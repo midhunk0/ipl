@@ -1,0 +1,62 @@
+.match{
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    gap: 16px;
+}
+
+.match-result{
+    display: flex;
+    flex-direction: column;
+}
+
+.match-buttons{
+    display: flex;
+    gap: 16px;
+}
+
+.match-update-button:hover img {
+    content: url("/icons/update-white.png");
+}
+
+.match-add-button:hover img{
+    content: url("/icons/add-white.png");
+}
+
+.match-delete-button:hover img {
+    content: url("/icons/delete-white.png");
+}
+
+.match-form{
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    gap: 16px;
+}
+
+.match-form-buttons{
+    display: flex;
+    gap: 16px;
+}
+
+.match-close-button:hover img{
+    content: url("/icons/close-white.png");
+}
+
+@media(max-width: 1080px){
+    .match-form{
+        width: 40%;
+    }
+}
+
+@media(max-width: 720px){
+    .match-form{
+        width: 50%;
+    }
+}
+
+@media(max-width: 564px){
+    .match-form{
+        width: 100%;
+    }
+}

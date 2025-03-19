@@ -1,0 +1,59 @@
+.team{
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    gap: 16px;
+}
+
+.team-details{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.team-buttons{
+    display: flex;
+    gap: 16px;
+}
+
+.team-match-add-button:hover img {
+    content: url("/icons/add-white.png");
+}
+
+.team-delete-button:hover img {
+    content: url("/icons/delete-white.png");
+}
+
+.team-match-add-form{
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    gap: 16px;
+}
+
+.team-form-buttons{
+    display: flex;
+    gap: 16px;
+}
+
+.team-form-close-button:hover img {
+    content: url("/icons/close-white.png");
+}
+
+@media(max-width: 1080px){
+    .team-match-add-form{
+        width: 40%;
+    }
+}
+
+@media(max-width: 720px){
+    .team-match-add-form{
+        width: 50%;
+    }
+}
+
+@media(max-width: 564px){
+    .team-match-add-form{
+        width: 100%;
+    }
+}

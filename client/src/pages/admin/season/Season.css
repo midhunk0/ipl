@@ -1,0 +1,74 @@
+.season{
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    gap: 16px;
+}
+
+.season-details{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.season-add-team-button:hover img {
+    content: url("/icons/add-white.png");
+}
+
+.season-add-team-form{
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    gap: 16px;
+}
+
+.season-home-input-wrapper{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 12px;
+    gap: 16px;
+}
+
+.season-home-input-wrapper input{
+    width: 100%;
+}
+
+.season-home-input-wrapper:first-of-type{
+    margin-top: 0;
+}
+
+.season-add-home-button:hover img{
+    content: url("/icons/add-white.png");
+}
+
+.season-remove-home-button:hover img{
+    content: url("/icons/delete-white.png");
+}
+
+.season-form-buttons{
+    display: flex;
+    gap: 16px;
+}
+
+.season-close-button:hover img {
+    content: url("/icons/close-white.png");
+}
+
+@media(max-width: 1080px){
+    .season-add-team-form{
+        width: 40%;
+    }
+}
+
+@media(max-width: 720px){
+    .season-add-team-form{
+        width: 50%;
+    }
+}
+
+@media(max-width: 564px){
+    .season-add-team-form{
+        width: 100%;
+    }
+}

@@ -1,0 +1,51 @@
+.matches{
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    gap: 16px;
+    position: relative;
+}
+
+.matches-details{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.matches-add-button:hover img {
+    content: url("/icons/add-white.png");
+}
+
+.matches-add-form{
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    gap: 16px;
+}
+
+.matches-form-buttons{
+    display: flex;
+    gap: 16px;
+}
+
+.matches-form-close-button:hover img {
+    content: url("/icons/close-white.png");
+}
+
+@media(max-width: 1080px){
+    .matches-add-form{
+        width: 40%;
+    }
+}
+
+@media(max-width: 720px){
+    .matches-add-form{
+        width: 50%;
+    }
+}
+
+@media(max-width: 564px){
+    .matches-add-form{
+        width: 100%;
+    }
+}

@@ -1,0 +1,196 @@
+.pointTable{
+    display: flex;
+    width: fit-content;
+    max-width: calc(100% - 2px);
+    overflow: auto;
+    border: 1px solid black;
+}
+
+.pointTable-teams{
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+}
+
+.pointTable-heading{
+    display: flex;
+}
+
+
+.pointTable-heading p{
+    padding: 16px;
+}
+
+.pointTable-heading-position, 
+.pointTable-team-position{
+    width: 20px;
+    min-width: 20px;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.pointTable-team{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: fit-content;
+}
+
+.pointTable-team-position, 
+.pointTable-team-name{
+    padding: 16px;
+    margin: 0;
+    font-size: 16px;
+    height: 20px;
+    text-align: center;
+}
+
+.pointTable-team-name{
+    padding-left: 0;
+}
+
+.pointTable-team:last-child .pointTable-team-position{
+    border-bottom: none;
+}
+
+.pointTable-team-logo{
+    padding: 8px;
+    border-bottom: 1px solid black;
+}
+
+.pointTable-team:last-child .pointTable-team-logo{
+    border-bottom: none;
+}
+
+.pointTable-heading-name, 
+.pointTable-team-name{
+    width: 225px;
+    min-width: 225px;
+    text-align: left;
+    cursor: pointer;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.pointTable-heading-name{
+    width: 257px;
+    min-width: 257px;
+}
+
+.pointTable-heading-name.short, 
+.pointTable-team-name.short{
+    width: 45px;
+    min-width: 45px;
+}
+
+.pointTable-team-name.short{
+    padding-left: 16px;
+}
+
+.pointTable-team:last-child .pointTable-team-name{
+    border-bottom: none;
+}
+
+.pointTable-team-results-container{
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+}
+
+.pointTable-team-results{
+    display: flex;
+}
+
+.pointTable-heading-result, 
+.pointTable-team-result{
+    display: flex;
+    padding: 16px;
+    justify-content: center;
+    align-items: center;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.pointTable-heading-result{
+    width: 20px;
+    min-width: 20px;
+}
+
+.pointTable-team-results:last-child .pointTable-team-result{
+    border-bottom: none;
+}
+
+.pointTable-team-result:first-child{
+    border-left: none;
+}
+
+.pointTable-heading-result:first-child{
+    border-left: none;
+}
+
+.pointTable-team-result{
+    background-color: white;
+}
+
+.pointTable-team-result:has(.win):hover{
+    background-color: #02BC7D;
+}
+
+.pointTable-team-result:has(.win):hover img{
+    content: url("/icons/win-white.png");
+}
+
+.pointTable-team-result:has(.tie):hover{
+    background-color: yellow;
+}
+
+.pointTable-team-result:has(.loss):hover{
+    background-color: #D82739;
+}
+
+.pointTable-team-result:has(.loss):hover img{
+    content: url("/icons/close-white.png");
+}
+
+.pointTable-team-point{
+    display: flex;
+    width: 20px;
+    height: 20px;
+    justify-content: center;
+    align-content: center;
+}
+
+.pointTable-heading-points{
+    padding: 16px;
+}
+
+.pointTable-heading-points, 
+.pointTable-team-points{
+    width: 45px;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.pointTable-team:last-child .pointTable-team-points{
+    border-bottom: none;
+}
+
+.pointTable-heading-nrr, 
+.pointTable-team-nrr{
+    width: 45px;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.pointTable-team:last-child .pointTable-team-nrr{
+    border-bottom: none;
+}
+
+.pointTable-team-points, 
+.pointTable-team-nrr{
+    padding: 16px;
+    margin: 0;
+    font-size: 16px;
+    height: 20px;
+    text-align: center;
+}

@@ -1,0 +1,52 @@
+.matchDetails{
+    display: flex;
+    width: 50%;
+    flex-direction: column;
+    gap: 16px;
+    border: 1px solid black;
+}
+
+.matchDetails-venue{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px;
+}
+
+.matchDetails-timings{
+    display: flex;
+    gap: 16px;
+}
+
+.matchDetails-result{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+}
+
+.matchDetails-team-scores{
+    display: flex;
+    justify-content: space-between;
+}
+
+.matchDetails-team, .matchDetails-opponent{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.matchDetails-scores{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.matchDetails-logo{
+    width: 44px;
+    aspect-ratio: 1/1;
+    object-fit: contain;
+}

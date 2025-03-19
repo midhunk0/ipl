@@ -1,0 +1,31 @@
+.stats{
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    position: relative;
+    overflow: hidden;
+}
+
+.stats-details{
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+    gap: 16px;
+}
+
+.stats-container{
+    min-height: calc(100vh - 181px);
+    width: calc(100% - 2px);
+    border: 1px solid black;
+}
+
+.stats-same-container{
+    display: flex;
+    gap: 16px;
+}
+
+@media(max-width: 720px){
+    .stats-same-container{
+        flex-direction: column;
+    }
+}

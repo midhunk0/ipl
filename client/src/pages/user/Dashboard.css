@@ -1,0 +1,36 @@
+.topbar{
+    display: flex;
+    padding: 16px;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: #fff;
+}
+
+.topbar-image{
+    width: 50px;
+    cursor: pointer;
+}
+
+.topbar-items{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.topbar-item{
+    list-style-type: none;
+    font-size: larger;
+    text-transform: capitalize;
+    cursor: pointer;
+}
+
+.topbar-item:hover{
+    color: blue;
+}
+
+.outlet{
+    flex-grow: 1;
+    overflow-y: auto;
+}

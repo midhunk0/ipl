@@ -1,0 +1,131 @@
+.matchesTable{
+    border: 1px solid black;
+    width: fit-content;
+    max-width: 100%;
+    overflow: scroll;
+}
+
+.matchesTable-header, .matchesTable-match{
+    display: flex;
+    white-space: nowrap;
+}
+
+.matchesTable-header p, .matchesTable-match p{
+    padding: 16px;
+}
+
+
+.matchesTable-heading-no, .matchesTable-match-no{
+    width: 20px;
+    min-width: 20px;
+    border-right: 1px solid black;
+}
+
+.matchesTable-match-no{
+    display: grid;
+    place-content: center;
+    border-top: 1px solid black;
+}
+
+.matchesTable-heading-teams, .matchesTable-match-teams{
+    width: 156px;
+    min-width: 156px;
+    border-right: 1px solid black;
+}
+
+.matchesTable-match-teams{
+    width: 188px;
+    min-width: 188px;
+    border-top: 1px solid black;
+    cursor: pointer;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.matchTable-match-team, .matchTable-match-opponent{
+    display: flex;
+    justify-content: space-between;
+    gap: 4px;
+    width: 100px;
+}
+
+.matchesTable-match-teams p{
+    padding: 16px 0;
+}
+
+.matchesTable-match-teams img{
+    width: 32px;
+    padding: 9px;
+    aspect-ratio: 1/1;
+    object-fit: contain;
+}
+
+.matchesTable-match-teams img:first-child{
+    padding-right: 0;
+}
+
+
+.matchesTable-match-teams img:last-child{
+    padding-left: 0;
+}
+
+.matchesTable-heading-date, .matchesTable-match-date{
+    width: 100px;
+    min-width: 100px;
+    border-right: 1px solid black;
+}
+
+.matchesTable-match-date{
+    display: grid;
+    place-content: center;
+    border-top: 1px solid black;
+}
+
+.matchesTable-heading-time, .matchesTable-match-time{
+    width: 50px;
+    min-width: 50px;
+    border-right: 1px solid black;
+}
+
+.matchesTable-match-time{
+    display: grid;
+    place-content: center;
+    border-top: 1px solid black;
+}
+
+.matchesTable-heading-venue, .matchesTable-match-venue {
+    width: 130px;
+    min-width: 130px;
+    border-right: 1px solid black;
+}
+
+.matchesTable-match-venue {
+    display: flex;
+    align-items: center;
+    overflow: scroll;
+    border-top: 1px solid black;
+}
+
+.matchesTable-heading-result, .matchesTable-match-result{
+    width: 180px;
+    min-width: 180px;
+    border-right: 1px solid black;
+}
+
+.matchesTable-match-result{
+    display: flex;
+    align-items: center;
+    border-top: 1px solid black;
+}
+
+.matchesTable-heading-potm, .matchesTable-match-potm{
+    width: 250px;
+    min-width: 250px;
+}
+
+.matchesTable-match-potm{
+    display: flex;
+    align-items: center;
+    border-top: 1px solid black;
+}

@@ -1,0 +1,57 @@
+.register{
+    display: flex;
+    height: 100vh;
+}
+
+.register-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 16px;
+    height: calc(100% - 32px);
+    width: 25%;
+    gap: 16px;
+}
+
+.register-button{
+    padding: 16px;
+    background-color: blue;
+    color: white;
+    font-size: 16px;
+    border: 1px solid black;
+    outline: none;
+    cursor: pointer;
+}
+
+.register-form p a{ 
+    text-decoration: none;
+    color: black;
+}
+
+.register-form p a:hover{
+    color: blue;
+} 
+
+@media(max-width: 1080px){
+    .register-form{
+        width: 40%;
+    }
+}
+
+@media(max-width: 720px){
+    .register-form{
+        width: 50%;
+    }
+}
+
+@media(max-width: 564px){
+    .register-form{
+        width: 100%;
+    }
+}
+
+@media(max-width: 364px){
+    .register{
+        padding: 0;
+    }
+}

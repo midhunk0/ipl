@@ -1,0 +1,12 @@
+.match{
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    gap: 16px;
+}
+
+.match-result{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
