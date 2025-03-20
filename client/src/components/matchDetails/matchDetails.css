@@ -50,3 +50,15 @@
     aspect-ratio: 1/1;
     object-fit: contain;
 }
+
+@media(max-width: 720px){
+    .matchDetails{
+        width: 75%;
+    }
+}
+
+@media(max-width: 564px){
+    .matchDetails{
+        width: 100%;
+    }
+}

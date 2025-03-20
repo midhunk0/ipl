@@ -2,7 +2,7 @@
     display: flex;
     width: fit-content;
     max-width: calc(100% - 2px);
-    overflow: auto;
+    overflow: scroll;
     border: 1px solid black;
 }
 
@@ -94,7 +94,6 @@
 .pointTable-team-results-container{
     display: flex;
     flex-direction: column;
-    overflow: scroll;
 }
 
 .pointTable-team-results{

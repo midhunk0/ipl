@@ -47,7 +47,7 @@ function App(){
                             <Route path="match" element={<AdminMatch/>}/>
                         </Route>
                     </Routes>
-                    <ToastContainer/>
+                    <ToastContainer position="bottom-right"/>
                 </Router>
             </SeasonProvider>
         </YearProvider>
