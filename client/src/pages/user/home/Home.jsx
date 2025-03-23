@@ -12,7 +12,7 @@ export function Home(){
         <div className="home">
             <input type="number" id="year" className="home-year-input" placeholder={currentYear.toString()} min="2008" max={currentYear} onChange={(e)=>setYear(Number(e.target.value))}/>
             <h1>IPL {year}</h1>
-            <PointTable dest="/team"/>
+            <PointTable teamDest="/team" matchDest="/match"/>
         </div>
     )
 }

@@ -5,7 +5,7 @@
     position: sticky;
     top: 0;
     z-index: 2;
-    background-color: #fff;
+    background-color: var(--white);
 }
 
 .topbar-image{
@@ -28,9 +28,9 @@
     cursor: pointer;
 }
 
-.topbar-item.active, .topbar-item:hover{
-    background-color: black;
-    color: white;
+.topbar-item.active{
+    background-color: var(--black);
+    color: var(--white);
 }
 
 .topbar-menu{
@@ -38,9 +38,23 @@
 }
 
 .topbar-icon{
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     cursor: pointer;
+    border: 1px solid var(--black);
+    padding: 16px;
+}
+
+.topbar-icon:hover{
+    background-color: var(--black);
+}
+
+.topbar-menu-icons:hover .topbar-icon.menu{
+    content: url("icons/menu-white.png");
+}
+
+.topbar-menu-icons:hover .topbar-icon.close{
+    content: url("icons/cross-white.png");
 }
 
 .topbar-menu-items{
@@ -48,9 +62,9 @@
     flex-direction: column;
     position: absolute;
     right: 0;
-    top: 48px;
+    top: 70px;
     padding: 16px;
-    background-color: white;
+    background-color: var(--white);
 }
 
 .topbar-menu-item{
@@ -61,9 +75,9 @@
     cursor: pointer;
 }
 
-.topbar-menu-item:hover{
-    background-color: black;
-    color: white;
+.topbar-menu-item.active{
+    background-color: var(--black);
+    color: var(--white);
 }
 
 .outlet{

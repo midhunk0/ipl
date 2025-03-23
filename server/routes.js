@@ -1,5 +1,22 @@
 const express=require("express");
-const { registerAdmin, loginAdmin, addTeam, addSeason, addMatch, fetchSeason, fetchSeasons, deleteSeason, fetchTeam, fetchMatches, deleteTeam, deleteMatch, addResult, logoutAdmin, checkAuth } = require("./controller");
+const { 
+    registerAdmin, 
+    loginAdmin, 
+    addTeam, 
+    addSeason, 
+    addMatch, 
+    fetchSeason, 
+    fetchSeasons, 
+    deleteSeason, 
+    fetchTeam, 
+    fetchMatches,
+    deleteTeam, 
+    deleteMatch, 
+    addResult, 
+    logoutAdmin, 
+    checkAuth, 
+    editMatch, 
+}=require("./controller");
 const router=express.Router();
 
 router.post("/registerAdmin", registerAdmin);
@@ -14,8 +31,9 @@ router.post("/addTeam", addTeam);
 router.get("/fetchTeam/:year/:teamId", fetchTeam);
 router.delete("/deleteTeam/:year/:teamId", deleteTeam);
 router.post("/addMatch", addMatch);
+router.put("/editMatch/:year/:matchId", editMatch);
 router.get("/fetchMatches/:year/:teamId", fetchMatches);
 router.delete("/deleteMatch/:year/:matchId", deleteMatch);
-router.put("/addResult/:year/:matchId", addResult);
+router.post("/addResult/:year/:matchId", addResult);
 
 module.exports=router;

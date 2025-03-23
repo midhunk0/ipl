@@ -7,6 +7,14 @@ import { MatchDetails } from "../../../components/matchDetails/matchDetails";
 import { toast } from "react-toastify";
 
 export function Match(){
+    const [matchData, setMatchData]=useState({
+        teamShort: "",
+        opponentShort: "",
+        date: "",
+        venue: "",
+        time: ""
+    });
+
     const [matchResult, setMatchResult]=useState({
         wonShort: "",
         wonBy: "",
@@ -25,11 +33,15 @@ export function Match(){
                 wickets: "",
                 overs: ""
             }
-        }
+        },
+        reason: ""
     });
     const [showOptions, setShowOptions]=useState(false);
+    const [showOptions1, setShowOptions1]=useState(false);
+    const [showOptions2, setShowOptions2]=useState(false);
     const [updateResult, setUpdateResult]=useState(true);
-
+    const [showEditForm, setShowEditForm]=useState(false);
+    const [team, setTeam]=useState({});
     const location=useLocation();
     const navigate=useNavigate();
     const { year }=useYear();
@@ -37,6 +49,7 @@ export function Match(){
     if(!season){
         return;
     }
+    const teams=season.teams;
     const matches=season.matches;
     const matchId=location.state?.matchId;
     
@@ -53,7 +66,7 @@ export function Match(){
         e.preventDefault();
         try{
             const response=await fetch(`${apiUrl}/addResult/${year}/${matchId}`, {
-                method: "PUT",
+                method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(matchResult),
                 credentials: "include"
@@ -78,7 +91,8 @@ export function Match(){
                             wickets: "",
                             overs: ""
                         }
-                    }
+                    },
+                    reason: ""
                 })
                 fetchSeason();
                 setUpdateResult(true);
@@ -152,65 +166,170 @@ export function Match(){
         });
     }
 
-    function updateForm(){
-        setMatchResult({
-            wonBy: match.result.wonBy,
-            wonShort: match.result.won.short,
-            playerOfTheMatch: {
-                name: match.result.playerOfTheMatch.name,
-                for: match.result.playerOfTheMatch.for
-            },
-            score: {
-                team: {
-                    runs: match.result.score.team.runs,
-                    wickets: match.result.score.team.wickets,
-                    overs: match.result.score.team.overs
-                },
-                opponent: {
-                    runs: match.result.score.opponent.runs,
-                    wickets: match.result.score.opponent.wickets,
-                    overs: match.result.score.opponent.overs
-                }
-            }
+    function updateMatchForm(){
+        setMatchData({
+            teamShort: match.team.short,
+            opponentShort: match.opponent.short,
+            venue: match.venue,
+            date: match.date.split("T")[0],
+            time: match.time
         })
+        const team=season.teams.find(team=>team.short===match.team.short);
+        setTeam(team)
+    }
+
+    function handleInputChange(e){
+        setMatchData({
+            ...matchData,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    function handleOpponentSelection(opponentShort) {
+        setMatchData(prev=>({
+            ...prev,
+            opponentShort, 
+        }));
+    }
+
+    function handleVenueSelection(home) {
+        setMatchData(prev=>({
+            ...prev,
+            venue: home, 
+        }));
+    }
+
+    async function handleEditMatch(e){
+        e.preventDefault();
+        try{
+            const response=await fetch(`${apiUrl}/editMatch/${year}/${matchId}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(matchData),
+                credentials: "include"
+            });
+            const result=await response.json();
+            if(response.ok){
+                fetchSeason();
+                setShowEditForm(false);
+                toast.success(result.message);
+            }
+            else{
+                toast.error(result.message);
+            }
+        }
+        catch(error){
+            console.log(error.message);
+        }
     }
 
     return(
         <div className="match">
             <h1>{match.team.name} v/s {match.opponent.name}</h1>
-            {updateResult ? 
+            {!showEditForm && updateResult ? 
                 <div className="match-result">
                     <MatchDetails match={match}/>
                     <div className="match-buttons">
-                        {match.result.won.name ? 
-                            <button className="blue-button match-update-button" onClick={()=>(setUpdateResult(false), updateForm())}>
-                                <img src="/icons/update.png" alt="update" className="icon"/>
-                                <span>Update Result</span>
-                            </button>
-                        : 
+                        {!match.result.draw.reason && !match.result.won.short && 
                             <button className="green-button match-add-button" onClick={()=>setUpdateResult(false)}>
-                                <img src="/icons/add.png" alt="add" className="icon"/>
+                                <img src="/icons/plus-black.png" alt="add" className="icon"/>
                                 <span>Add Result</span>
                             </button>
                         }
-                        <button className="red-button match-delete-button" type="button"  onClick={()=>handleDeleteMatch()}>
-                            <img src="/icons/delete.png" alt="delete" className="icon"/>
+                        <button type="button" className="blue-button match-edit-button" onClick={()=>(setShowEditForm(prev=>!prev), updateMatchForm())}>
+                            <img src="/icons/edit-black.png" alt="edit" className="icon"/>
+                            <span>Edit match</span>
+                        </button>
+                        <button className="red-button match-delete-button" type="button" onClick={()=>handleDeleteMatch()}>
+                            <img src="/icons/trash-red.png" alt="delete" className="icon"/>
                             <span>Delete match</span>
                         </button>
                     </div>
-                </div>
+                </div> 
+            : showEditForm ? 
+                <form className="match-form" onSubmit={handleEditMatch} method="POST">
+                    <h2>edit Match</h2>
+                    <div className="input-container">
+                        <label htmlFor="team">Team</label>
+                        <input type="text" name="teamShort" id="team" value={matchData.teamShort} readOnly/>
+                    </div>
+                    <div className="input-container">
+                        <label htmlFor="opponent">Opponent</label>
+                        <div className="input selection" onClick={()=>setShowOptions1(prev=>!prev)}>
+                            <p>{matchData.opponentShort!=="" ? matchData.opponentShort : "Choose Opponent"}</p>
+                            <button type="button">
+                                {showOptions1 ? 
+                                    <img src="/icons/up-black.png" alt="up" className="icon"/> 
+                                : 
+                                    <img src="/icons/down-black.png" alt="down" className="icon"/>
+                                }
+                            </button>
+                            {showOptions1 && 
+                                <div className="select" onClick={()=>setShowOptions1(prev=>!prev)}>
+                                    {teams.filter(opponent=>opponent.short!==match.team.short)
+                                        .map((opponent)=>(
+                                            <div className="input" key={opponent._id} value={matchData.opponentShort} onClick={()=>(handleOpponentSelection(opponent.short), setShowOptions1(prev=>!prev))}>
+                                                <p>{opponent.short}</p>
+                                            </div>
+                                        ))
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div className="input-container">
+                        <label htmlFor="venue">Venue</label>
+                        <div className="input selection" onClick={()=>setShowOptions2(prev=>!prev)}>
+                            <p>{matchData.venue!=="" ? matchData.venue : "Choose Venue"}</p>
+                            <button type="button">
+                                {showOptions2 ? 
+                                    <img src="/icons/up-black.png" alt="up" className="icon"/> 
+                                : 
+                                    <img src="/icons/down-black.png" alt="down" className="icon"/>
+                                }
+                            </button>
+                            {showOptions2 && 
+                                <div className="select" onClick={()=>setShowOptions2(prev=>!prev)}>
+                                    {team.home.map((home, index)=>( 
+                                        <div className="input" key={index} value={home} onClick={()=>(handleVenueSelection(home), setShowOptions2(prev=>!prev))}>        
+                                            <p>{home}</p>    
+                                        </div>
+                                    ))}
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div className="input-container">
+                        <label htmlFor="date">Date</label>
+                        <input type="date" name="date" id="date" value={matchData.date} onChange={handleInputChange}/>
+                    </div>
+                    <div className="input-container">
+                        <label htmlFor="time">Time</label>
+                        <input type="time" name="time" id="time" value={matchData.time} onChange={handleInputChange}/>
+                    </div>
+                    <div className="match-form-buttons">
+                        <button className="black-button match-close-button" type="button" onClick={()=>setShowEditForm(prev=>!prev)}>
+                            <img src="/icons/cross-black.png" alt="close" className="icon"/>
+                            <span>Close</span>
+                        </button>
+                        <button className="blue-button match-edit-button" type="submit">
+                            <img src="/icons/edit-black.png" alt="add" className="icon"/>
+                            <span>edit match</span>
+                        </button>
+                    </div>
+                </form>
             : 
                 <form className="match-form" onSubmit={handleAddResult}>
                     <h2>Add Result</h2>
                     <div className="input-container">
                         <label htmlFor="won">Won</label>
                         <div className="input selection" onClick={()=>setShowOptions(prev=>!prev)}>
-                            <p>{matchResult.wonShort!=="" ? matchResult.wonShort : "Choose Winner"}</p>
+                            <p>{matchResult.wonShort!=="" ? matchResult.wonShort : match.result.draw.status ? "Draw" : "Choose Winner"}</p>
                             <button type="button">
                                 {showOptions ? 
-                                    <img src="/icons/up.png" alt="close" className="icon"/> 
+                                    <img src="/icons/up-black.png" alt="close" className="icon"/> 
                                 : 
-                                    <img src="/icons/down.png" alt="open" className="icon"/>
+                                    <img src="/icons/down-black.png" alt="open" className="icon"/>
                                 }
                             </button>
                             {showOptions && 
@@ -221,46 +340,51 @@ export function Match(){
                                     <div className="input" value={match.opponent.short} onClick={()=>handleWinnerSelection(match.opponent.short)}>
                                         <p>{match.opponent.short}</p>
                                     </div>
+                                    <div className="input" value="Draw" onClick={()=>handleWinnerSelection("Draw")}>
+                                        <p>Draw</p>
+                                    </div>
                                 </div>
                             }
                         </div>
                     </div>
-                    <div className="input-container">
-                        <label htmlFor="wonBy">Won By</label>
-                        <input type="text" name="wonBy" id="wonBy" value={matchResult.wonBy} onChange={(e)=>setMatchResult({...matchResult, wonBy: e.target.value})}/>
-                    </div>
-                    <div className="input-container">
-                        <label htmlFor="teamScore">Score by {match.team.short}</label>
-                        <input type="text" name="team" id="teamScore" value={`${matchResult.score.team.runs}/${matchResult.score.team.wickets} (${matchResult.score.team.overs})`} onChange={handleScoreChange}/>
-                    </div>
-                    <div className="input-container">
-                        <label htmlFor="opponentScore">Score by {match.opponent.short}</label>
-                        <input type="text" name="opponent" id="opponentScore" value={`${matchResult.score.opponent.runs}/${matchResult.score.opponent.wickets} (${matchResult.score.opponent.overs})`} onChange={handleScoreChange}/>
-                    </div>
-                    <div className="input-container">
-                        <label htmlFor="potm">Player of the Match</label>
-                        <input type="text" name="name" id="potm" value={matchResult.playerOfTheMatch.name} onChange={(e)=>handlePOTM(e)}/>
-                    </div>
-                    <div className="input-container">
-                        <label htmlFor="potmFor">Player of the Match For</label>
-                        <input type="text" name="for" id="potmFor" value={matchResult.playerOfTheMatch.for} onChange={(e)=>handlePOTM(e)}/>
-                    </div>
+                    {matchResult.wonShort==="Draw" ? 
+                        <div className="input-container">
+                            <label htmlFor="reason">Reason</label>
+                            <input type="text" name="reason" id="reason" value={matchResult.reason} onChange={(e)=>setMatchResult({...matchResult, reason: e.target.value})}/>
+                        </div>
+                    : 
+                        <>
+                            <div className="input-container">
+                                <label htmlFor="wonBy">Won By</label>
+                                <input type="text" name="wonBy" id="wonBy" value={matchResult.wonBy} onChange={(e)=>setMatchResult({...matchResult, wonBy: e.target.value})}/>
+                            </div>
+                            <div className="input-container">
+                                <label htmlFor="teamScore">Score by {match.team.short}</label>
+                                <input type="text" name="team" id="teamScore" value={`${matchResult.score.team.runs}/${matchResult.score.team.wickets} (${matchResult.score.team.overs})`} onChange={handleScoreChange}/>
+                            </div>
+                            <div className="input-container">
+                                <label htmlFor="opponentScore">Score by {match.opponent.short}</label>
+                                <input type="text" name="opponent" id="opponentScore" value={`${matchResult.score.opponent.runs}/${matchResult.score.opponent.wickets} (${matchResult.score.opponent.overs})`} onChange={handleScoreChange}/>
+                            </div>
+                            <div className="input-container">
+                                <label htmlFor="potm">Player of the Match</label>
+                                <input type="text" name="name" id="potm" value={matchResult.playerOfTheMatch.name} onChange={(e)=>handlePOTM(e)}/>
+                            </div>
+                            <div className="input-container">
+                                <label htmlFor="potmFor">Player of the Match For</label>
+                                <input type="text" name="for" id="potmFor" value={matchResult.playerOfTheMatch.for} onChange={(e)=>handlePOTM(e)}/>
+                            </div>
+                        </>
+                    }
                     <div className="match-form-buttons">
-                        <button className="blue-button match-close-button" type="button" onClick={()=>setUpdateResult(prev=>!prev)}>
-                            <img src="/icons/close.png" alt="close" className="icon"/>
+                        <button className="black-button match-close-button" type="button" onClick={()=>setUpdateResult(prev=>!prev)}>
+                            <img src="/icons/cross-black.png" alt="close" className="icon"/>
                             <span>Close</span>
                         </button>
-                        {match.result.won.name ? 
-                            <button className="green-button match-update-button" type="submit">
-                                <img src="/icons/update.png" alt="update" className="icon"/>
-                                <span>Update Result</span>
-                            </button>
-                        : 
-                            <button className="green-button match-add-button" type="submit">
-                                <img src="/icons/add.png" alt="add" className="icon"/>
-                                <span>Add Result</span>
-                            </button>
-                        }
+                        <button className="green-button match-add-button" type="submit">
+                            <img src="/icons/plus-black.png" alt="add" className="icon"/>
+                            <span>Add Result</span>
+                        </button>
                     </div>
                 </form>
             }

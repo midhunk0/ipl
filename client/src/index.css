@@ -4,3 +4,21 @@
     scrollbar-width: none;
     font-family: "Chivo", sans-serif;
 }
+
+:root{
+    --red: #D82739;
+    --green: #02BC7D;
+    --blue: #1B6CA7;
+    --white: #FFFFFF;
+    --black: #1E1E1E;
+
+    --bg-color: var(--white);
+    --text-color: var(--black);
+}
+
+@media(prefers-color-scheme: dark){
+    :root{
+        --bg-color: var(--black);
+        --text-color: var(--white);
+    }
+}

@@ -16,7 +16,7 @@
 .stats-container{
     min-height: calc(100vh - 181px);
     width: calc(100% - 2px);
-    border: 1px solid black;
+    border: 1px solid var(--black);
 }
 
 .stats-same-container{

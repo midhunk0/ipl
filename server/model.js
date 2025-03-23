@@ -33,6 +33,10 @@ const matchSchema=new mongoose.Schema({
         playerOfTheMatch: { 
             name: { type: String, default: "" },
             for: { type: String, default: "" }
+        },
+        draw: { 
+            status: { type: Boolean, default: false },
+            reason: { type: String, default: "" }
         }
     }
 });
@@ -45,7 +49,7 @@ const teamSchema=new mongoose.Schema({
     home: { type: [String], required: true },
     matches: [{
         matchId: { type: String, required: true },
-        result: { type: Number, default: null },
+        point: { type: Number, default: null },
         date: { type: Date, default: null },
         _id: false
     }],

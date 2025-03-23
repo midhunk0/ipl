@@ -3,7 +3,7 @@ import "./PointTable.css";
 import { useSeason } from "../../context/seasonContext";
 import { useNavigate } from "react-router-dom";
 
-export function PointTable({dest}){
+export function PointTable({ teamDest, matchDest }){
     const navigate=useNavigate();
     const [_, setWidth]=useState(window.innerWidth);
     const [show, setShow]=useState(window.innerWidth>720);
@@ -37,12 +37,10 @@ export function PointTable({dest}){
                         {season.teams.map((team, index)=>(
                             <div className="pointTable-team" key={index}>
                                 <p className="pointTable-team-position">{index+1}</p>
-                                {show && (
-                                    <div className="pointTable-team-logo">
-                                        <img src={`/logos/${team.short}.png`} alt="logo" className="logo"/>
-                                    </div>
-                                )}
-                                <p className={`pointTable-team-name ${show ? "" : "short"}`} onClick={()=>navigate(dest, { state: { teams: season.teams, teamId: team._id }})}>{show ? `${team.name}` : `${team.short}`}</p>
+                                <div className="pointTable-team-logo">
+                                    <img src={`/logos/${team.short}.png`} alt="logo" className="logo"/>
+                                </div>
+                                <p className={`pointTable-team-name ${show ? "" : "short"}`} onClick={()=>navigate(teamDest, { state: { teams: season.teams, teamId: team._id }})}>{show ? `${team.name}` : `${team.short}`}</p>
                             </div>
                         ))}
                     </div>
@@ -55,22 +53,20 @@ export function PointTable({dest}){
                         {season.teams.map((team, index)=>(
                             <div className="pointTable-team-results" key={index}>
                                 {[...Array(14)].map((_, index)=>(
-                                    <div key={index} className="pointTable-team-result">
+                                    <div key={index} className={`pointTable-team-result ${team.matches[index]?.matchId ? "" : "no-match"}`} onClick={()=>{team.matches[index]?.matchId && navigate(matchDest, { state: { matchId: team.matches[index]?.matchId }})}}>
                                         <div className="pointTable-team-point">
-                                        {team.matches[index]?.result !== undefined ? (() => {
-                                            switch(team.matches[index].result){
+                                        {team.matches[index]?.point!==undefined ? (()=>{
+                                            switch(team.matches[index].point){
                                                 case 2:
-                                                    return <img src="/icons/win.png" alt="win" className="icon win"/>
+                                                    return <img src="/icons/check-green.png" alt="win" className="icon win"/>
                                                 case 1:
-                                                    return <img src="/icons/tie.png" alt="tie" className="icon tie"/>
+                                                    return <img src="/icons/draw-blue.png" alt="tie" className="icon tie"/>
                                                 case 0:
-                                                    return <img src="/icons/loss.png" alt="loss" className="icon loss"/>
-                                                case -1:
-                                                    return "-";
+                                                    return <img src="/icons/cross-red.png" alt="loss" className="icon loss"/>
                                                 default:
                                                     return "-";
                                             }
-                                        })() : "-"}  
+                                        })() : ""}  
                                         </div>
                                     </div>
                                 ))}

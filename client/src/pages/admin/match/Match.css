@@ -15,17 +15,23 @@
     gap: 16px;
 }
 
-.match-update-button:hover img {
+.match-update-result-button:hover img {
     content: url("/icons/update-white.png");
 }
 
+.match-edit-button:hover img{
+    content: url("/icons/edit-white.png");
+}
+
 .match-add-button:hover img{
-    content: url("/icons/add-white.png");
+    content: url("/icons/plus-white.png");
 }
 
 .match-delete-button:hover img {
-    content: url("/icons/delete-white.png");
+    content: url("/icons/trash-white.png");
 }
+
+
 
 .match-form{
     display: flex;
@@ -40,7 +46,7 @@
 }
 
 .match-close-button:hover img{
-    content: url("/icons/close-white.png");
+    content: url("/icons/cross-white.png");
 }
 
 @media(max-width: 1080px){

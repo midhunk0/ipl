@@ -7,8 +7,11 @@ export function MatchesTable({matches, dest}){
     const navigate=useNavigate();
     
     function getFormatedDate(date){
-        const d=new Date(date);
-        return `${d.getDate()}-${d.toLocaleString("en-IN", { month: "2-digit" })}-${d.getFullYear()}`;   
+        return new Date(date).toLocaleDateString("en-IN", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric"
+        }).replace(/\//g, "-");   
     }
 
     return(
@@ -41,12 +44,17 @@ export function MatchesTable({matches, dest}){
                             <p className="matchesTable-match-date">{getFormatedDate(match.date)}</p>
                             <p className="matchesTable-match-time">{match.time}</p>
                             <p className="matchesTable-match-venue">{match.venue.split(",")[1]?.trim()}</p>
-                            {match.result.won.short ? (
+                            {match.result.won.short ? 
                                 <>
                                     <p className="matchesTable-match-result">{match.result.won.short} win by {match.result.wonBy}</p>
                                     <p className="matchesTable-match-potm">{match.result.playerOfTheMatch.name} {match.result.playerOfTheMatch.for}</p>
                                 </>
-                            ) : 
+                            : match.result.draw.status ? 
+                                <>
+                                    <p className="matchesTable-match-result">{match.result.draw.reason}</p>
+                                    <p className="matchesTable-match-potm">-</p>
+                                </>
+                            :                             
                                 <>
                                     <p className="matchesTable-match-result"></p>
                                     <p className="matchesTable-match-potm"></p>

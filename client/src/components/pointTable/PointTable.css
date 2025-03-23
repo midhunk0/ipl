@@ -3,7 +3,7 @@
     width: fit-content;
     max-width: calc(100% - 2px);
     overflow: scroll;
-    border: 1px solid black;
+    border: 1px solid var(--black);
 }
 
 .pointTable-teams{
@@ -25,8 +25,8 @@
 .pointTable-team-position{
     width: 20px;
     min-width: 20px;
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
+    border-right: 1px solid var(--black);
+    border-bottom: 1px solid var(--black);
 }
 
 .pointTable-team{
@@ -55,7 +55,7 @@
 
 .pointTable-team-logo{
     padding: 8px;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--black);
 }
 
 .pointTable-team:last-child .pointTable-team-logo{
@@ -67,9 +67,12 @@
     width: 225px;
     min-width: 225px;
     text-align: left;
+    border-right: 1px solid var(--black);
+    border-bottom: 1px solid var(--black);
+}
+
+.pointTable-team-name{
     cursor: pointer;
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
 }
 
 .pointTable-heading-name{
@@ -77,14 +80,13 @@
     min-width: 257px;
 }
 
-.pointTable-heading-name.short, 
+.pointTable-heading-name.short{
+    width: 62px;
+    min-width: 62px;
+} 
 .pointTable-team-name.short{
-    width: 45px;
-    min-width: 45px;
-}
-
-.pointTable-team-name.short{
-    padding-left: 16px;
+    width: 30px;
+    min-width: 30px;
 }
 
 .pointTable-team:last-child .pointTable-team-name{
@@ -106,8 +108,16 @@
     padding: 16px;
     justify-content: center;
     align-items: center;
-    border-left: 1px solid black;
-    border-bottom: 1px solid black;
+    border-left: 1px solid var(--black);
+    border-bottom: 1px solid var(--black);
+}
+
+.pointTable-team-result{
+    cursor: pointer;
+}
+
+.pointTable-team-result.no-match{
+    cursor: auto;
 }
 
 .pointTable-heading-result{
@@ -128,27 +138,31 @@
 }
 
 .pointTable-team-result{
-    background-color: white;
+    background-color: var(--white);
 }
 
 .pointTable-team-result:has(.win):hover{
-    background-color: #02BC7D;
+    background-color: var(--green);
 }
 
 .pointTable-team-result:has(.win):hover img{
-    content: url("/icons/win-white.png");
+    content: url("/icons/check-white.png");
 }
 
 .pointTable-team-result:has(.tie):hover{
-    background-color: yellow;
+    background-color: var(--blue);
+}
+
+.pointTable-team-result:has(.tie):hover img{
+    content: url("/icons/draw-white.png");
 }
 
 .pointTable-team-result:has(.loss):hover{
-    background-color: #D82739;
+    background-color: var(--red);
 }
 
 .pointTable-team-result:has(.loss):hover img{
-    content: url("/icons/close-white.png");
+    content: url("/icons/cross-white.png");
 }
 
 .pointTable-team-point{
@@ -166,8 +180,8 @@
 .pointTable-heading-points, 
 .pointTable-team-points{
     width: 45px;
-    border-left: 1px solid black;
-    border-bottom: 1px solid black;
+    border-left: 1px solid var(--black);
+    border-bottom: 1px solid var(--black);
 }
 
 .pointTable-team:last-child .pointTable-team-points{
@@ -177,8 +191,8 @@
 .pointTable-heading-nrr, 
 .pointTable-team-nrr{
     width: 45px;
-    border-left: 1px solid black;
-    border-bottom: 1px solid black;
+    border-left: 1px solid var(--black);
+    border-bottom: 1px solid var(--black);
 }
 
 .pointTable-team:last-child .pointTable-team-nrr{

@@ -17,12 +17,14 @@ export function Dashboard(){
                     <li className={`topbar-item ${active==="stats" ? "active" : ""}`} onClick={()=>navigate("/stats")}>stats</li>
                 </ul>
                 <div className="topbar-menu">
-                    <img src={show ? "/icons/close.png" : "/icons/menu.png"} alt={show ? "menu" : "close"} className="topbar-icon" onClick={()=>setShow(prev=>!prev)}/>
+                    <div className="topbar-menu-icons">
+                        <img src={show ? `/icons/cross-black.png` : `/icons/menu-black.png`} alt={show ? "menu" : "close"} className={`topbar-icon ${show ? "close" : "menu"}`} onClick={()=>setShow(prev=>!prev)}/>
+                    </div>
                     {show && 
                         <ul className="topbar-menu-items">
-                            <li className="topbar-menu-item" onClick={()=>{ navigate("/"); setShow(prev=>!prev) }}>home</li>
-                            <li className="topbar-menu-item" onClick={()=>{ navigate("/matches"); setShow(prev=>!prev) }}>matches</li>
-                            <li className="topbar-menu-item" onClick={()=>{ navigate("/stats"); setShow(prev=>!prev) }}>stats</li>
+                            <li className={`topbar-menu-item ${active==="" || active==="home" || active==="team" ? "active" : ""}`} onClick={()=>{ navigate("/"); setShow(prev=>!prev) }}>home</li>
+                            <li className={`topbar-menu-item ${active==="matches" || active==="match" ? "active" : ""}`} onClick={()=>{ navigate("/matches"); setShow(prev=>!prev) }}>matches</li>
+                            <li className={`topbar-menu-item ${active==="stats" ? "active" : ""}`} onClick={()=>{ navigate("/stats"); setShow(prev=>!prev) }}>stats</li>
                         </ul>
                     }
                 </div>

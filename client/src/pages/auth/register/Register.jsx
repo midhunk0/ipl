@@ -71,9 +71,9 @@ export function Register(){
                         <input className="register-input" type={show ? "text" : "password"} name="password" id="password" value={registerData.password} onChange={handleInputChange}/>
                         <button type="button" onClick={()=>setShow(prev=>!prev)}>
                             {show ? 
-                                <img src="/icons/visible.png" alt="visible" className="icon"/> 
+                                <img src="/icons/eye-black.png" alt="visible" className="icon"/> 
                                 : 
-                                <img src="/icons/visible-off.png" alt="visible-off" className="icon"/>
+                                <img src="/icons/eye-crossed-black.png" alt="visible-off" className="icon"/>
                             }
                         </button>
                     </div>

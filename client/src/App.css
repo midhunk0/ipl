@@ -2,13 +2,17 @@
     position: relative;
 }
 
+.password-container input{
+    width: calc(100% - 34px);
+}
+
 .password-container button{
     display: flex;
     position: absolute;
     right: 16px;
     top: 50%;
     transform: translateY(-50%);
-    background-color: white;
+    background-color: var(--white);
     border: none;
     cursor: pointer;
 }
@@ -49,21 +53,21 @@ h2{
 
 .input-container input{
     padding: 16px;
-    border: 1px solid black;
+    border: 1px solid var(--black);
     outline: none;
     font-size: 16px;
-    width: calc(100% - 32px);
+    /* width: calc(100% - 32px); */
 }
 
-.red-button, .green-button, .blue-button{
+.black-button, .red-button, .green-button, .blue-button{
     display: flex;
     align-content: center;
     gap: 16px;
     padding: 16px;
     font-size: 16px;
-    background-color: white;
-    border: 1px solid black;
-    color: white;
+    background-color: var(--white);
+    border: 1px solid var(--black);
+    color: var(--white);
     text-transform: capitalize;
     outline: none;
     cursor: pointer;
@@ -71,59 +75,64 @@ h2{
     transition: background-color 0.1s ease, color 0.1s ease;
 }
 
-.red-button span, .green-button span, .blue-button span{
+.black-button span, .red-button span, .green-button span, .blue-button span{
     display: none;
 }
 
-.red-button:hover span, .green-button:hover span, .blue-button:hover span{
+.black-button:hover span, .red-button:hover span, .green-button:hover span, .blue-button:hover span{
     display: flex;
     align-items: center;
 }
 
+.black-button:hover{
+    background-color: var(--black);
+}
+
 .red-button:hover{
-    background-color: #D82739;
+    background-color: var(--red);
 }
 
 .green-button:hover{
-    background-color: #02BC7D;
+    background-color: var(--green);
 }
 
 .blue-button:hover{
-    background-color: #1B6CA7;
+    background-color: var(--blue);
 }
 
 .input{
     padding: 16px;
-    border: 1px solid black;
+    border: 1px solid var(--black);
     outline: none;
     font-size: 16px;
 }
 
 .input.selection{
-    position: relative;
-    padding: 16px;
     display: flex;
+    position: relative;
     align-items: center;
     cursor: pointer;
 }
 
 .select{
-    position: absolute;
     display: flex;
+    position: absolute;
     flex-direction: column;
     width: 100%;
     left: -1px;
+    gap: 4px;
     top: calc(100% + 16px);
     z-index: 2;
     max-height: 150px;
-    border: 1px solid black;
+    border: 1px solid var(--black);
     overflow: scroll;
-    background-color: white;
+    background-color: var(--white);
+    outline: none;
 }
 
 .select .input{
     border: none;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--black);
     cursor: pointer;
 }
 
@@ -132,12 +141,8 @@ h2{
 }
 
 .select .input:hover{
-    color: white;
-    background-color: black;
-}
-
-.input.selection p{
-    font-size: 16px;
+    color: var(--white);
+    background-color: var(--black);
 }
 
 .input.selection button{
@@ -146,7 +151,7 @@ h2{
     right: 16px;
     top: 50%;
     transform: translateY(-50%);
-    background-color: white;
+    background-color: var(--white);
     border: none;
     cursor: pointer;
 }

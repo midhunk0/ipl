@@ -1,7 +1,7 @@
 .home-year-input{
     padding: 16px;
     font-size: 16px;
-    border: 1px solid black;
+    border: 1px solid var(--black);
     outline: none;
     width: fit-content;
 }

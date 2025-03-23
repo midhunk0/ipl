@@ -15,20 +15,20 @@
 
 .login-button{
     padding: 16px;
-    background-color: blue;
-    color: white;
+    background-color: var(--blue);
+    color: var(--white);
     font-size: 16px;
-    border: 1px solid black;
+    border: 1px solid var(--black);
     outline: none;
 }
 
 .login-form p a{ 
     text-decoration: none;
-    color: black;
+    color: var(--black);
 }
 
 .login-form p a:hover{
-    color: blue;
+    color: var(--blue);
 } 
 
 @media(max-width: 1080px){

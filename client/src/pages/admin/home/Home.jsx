@@ -89,7 +89,7 @@ export function Home(){
             <form className="home-add-season-form" onSubmit={handleAddNewSeason} method="POST">
                 <input type="number" id="year" className="home-add-season-input" placeholder={currentYear} min="2008" max={currentYear} onChange={(e)=>setYear(e.target.value)}/>
                 <button type="submit" className="green-button home-add-season-button">
-                    <img src="/icons/add.png" alt="add" className="icon"/>
+                    <img src="/icons/plus-black.png" alt="add" className="icon"/>
                     <span>Add New Season</span>
                 </button>
             </form>
@@ -100,7 +100,7 @@ export function Home(){
                         <p>🥇 {season.champion}</p>
                         <p>🥈 {season.runnerUp}</p>
                         <button type="button" className="red-button home-season-delete-button" onClick={(e)=>{e.stopPropagation(); handleDeleteSeason(season.year)}}>
-                            <img src="/icons/delete.png" alt="delete" className="icon"/>
+                            <img src="/icons/trash-red.png" alt="delete" className="icon"/>
                             <span>delete</span>
                         </button>
                     </div>

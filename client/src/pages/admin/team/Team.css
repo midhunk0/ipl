@@ -17,11 +17,11 @@
 }
 
 .team-match-add-button:hover img {
-    content: url("/icons/add-white.png");
+    content: url("/icons/plus-white.png");
 }
 
 .team-delete-button:hover img {
-    content: url("/icons/delete-white.png");
+    content: url("/icons/trash-white.png");
 }
 
 .team-match-add-form{
@@ -37,7 +37,7 @@
 }
 
 .team-form-close-button:hover img {
-    content: url("/icons/close-white.png");
+    content: url("/icons/cross-white.png");
 }
 
 @media(max-width: 1080px){

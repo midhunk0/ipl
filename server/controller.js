@@ -145,7 +145,18 @@ async function fetchSeason(req, res){
         season.teams.forEach(team => {
             team.matches.sort((a, b) => new Date(a.date) - new Date(b.date));
         });
-        season.matches.sort((a, b)=> new Date(a.date) - new Date(b.date));
+        season.matches.sort((a, b) => {
+            const dateTimeA = new Date(a.date);
+            const [hoursA, minutesA] = a.time.split(":").map(Number);
+            dateTimeA.setHours(hoursA, minutesA);
+        
+            const dateTimeB = new Date(b.date);
+            const [hoursB, minutesB] = b.time.split(":").map(Number);
+            dateTimeB.setHours(hoursB, minutesB);
+        
+            return dateTimeA - dateTimeB;
+        });
+        
         return res.status(200).json({ message: "Season details fetched", season });
     }
     catch(error){
@@ -326,6 +337,50 @@ async function fetchMatches(req, res){
     }
 };
 
+async function editMatch(req, res){
+    try{
+        const { teamShort, opponentShort, venue, date, time }=req.body;
+        const { year, matchId }=req.params;
+        if(!teamShort || !opponentShort || !venue || !date || !time){
+            return res.status(400).json({ message: "Match details are required" });
+        }
+        const admin=await Admin.findOne();
+        if(!admin){
+            return res.status(400).json({ message: "Admin not found" });
+        }
+        const season=admin.ipl.find(season=>season.year===Number(year));
+        if(!season){
+            return res.status(400).json({ message: "Season dont exists" });
+        }
+        const team=season.teams.find(team=>team.short===teamShort);
+        if(!team){
+            return res.status(400).json({ message: "Team not exists" });
+        }
+        const opponent=season.teams.find(team=>team.short===opponentShort);
+        if(!opponent){
+            return res.status(400).json({ message: "Opponent team not exists" });
+        }
+        const match=season.matches.find(match=>match._id.toString()===matchId);
+        match.set({
+            team: {
+                name: team.name,
+                short: teamShort
+            },
+            oppponent: {
+                name: opponent.name,
+                short: opponentShort
+            },
+            date,
+            time, venue
+        })
+        await admin.save();
+        return res.status(200).json({ message: "Match updated" })
+    }
+    catch(error){
+        return res.status(500).json({ message: error.message });
+    }
+}
+
 async function deleteMatch(req, res){
     try {
         const admin=await Admin.findOne();
@@ -352,13 +407,16 @@ async function deleteMatch(req, res){
                 if(match.result.won.short===team.short){
                     team.points-=2;
                 }
+                if(match.result.draw.status){
+                    team.points-=1;
+                }
                 team.totalRunsScored-=match.result.score.team.runs;
                 team.totalOversFaced-=match.result.score.team.overs;
                 team.totalRunsConceded-=match.result.score.opponent.runs;
                 team.totalOversBowled-=match.result.score.opponent.overs;
                 if(team.totalOversFaced>0&&team.totalOversBowled>0){
                     team.netRunRate=(team.totalRunsScored/team.totalOversFaced)-(team.totalRunsConceded/team.totalOversBowled);
-                    team.netRunRate=team.netRunRate.toFixed(2);
+                    team.netRunRate=team.netRunRate.toFixed(3);
                 }
                 else{
                     team.netRunRate=0; 
@@ -372,13 +430,16 @@ async function deleteMatch(req, res){
                 if(match.result.won.short===opponent.short){
                     opponent.points-=2;
                 }
+                if(match.result.draw.status){
+                    opponent.points-=1;
+                }
                 opponent.totalRunsScored-=match.result.score.opponent.runs;
                 opponent.totalOversFaced-=match.result.score.opponent.overs;
                 opponent.totalRunsConceded-=match.result.score.team.runs;
                 opponent.totalOversBowled-=match.result.score.team.overs;
                 if(opponent.totalOversFaced>0&&opponent.totalOversBowled>0){
                     opponent.netRunRate=(opponent.totalRunsScored/opponent.totalOversFaced)-(opponent.totalRunsConceded/opponent.totalOversBowled);
-                    opponent.netRunRate=opponent.netRunRate.toFixed(2);
+                    opponent.netRunRate=opponent.netRunRate.toFixed(3);
                 }
                 else{
                     opponent.netRunRate=0; 
@@ -410,7 +471,38 @@ async function addResult(req, res){
         if(!match){
             return res.status(400).json({ message: "Match not found" });
         }
-        const { wonShort, wonBy, playerOfTheMatch, score }=req.body;
+        const { wonShort, wonBy, playerOfTheMatch, score, reason }=req.body;
+        let won="";
+        const teamShort=match.team?.short;
+        const team=season.teams.find(team=>team.short===teamShort);
+        if(!team){
+            return res.status(400).json({ message: "Team not found" });
+        }
+        const teamMatch=team.matches.find(match=>match.matchId===matchId);
+        const opponentShort=match.opponent?.short;
+        const opponent=season.teams.find(team=>team.short===opponentShort);
+        if(!opponent){
+            return res.status(400).json({ message: "Opponent not found" });
+        }
+        const opponentMatch=opponent.matches.find(match=>match.matchId===matchId);
+        if(reason!==""){
+            if(teamMatch){
+                teamMatch.point=1;
+            }
+            team.points+=1;
+            if(opponentMatch){
+                opponentMatch.point=1;
+            }
+            opponent.points+=1;
+            match.result={
+                draw: {
+                    status: true, 
+                    reason: reason
+                }
+            }
+            await admin.save();
+            return res.status(200).json({ message: "Result added" });
+        }
         if(!wonShort || !wonBy || !playerOfTheMatch || !score){
             return res.status(400).json({ message: "Result details are required" });
         }
@@ -423,39 +515,30 @@ async function addResult(req, res){
         if(!playerOfTheMatch.name || !playerOfTheMatch.for){
             return res.status(400).json({ message: "Player of the match details are required" })
         }
-        let won="";
-        const teamShort=match.team?.short;
-        const team=season.teams.find(team=>team.short===teamShort);
-        if(!team){
-            return res.status(400).json({ message: "Team not found" });
-        }
-        const teamMatch=team.matches.find(match=>match.matchId===matchId);
+        const convertOvers=(overs)=>{
+            const [fullOvers, balls]=String(overs).split('.').map(Number);
+            return fullOvers+(balls ? balls/6 : 0);
+        };
         if(teamMatch){
-            teamMatch.result=wonShort===teamShort ? 2 : 0;
+            teamMatch.point=wonShort===teamShort ? 2 : 0;
         }
         team.points+=wonShort===teamShort ? 2 : 0;
         team.totalRunsScored+=Number(score.team.runs);
-        team.totalOversFaced+=Number(score.team.overs);
+        team.totalOversFaced+=convertOvers(score.team.overs);
         team.totalRunsConceded+=Number(score.opponent.runs);
-        team.totalOversBowled+=Number(score.opponent.overs);
+        team.totalOversBowled+=convertOvers(score.opponent.overs);
         team.netRunRate=(team.totalRunsScored / team.totalOversFaced) - (team.totalRunsConceded / team.totalOversBowled);
-        team.netRunRate=team.netRunRate.toFixed(2);
-        const opponentShort=match.opponent?.short;
-        const opponent=season.teams.find(team=>team.short===opponentShort);
-        if(!opponent){
-            return res.status(400).json({ message: "Opponent not found" });
-        }
-        const opponentMatch=opponent.matches.find(match=>match.matchId===matchId);
+        team.netRunRate=team.netRunRate.toFixed(3);
         if(opponentMatch){
-            opponentMatch.result=wonShort===opponentShort ? 2 : 0;
+            opponentMatch.point=wonShort===opponentShort ? 2 : 0;
         }
         opponent.points+=wonShort===opponentShort ? 2 : 0;
         opponent.totalRunsScored+=Number(score.opponent.runs);
-        opponent.totalOversFaced+=Number(score.opponent.overs);
+        opponent.totalOversFaced+=convertOvers(score.opponent.overs);
         opponent.totalRunsConceded+=Number(score.team.runs);
-        opponent.totalOversBowled+=Number(score.team.overs);
+        opponent.totalOversBowled+=convertOvers(score.team.overs);
         opponent.netRunRate=(opponent.totalRunsScored / opponent.totalOversFaced) - (opponent.totalRunsConceded / opponent.totalOversBowled);
-        opponent.netRunRate=opponent.netRunRate.toFixed(2);
+        opponent.netRunRate=opponent.netRunRate.toFixed(3);
         won=wonShort===teamShort ? team.name : opponent.name; 
         match.result={
             won: {
@@ -478,7 +561,7 @@ async function addResult(req, res){
                     wickets: score.opponent.wickets,
                     overs: score.opponent.overs
                 }
-            }
+            },
         };
         await admin.save();
         return res.status(200).json({ message: "Result added" });
@@ -501,7 +584,8 @@ module.exports={
     fetchTeam,
     deleteTeam,
     addMatch,
+    editMatch,
     fetchMatches,
     deleteMatch,
-    addResult
+    addResult,
 }

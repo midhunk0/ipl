@@ -86,8 +86,11 @@ export function Season(){
             <h1>IPL {season.year}</h1>
             {!showForm ? (
                 <div className="season-details">
-                    <PointTable dest="/admin/team"/>
-                    <button className="green-button season-add-team-button" onClick={()=>setShowForm(prev=>!prev)}><img src="/icons/add.png" alt="add" className="icon"/><span>Add new team</span></button>
+                    <PointTable teamDest="/admin/team" matchDest="/admin/match"/>
+                    <button className="green-button season-add-team-button" onClick={()=>setShowForm(prev=>!prev)}>
+                        <img src="/icons/plus-black.png" alt="add" className="icon"/>
+                        <span>Add new team</span>
+                    </button>
                 </div>
             ) : (
                 <form className="season-add-team-form" onSubmit={handleAddTeam} method="POST">
@@ -107,24 +110,24 @@ export function Season(){
                                 <input type="text" value={home} id="home" onChange={(e)=>handleHomeChange(index, e.target.value)} />
                                 {index==0 && (
                                     <button type="button" className="green-button season-add-home-button" onClick={handleHomeAdd}>
-                                        <img src="/icons/add.png" alt="add" className="icon"/>
+                                        <img src="/icons/plus-black.png" alt="add" className="icon"/>
                                     </button>
                                 )}
                                 {index>0 && (
                                     <button type="button" className="red-button season-remove-home-button" onClick={()=>handleHomeRemove(index)}>
-                                        <img src="/icons/delete.png" alt="delete" className="icon"/>
+                                        <img src="/icons/trash-red.png" alt="delete" className="icon"/>
                                     </button>
                                 )}
                             </div>
                         ))}
                     </div>
                     <div className="season-form-buttons">
-                        <button className="blue-button season-close-button" type="button" onClick={()=>setShowForm(prev=>!prev)}>
-                            <img src="/icons/close.png" alt="close" className="icon"/>
+                        <button className="black-button season-close-button" type="button" onClick={()=>setShowForm(prev=>!prev)}>
+                            <img src="/icons/cross-black.png" alt="close" className="icon"/>
                             <span>Close</span>
                         </button>
                         <button className="green-button season-add-team-button" type="submit">
-                            <img src="/icons/add.png" alt="add" className="icon"/>
+                            <img src="/icons/plus-black.png" alt="add" className="icon"/>
                             <span>Add New Team</span>
                         </button>
                     </div>

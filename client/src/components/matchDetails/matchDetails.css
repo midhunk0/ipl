@@ -1,9 +1,9 @@
 .matchDetails{
     display: flex;
-    width: 50%;
+    width: 30%;
     flex-direction: column;
     gap: 16px;
-    border: 1px solid black;
+    border: 1px solid var(--black);
 }
 
 .matchDetails-venue{
@@ -29,6 +29,7 @@
 .matchDetails-team-scores{
     display: flex;
     justify-content: space-between;
+    gap: 16px;
 }
 
 .matchDetails-team, .matchDetails-opponent{
@@ -45,10 +46,23 @@
     width: 100%;
 }
 
+.matchDetails-draw{
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    align-items: center;
+}
+
 .matchDetails-logo{
     width: 44px;
     aspect-ratio: 1/1;
     object-fit: contain;
+}
+
+@media(max-width: 1200px){
+    .matchDetails{
+        width: 50%;
+    }
 }
 
 @media(max-width: 720px){

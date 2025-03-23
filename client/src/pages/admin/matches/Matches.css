@@ -13,7 +13,7 @@
 }
 
 .matches-add-button:hover img {
-    content: url("/icons/add-white.png");
+    content: url("/icons/plus-white.png");
 }
 
 .matches-add-form{
@@ -29,7 +29,7 @@
 }
 
 .matches-form-close-button:hover img {
-    content: url("/icons/close-white.png");
+    content: url("/icons/cross-white.png");
 }
 
 @media(max-width: 1080px){

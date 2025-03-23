@@ -95,7 +95,10 @@ export function Matches(){
             <h1>IPL {year} fixtures</h1>
             {!showForm ? 
                 <div className="matches-details">
-                    <button className="green-button matches-add-button" type="button" onClick={()=>setShowForm(prev=>!prev)}><img src="/icons/add.png" alt="add" className="icon"/><span>Add new match</span></button>
+                    <button className="green-button matches-add-button" type="button" onClick={()=>setShowForm(prev=>!prev)}>
+                        <img src="/icons/plus-black.png" alt="add" className="icon"/>
+                        <span>Add new match</span>
+                    </button>
                     <MatchesTable matches={season.matches} dest="/admin/match"/>
                 </div>
             :
@@ -107,9 +110,9 @@ export function Matches(){
                             <p>{matchData.teamShort!=="" ? matchData.teamShort : "Choose Team"}</p>
                             <button type="button">
                                 {showOptions ? 
-                                    <img src="/icons/up.png" alt="up" className="icon"/> 
+                                    <img src="/icons/up-black.png" alt="up" className="icon"/> 
                                 : 
-                                    <img src="/icons/down.png" alt="down" className="icon"/>
+                                    <img src="/icons/down-black.png" alt="down" className="icon"/>
                                 }
                             </button>
                             {showOptions && 
@@ -129,9 +132,9 @@ export function Matches(){
                             <p>{matchData.opponentShort!=="" ? matchData.opponentShort : "Choose Opponent"}</p>
                             <button type="button">
                                 {showOptions1 ? 
-                                    <img src="/icons/up.png" alt="up" className="icon"/> 
-                                    : 
-                                    <img src="/icons/down.png" alt="down" className="icon"/>
+                                    <img src="/icons/up-black.png" alt="up" className="icon"/> 
+                                : 
+                                    <img src="/icons/down-black.png" alt="down" className="icon"/>
                                 }   
                             </button>
                             {showOptions1 && 
@@ -153,9 +156,9 @@ export function Matches(){
                             <p>{matchData.venue!=="" ? matchData.venue : "Choose Venue"}</p>
                             <button type="button">
                                 {showOptions2 ? 
-                                    <img src="/icons/up.png" alt="up" className="icon"/> 
-                                    : 
-                                    <img src="/icons/down.png" alt="down" className="icon"/>
+                                    <img src="/icons/up-black.png" alt="up" className="icon"/> 
+                                : 
+                                    <img src="/icons/down-black.png" alt="down" className="icon"/>
                                 }
                             </button>
                             {showOptions2 && 
@@ -180,8 +183,14 @@ export function Matches(){
                         <input type="time" name="time" id="time" value={matchData.time} onChange={handleInputChange}/>
                     </div>
                     <div className="matches-form-buttons">
-                        <button className="blue-button matches-form-close-button" type="button" onClick={()=>setShowForm(prev=>!prev)}><img src="/icons/close.png" alt="close" className="icon"/><span>Close</span></button>
-                        <button className="green-button matches-add-button" type="submit"><img src="/icons/add.png" alt="add" className="icon"/><span>Add new match</span></button>
+                        <button className="black-button matches-form-close-button" type="button" onClick={()=>setShowForm(prev=>!prev)}>
+                            <img src="/icons/cross-black.png" alt="close" className="icon"/>
+                            <span>Close</span>
+                        </button>
+                        <button className="green-button matches-add-button" type="submit">
+                            <img src="/icons/plus-black.png" alt="add" className="icon"/>
+                            <span>Add new match</span>
+                        </button>
                     </div>
                 </form>
             }

@@ -12,7 +12,7 @@
 }
 
 .season-add-team-button:hover img {
-    content: url("/icons/add-white.png");
+    content: url("/icons/plus-white.png");
 }
 
 .season-add-team-form{
@@ -39,11 +39,11 @@
 }
 
 .season-add-home-button:hover img{
-    content: url("/icons/add-white.png");
+    content: url("/icons/plus-white.png");
 }
 
 .season-remove-home-button:hover img{
-    content: url("/icons/delete-white.png");
+    content: url("/icons/trash-white.png");
 }
 
 .season-form-buttons{
@@ -52,7 +52,7 @@
 }
 
 .season-close-button:hover img {
-    content: url("/icons/close-white.png");
+    content: url("/icons/cross-white.png");
 }
 
 @media(max-width: 1080px){
