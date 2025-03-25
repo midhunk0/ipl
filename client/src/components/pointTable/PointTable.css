@@ -53,13 +53,20 @@
     border-bottom: none;
 }
 
-.pointTable-team-logo{
-    padding: 8px;
+.pointTable-team-details{
+    display: flex;
+    gap: 8px;
     border-bottom: 1px solid var(--black);
+    cursor: pointer;
 }
 
-.pointTable-team:last-child .pointTable-team-logo{
+.pointTable-team:last-child .pointTable-team-details{
     border-bottom: none;
+}
+
+.pointTable-team-logo{
+    padding: 8px;
+    padding-right: 0;
 }
 
 .pointTable-heading-name, 
@@ -72,7 +79,7 @@
 }
 
 .pointTable-team-name{
-    cursor: pointer;
+    border-bottom: none;
 }
 
 .pointTable-heading-name{
@@ -87,10 +94,6 @@
 .pointTable-team-name.short{
     width: 30px;
     min-width: 30px;
-}
-
-.pointTable-team:last-child .pointTable-team-name{
-    border-bottom: none;
 }
 
 .pointTable-team-results-container{

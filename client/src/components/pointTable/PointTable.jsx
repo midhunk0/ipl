@@ -37,10 +37,10 @@ export function PointTable({ teamDest, matchDest }){
                         {season.teams.map((team, index)=>(
                             <div className="pointTable-team" key={index}>
                                 <p className="pointTable-team-position">{index+1}</p>
-                                <div className="pointTable-team-logo">
-                                    <img src={`/logos/${team.short}.png`} alt="logo" className="logo"/>
+                                <div className="pointTable-team-details" onClick={()=>navigate(teamDest, { state: { teams: season.teams, teamId: team._id }})}>
+                                    <img src={`/logos/${team.short}.png`} alt="logo" className="logo pointTable-team-logo"/>
+                                    <p className={`pointTable-team-name ${show ? "" : "short"}`}>{show ? `${team.name}` : `${team.short}`}</p>
                                 </div>
-                                <p className={`pointTable-team-name ${show ? "" : "short"}`} onClick={()=>navigate(teamDest, { state: { teams: season.teams, teamId: team._id }})}>{show ? `${team.name}` : `${team.short}`}</p>
                             </div>
                         ))}
                     </div>

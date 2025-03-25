@@ -22,7 +22,7 @@
 
 .topbar-item{
     list-style-type: none;
-    font-size: 16px;
+    font-size: 18px;
     padding: 16px;
     text-transform: capitalize;
     cursor: pointer;
@@ -47,6 +47,10 @@
 
 .topbar-icon:hover{
     background-color: var(--black);
+}
+
+.topbar-menu-icons{
+    display: flex;
 }
 
 .topbar-menu-icons:hover .topbar-icon.menu{

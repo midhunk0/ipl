@@ -1,7 +1,35 @@
-.home-year-input{
-    padding: 16px;
-    font-size: 16px;
-    border: 1px solid var(--black);
+.home h1{
+    display: flex;
+    gap: 16px;
+}
+
+.home-header{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.home-header-slider{
+    display: flex;
+    flex-direction: column;
+}
+
+.home-slider-up, .home-slider-down{
+    display: flex;
+    border: none;
     outline: none;
-    width: fit-content;
+    cursor: pointer;
+    background-color: var(--white);
+}
+
+.home-slider-up:hover, .home-slider-down:hover{
+    background-color: var(--black);
+}
+
+.home-slider-up:hover img{
+    content: url("/icons/up-white.png");
+}
+
+.home-slider-down:hover img{
+    content: url("/icons/down-white.png");
 }

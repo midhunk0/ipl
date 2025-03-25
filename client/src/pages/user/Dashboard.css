@@ -22,7 +22,7 @@
 
 .topbar-item{
     list-style-type: none;
-    font-size: 16px;
+    font-size: 20px;
     padding: 16px;
     text-transform: capitalize;
     cursor: pointer;
@@ -30,6 +30,7 @@
 
 .topbar-item.active{
     background-color: var(--black);
+    border: 1px solid var(--black);
     color: var(--white);
 }
 

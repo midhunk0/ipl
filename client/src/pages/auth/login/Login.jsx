@@ -68,7 +68,7 @@ export function Login(){
                             {show ? 
                                 <img src="/icons/eye-black.png" alt="visible" className="icon"/> 
                                 : 
-                                <img src="/icons/eye-crossed-black-off.png" alt="visible-off" className="icon"/>
+                                <img src="/icons/eye-crossed-black.png" alt="visible-off" className="icon"/>
                             }
                         </button>
                     </div>                
