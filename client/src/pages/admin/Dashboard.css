@@ -54,11 +54,11 @@
 }
 
 .topbar-menu-icons:hover .topbar-icon.menu{
-    content: url("icons/menu-white.png");
+    content: url("/icons/menu-white.png");
 }
 
 .topbar-menu-icons:hover .topbar-icon.close{
-    content: url("icons/cross-white.png");
+    content: url("/icons/cross-white.png");
 }
 
 .topbar-menu-items{
