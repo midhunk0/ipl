@@ -1,19 +1,17 @@
 // @ts-nocheck
 import React from "react";
 import "./Match.css";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useSeason } from "../../../context/seasonContext";
 import { MatchDetails } from "../../../components/matchDetails/matchDetails";
 
 export function Match(){
-
-    const location=useLocation();
+    const { matchId }=useParams();
     const { season }=useSeason();
     if(!season){
         return;
     }
     const matches=season.matches;
-    const matchId=location.state?.matchId;
     
     const match=matches.find(match=>match._id===matchId);
     if(!match){

@@ -18,7 +18,7 @@ export function Team(){
     return(
         <div className="team">
             <h1>{team.name}</h1>
-            <MatchesTable matches={matches} dest="/match"/>
+            <MatchesTable matches={matches} dest="/matches"/>
         </div>      
     )
 }

@@ -69,17 +69,17 @@ export function Register(){
                     <label htmlFor="password">password</label>
                     <div className="password-container">
                         <input className="register-input" type={show ? "text" : "password"} name="password" id="password" value={registerData.password} onChange={handleInputChange}/>
-                        <button type="button" onClick={()=>setShow(prev=>!prev)}>
+                        <button type="button" className={`${show ? "green-button": "red-button"}`} onClick={()=>setShow(prev=>!prev)}>
                             {show ? 
-                                <img src="/icons/eye-black.png" alt="visible" className="icon"/> 
-                                : 
-                                <img src="/icons/eye-crossed-black.png" alt="visible-off" className="icon"/>
+                                <img src="/icons/eye-black.png" alt="visible" className="icon eye"/> 
+                            : 
+                                <img src="/icons/eye-crossed-black.png" alt="visible-off" className="icon eye-crossed"/>
                             }
                         </button>
                     </div>
                 </div>
-                <button className="register-button" type="submit">Register</button>
-                <p>Already registered? <a href="/login">Login</a></p>
+                <button className="register-button" type="submit">register</button>
+                <p>Already registered? <a href="/login">login</a></p>
             </form>
         </div>
     )

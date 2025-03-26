@@ -5,6 +5,12 @@
     gap: 16px;
 }
 
+.team-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .team-details{
     display: flex;
     flex-direction: column;
@@ -55,5 +61,11 @@
 @media(max-width: 564px){
     .team-match-add-form{
         width: 100%;
+    }
+
+    .team-header{
+        flex-direction: column;
+        align-items: start;
+        gap: 16px;
     }
 }

@@ -1,7 +1,7 @@
 .matchesTable{
     border: 1px solid var(--black);
     width: fit-content;
-    max-width: 100%;
+    max-width: calc(100% - 2px);
     overflow: scroll;
 }
 
@@ -12,8 +12,12 @@
 
 .matchesTable-header p, .matchesTable-match p{
     padding: 16px;
+    text-transform: capitalize;
 }
 
+.matchesTable-header p:last-child{
+    text-transform: uppercase;
+}
 
 .matchesTable-heading-no, .matchesTable-match-no{
     width: 20px;

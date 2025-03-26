@@ -13,7 +13,7 @@ export function MatchDetails({ match }){
                 <p>{match.venue}</p>
                 <div className="matchDetails-timings">
                     <p>{getFormatedDate(match.date)}</p>
-                    <p>{match.time} PM IST</p>
+                    <p>{match.time} pm ist</p>
                 </div>
             </div>
             {match.result.won.name && 

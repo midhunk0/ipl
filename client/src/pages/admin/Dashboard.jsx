@@ -14,8 +14,8 @@ export function Dashboard(){
                 <img src="/logos/logo.jpg" alt="logo" onClick={()=>navigate("/admin")} className="topbar-image"/>
                 <ul className="topbar-items">
                     <li className={`topbar-item ${active==="admin" ? "active" : ""}`} onClick={()=>navigate("/admin")}>home</li>
-                    <li className={`topbar-item ${active==="season" || active==="team" ? "active" : ""}`} onClick={()=>navigate("/admin/season")}>season</li>
-                    <li className={`topbar-item ${active==="match" || active==="matches" ? "active" : ""}`} onClick={()=>navigate("/admin/matches")}>matches</li>
+                    <li className={`topbar-item ${active==="point-table" || active==="team" ? "active" : ""}`} onClick={()=>navigate("/admin/point-table")}>point table</li>
+                    <li className={`topbar-item ${location.pathname.startsWith("/admin/matches") ? "active" : ""}`} onClick={()=>navigate("/admin/matches")}>matches</li>
                 </ul>
                 <div className="topbar-menu">
                     <div className="topbar-menu-icons">
@@ -24,8 +24,8 @@ export function Dashboard(){
                     {show && 
                         <ul className="topbar-menu-items">
                             <li className={`topbar-menu-item ${active==="admin" ? "active" : ""}`} onClick={()=>{ navigate("/admin"); setShow(prev=>!prev) }}>home</li>
-                            <li className={`topbar-menu-item ${active==="season" || active==="team" ? "active" : ""}`} onClick={()=>{ navigate("/admin/season"); setShow(prev=>!prev) }}>season</li>
-                            <li className={`topbar-menu-item ${active==="match" || active==="matches" ? "active" : ""}`} onClick={()=>{ navigate("/admin/matches"); setShow(prev=>!prev) }}>matches</li>
+                            <li className={`topbar-menu-item ${active==="point-table" || active==="team" ? "active" : ""}`} onClick={()=>{ navigate("/admin/point-table"); setShow(prev=>!prev) }}>point table</li>
+                            <li className={`topbar-menu-item ${location.pathname.startsWith("/admin/matches") ? "active" : ""}`} onClick={()=>{ navigate("/admin/matches"); setShow(prev=>!prev) }}>matches</li>
                         </ul>
                     }
                 </div>

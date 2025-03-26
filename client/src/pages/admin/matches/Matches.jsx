@@ -92,20 +92,26 @@ export function Matches(){
 
     return(
         <div className="matches">
-            <h1>IPL {year} fixtures</h1>
+            <div className="matches-header">
+                <h1>IPL {year} fixtures</h1>
+                {!showForm &&
+                    <div className="matches-details">
+                        <button className="green-button matches-add-button" type="button" onClick={()=>setShowForm(prev=>!prev)}>
+                            <img src="/icons/plus-black.png" alt="add" className="icon"/>
+                            <span>add new match</span>
+                        </button>
+                    </div>
+                }
+            </div>
             {!showForm ? 
                 <div className="matches-details">
-                    <button className="green-button matches-add-button" type="button" onClick={()=>setShowForm(prev=>!prev)}>
-                        <img src="/icons/plus-black.png" alt="add" className="icon"/>
-                        <span>Add new match</span>
-                    </button>
-                    <MatchesTable matches={season.matches} dest="/admin/match"/>
+                    <MatchesTable matches={season.matches} dest="/admin/matches"/>
                 </div>
             :
                 <form className="matches-add-form" onSubmit={handleAddMatch} method="POST">
-                    <h2>Add new Match</h2>
+                    <h2>add new match</h2>
                     <div className="input-container">
-                        <label htmlFor="team">Team</label>
+                        <label htmlFor="team">team</label>
                         <div className="input selection" onClick={()=>setShowOptions(prev=>!prev)}>
                             <p>{matchData.teamShort!=="" ? matchData.teamShort : "Choose Team"}</p>
                             <button type="button">
@@ -127,7 +133,7 @@ export function Matches(){
                         </div>              
                     </div>
                     <div className="input-container">
-                        <label htmlFor="opponent">Opponent</label>
+                        <label htmlFor="opponent">opponent</label>
                         <div className="input selection" onClick={()=>setShowOptions1(prev=>!prev)}>
                             <p>{matchData.opponentShort!=="" ? matchData.opponentShort : "Choose Opponent"}</p>
                             <button type="button">
@@ -151,7 +157,7 @@ export function Matches(){
                         </div>
                     </div>
                     <div className="input-container">
-                        <label htmlFor="venue">Venue</label>
+                        <label htmlFor="venue">venue</label>
                         <div className="input selection" onClick={()=>setShowOptions2(prev=>!prev)}>
                             <p>{matchData.venue!=="" ? matchData.venue : "Choose Venue"}</p>
                             <button type="button">
@@ -175,21 +181,21 @@ export function Matches(){
                         </div>
                     </div>
                     <div className="input-container">
-                        <label htmlFor="date">Date</label>
+                        <label htmlFor="date">date</label>
                         <input type="date" name="date" id="date" value={matchData.date} onChange={handleInputChange}/>
                     </div>
                     <div className="input-container">
-                        <label htmlFor="time">Time</label>
+                        <label htmlFor="time">time</label>
                         <input type="time" name="time" id="time" value={matchData.time} onChange={handleInputChange}/>
                     </div>
                     <div className="matches-form-buttons">
                         <button className="black-button matches-form-close-button" type="button" onClick={()=>setShowForm(prev=>!prev)}>
                             <img src="/icons/cross-black.png" alt="close" className="icon"/>
-                            <span>Close</span>
+                            <span>close</span>
                         </button>
                         <button className="green-button matches-add-button" type="submit">
                             <img src="/icons/plus-black.png" alt="add" className="icon"/>
-                            <span>Add new match</span>
+                            <span>add new match</span>
                         </button>
                     </div>
                 </form>

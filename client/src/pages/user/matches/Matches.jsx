@@ -13,8 +13,8 @@ export function Matches(){
                 <p>No Season</p>
             ): (
                 <>
-                    <h1>IPL {year} Matches</h1>
-                    <MatchesTable matches={season.matches} dest="/match"/>
+                    <h1>IPL {year} matches</h1>
+                    <MatchesTable matches={season.matches} dest="/matches"/>
                 </>
             )}
         </div>

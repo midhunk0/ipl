@@ -19,6 +19,7 @@
 
 .pointTable-heading p{
     padding: 16px;
+    text-transform: capitalize;
 }
 
 .pointTable-heading-position, 
@@ -196,6 +197,10 @@
     width: 45px;
     border-left: 1px solid var(--black);
     border-bottom: 1px solid var(--black);
+}
+
+.pointTable-heading .pointTable-heading-nrr{
+    text-transform: uppercase;
 }
 
 .pointTable-team:last-child .pointTable-team-nrr{

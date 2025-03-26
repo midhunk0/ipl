@@ -1,74 +1,66 @@
-.season{
+.season-page{
     display: flex;
     flex-direction: column;
     padding: 16px;
     gap: 16px;
 }
 
-.season-details{
+.season-add-form{
     display: flex;
-    flex-direction: column;
     gap: 16px;
 }
 
-.season-add-team-button:hover img {
+.season-add-input{
+    padding: 16px;
+    font-size: 16px;
+    outline: none;
+    border: 1px solid var(--black);
+}
+
+.season-add-button:hover img {
     content: url("/icons/plus-white.png");
 }
 
-.season-add-team-form{
-    display: flex;
-    flex-direction: column;
-    width: 25%;
+.seasons{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 16px;
-}
-
-.season-home-input-wrapper{
-    display: flex;
     justify-content: space-between;
-    width: 100%;
-    margin-top: 12px;
-    gap: 16px;
+    max-width: 100%;
+    overflow: scroll;
 }
 
-.season-home-input-wrapper input{
-    width: 100%;
+.season{
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    gap: 12px;
+    border: 1px solid var(--black);
+    cursor: pointer;
 }
 
-.season-home-input-wrapper:first-of-type{
-    margin-top: 0;
-}
-
-.season-add-home-button:hover img{
-    content: url("/icons/plus-white.png");
-}
-
-.season-remove-home-button:hover img{
+.season-delete-button:hover img{
     content: url("/icons/trash-white.png");
 }
 
-.season-form-buttons{
-    display: flex;
-    gap: 16px;
-}
-
-.season-close-button:hover img {
-    content: url("/icons/cross-white.png");
+.season:hover .season-delete-button:hover{
+    background-color: var(--red);
 }
 
 @media(max-width: 1080px){
-    .season-add-team-form{
-        width: 40%;
+    .season{
+        flex: 1 1 calc(33.33% - 12px);
     }
 }
 
 @media(max-width: 720px){
-    .season-add-team-form{
-        width: 50%;
+    .season{
+        flex: 1 1 calc(50% - 8px);
     }
 }
 
-@media(max-width: 564px){
-    .season-add-team-form{
-        width: 100%;
+@media(max-width: 480px){
+    .season{
+        flex: 1 1 100%;
     }
 }

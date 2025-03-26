@@ -1,12 +1,13 @@
 // @ts-nocheck
 import React, { useState } from "react";
 import "./Match.css";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useParams, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { useSeason, useYear } from "../../../context/seasonContext";
 import { MatchDetails } from "../../../components/matchDetails/matchDetails";
-import { toast } from "react-toastify";
 
 export function Match(){
+    const { matchId }=useParams();
     const [matchData, setMatchData]=useState({
         teamShort: "",
         opponentShort: "",
@@ -42,7 +43,6 @@ export function Match(){
     const [updateResult, setUpdateResult]=useState(true);
     const [showEditForm, setShowEditForm]=useState(false);
     const [team, setTeam]=useState({});
-    const location=useLocation();
     const navigate=useNavigate();
     const { year }=useYear();
     const { season, setSeason, fetchSeason }=useSeason();
@@ -51,7 +51,6 @@ export function Match(){
     }
     const teams=season.teams;
     const matches=season.matches;
-    const matchId=location.state?.matchId;
     
     const match=matches.find(match=>match._id===matchId);
     if(!match){
@@ -225,36 +224,40 @@ export function Match(){
 
     return(
         <div className="match">
-            <h1>{match.team.name} v/s {match.opponent.name}</h1>
-            {!showEditForm && updateResult ? 
-                <div className="match-result">
-                    <MatchDetails match={match}/>
+            <div className="match-header">
+                <h1>{match.team.short} v/s {match.opponent.short}</h1>
+                {!showEditForm && updateResult &&
                     <div className="match-buttons">
                         {!match.result.draw.reason && !match.result.won.short && 
                             <button className="green-button match-add-button" onClick={()=>setUpdateResult(false)}>
                                 <img src="/icons/plus-black.png" alt="add" className="icon"/>
-                                <span>Add Result</span>
+                                <span>add result</span>
                             </button>
                         }
                         <button type="button" className="blue-button match-edit-button" onClick={()=>(setShowEditForm(prev=>!prev), updateMatchForm())}>
                             <img src="/icons/edit-black.png" alt="edit" className="icon"/>
-                            <span>Edit match</span>
+                            <span>edit match</span>
                         </button>
                         <button className="red-button match-delete-button" type="button" onClick={()=>handleDeleteMatch()}>
                             <img src="/icons/trash-red.png" alt="delete" className="icon"/>
-                            <span>Delete match</span>
+                            <span>delete match</span>
                         </button>
                     </div>
+                }
+            </div>
+            {!showEditForm && updateResult ? 
+                <div className="match-result">
+                    <MatchDetails match={match}/>
                 </div> 
             : showEditForm ? 
                 <form className="match-form" onSubmit={handleEditMatch} method="POST">
-                    <h2>edit Match</h2>
+                    <h2>edit match</h2>
                     <div className="input-container">
-                        <label htmlFor="team">Team</label>
+                        <label htmlFor="team">team</label>
                         <input type="text" name="teamShort" id="team" value={matchData.teamShort} readOnly/>
                     </div>
                     <div className="input-container">
-                        <label htmlFor="opponent">Opponent</label>
+                        <label htmlFor="opponent">opponent</label>
                         <div className="input selection" onClick={()=>setShowOptions1(prev=>!prev)}>
                             <p>{matchData.opponentShort!=="" ? matchData.opponentShort : "Choose Opponent"}</p>
                             <button type="button">
@@ -278,7 +281,7 @@ export function Match(){
                         </div>
                     </div>
                     <div className="input-container">
-                        <label htmlFor="venue">Venue</label>
+                        <label htmlFor="venue">venue</label>
                         <div className="input selection" onClick={()=>setShowOptions2(prev=>!prev)}>
                             <p>{matchData.venue!=="" ? matchData.venue : "Choose Venue"}</p>
                             <button type="button">
@@ -300,17 +303,17 @@ export function Match(){
                         </div>
                     </div>
                     <div className="input-container">
-                        <label htmlFor="date">Date</label>
+                        <label htmlFor="date">date</label>
                         <input type="date" name="date" id="date" value={matchData.date} onChange={handleInputChange}/>
                     </div>
                     <div className="input-container">
-                        <label htmlFor="time">Time</label>
+                        <label htmlFor="time">time</label>
                         <input type="time" name="time" id="time" value={matchData.time} onChange={handleInputChange}/>
                     </div>
                     <div className="match-form-buttons">
                         <button className="black-button match-close-button" type="button" onClick={()=>setShowEditForm(prev=>!prev)}>
                             <img src="/icons/cross-black.png" alt="close" className="icon"/>
-                            <span>Close</span>
+                            <span>close</span>
                         </button>
                         <button className="blue-button match-edit-button" type="submit">
                             <img src="/icons/edit-black.png" alt="add" className="icon"/>
@@ -320,9 +323,9 @@ export function Match(){
                 </form>
             : 
                 <form className="match-form" onSubmit={handleAddResult}>
-                    <h2>Add Result</h2>
+                    <h2>add result</h2>
                     <div className="input-container">
-                        <label htmlFor="won">Won</label>
+                        <label htmlFor="won">won</label>
                         <div className="input selection" onClick={()=>setShowOptions(prev=>!prev)}>
                             <p>{matchResult.wonShort!=="" ? matchResult.wonShort : match.result.draw.status ? "Draw" : "Choose Winner"}</p>
                             <button type="button">
@@ -341,7 +344,7 @@ export function Match(){
                                         <p>{match.opponent.short}</p>
                                     </div>
                                     <div className="input" value="Draw" onClick={()=>handleWinnerSelection("Draw")}>
-                                        <p>Draw</p>
+                                        <p>draw</p>
                                     </div>
                                 </div>
                             }
@@ -349,29 +352,29 @@ export function Match(){
                     </div>
                     {matchResult.wonShort==="Draw" ? 
                         <div className="input-container">
-                            <label htmlFor="reason">Reason</label>
+                            <label htmlFor="reason">reason</label>
                             <input type="text" name="reason" id="reason" value={matchResult.reason} onChange={(e)=>setMatchResult({...matchResult, reason: e.target.value})}/>
                         </div>
                     : 
                         <>
                             <div className="input-container">
-                                <label htmlFor="wonBy">Won By</label>
+                                <label htmlFor="wonBy">won by</label>
                                 <input type="text" name="wonBy" id="wonBy" value={matchResult.wonBy} onChange={(e)=>setMatchResult({...matchResult, wonBy: e.target.value})}/>
                             </div>
                             <div className="input-container">
-                                <label htmlFor="teamScore">Score by {match.team.short}</label>
+                                <label htmlFor="teamScore">score by {match.team.short}</label>
                                 <input type="text" name="team" id="teamScore" value={`${matchResult.score.team.runs}/${matchResult.score.team.wickets} (${matchResult.score.team.overs})`} onChange={handleScoreChange}/>
                             </div>
                             <div className="input-container">
-                                <label htmlFor="opponentScore">Score by {match.opponent.short}</label>
+                                <label htmlFor="opponentScore">score by {match.opponent.short}</label>
                                 <input type="text" name="opponent" id="opponentScore" value={`${matchResult.score.opponent.runs}/${matchResult.score.opponent.wickets} (${matchResult.score.opponent.overs})`} onChange={handleScoreChange}/>
                             </div>
                             <div className="input-container">
-                                <label htmlFor="potm">Player of the Match</label>
+                                <label htmlFor="potm">player of the match</label>
                                 <input type="text" name="name" id="potm" value={matchResult.playerOfTheMatch.name} onChange={(e)=>handlePOTM(e)}/>
                             </div>
                             <div className="input-container">
-                                <label htmlFor="potmFor">Player of the Match For</label>
+                                <label htmlFor="potmFor">player of the match for</label>
                                 <input type="text" name="for" id="potmFor" value={matchResult.playerOfTheMatch.for} onChange={(e)=>handlePOTM(e)}/>
                             </div>
                         </>
@@ -379,11 +382,11 @@ export function Match(){
                     <div className="match-form-buttons">
                         <button className="black-button match-close-button" type="button" onClick={()=>setUpdateResult(prev=>!prev)}>
                             <img src="/icons/cross-black.png" alt="close" className="icon"/>
-                            <span>Close</span>
+                            <span>close</span>
                         </button>
                         <button className="green-button match-add-button" type="submit">
                             <img src="/icons/plus-black.png" alt="add" className="icon"/>
-                            <span>Add Result</span>
+                            <span>add result</span>
                         </button>
                     </div>
                 </form>

@@ -15,17 +15,24 @@
 
 .register-button{
     padding: 16px;
-    background-color: var(--blue);
-    color: var(--white);
+    background-color: var(--white);
+    color: var(--black);
     font-size: 16px;
     border: 1px solid var(--black);
     outline: none;
     cursor: pointer;
+    text-transform: capitalize;
+}
+
+.register-button:hover{
+    background-color: var(--blue);
+    color: var(--white);
 }
 
 .register-form p a{ 
     text-decoration: none;
     color: var(--black);
+    text-transform: capitalize;
 }
 
 .register-form p a:hover{

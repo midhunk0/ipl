@@ -1,20 +1,28 @@
 .password-container{
-    position: relative;
+    display: flex;
+    gap: 16px;
 }
 
 .password-container input{
-    width: calc(100% - 34px);
+    width: 100%;
 }
 
 .password-container button{
     display: flex;
-    position: absolute;
-    right: 16px;
-    top: 50%;
-    transform: translateY(-50%);
+    padding: 15px;
     background-color: var(--white);
-    border: none;
     cursor: pointer;
+    border: none;
+    border: 1px solid var(--black);
+    outline: none;
+}
+
+.password-container button:hover .icon.eye{
+    content: url("/icons/eye-white.png");
+}
+
+.password-container button:hover .icon.eye-crossed{
+    content: url("/icons/eye-crossed-white.png");
 }
 
 .icon{
@@ -56,7 +64,6 @@ h2{
     border: 1px solid var(--black);
     outline: none;
     font-size: 16px;
-    /* width: calc(100% - 32px); */
 }
 
 .black-button, .red-button, .green-button, .blue-button{

@@ -3,7 +3,12 @@
     flex-direction: column;
     padding: 16px;
     gap: 16px;
-    position: relative;
+}
+
+.matches-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .matches-details{
@@ -47,5 +52,11 @@
 @media(max-width: 564px){
     .matches-add-form{
         width: 100%;
+    }
+
+    .matches-header{
+        flex-direction: column;
+        align-items: start;
+        gap: 16px;
     }
 }

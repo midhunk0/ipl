@@ -5,6 +5,12 @@
     gap: 16px;
 }
 
+.match-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .match-result{
     display: flex;
     flex-direction: column;
@@ -64,5 +70,11 @@
 @media(max-width: 564px){
     .match-form{
         width: 100%;
+    }
+
+    .match-header{
+        flex-direction: column;
+        gap: 16px;
+        align-items: start;
     }
 }

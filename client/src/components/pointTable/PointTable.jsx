@@ -31,8 +31,8 @@ export function PointTable({ teamDest, matchDest }){
                 <div className="pointTable">
                     <div className="pointTable-teams">
                         <div className="pointTable-heading">
-                            <p className="pointTable-heading-position">No</p>
-                            <p className={`pointTable-heading-name ${show ? "" : "short"}`}>Team</p>
+                            <p className="pointTable-heading-position">no</p>
+                            <p className={`pointTable-heading-name ${show ? "" : "short"}`}>team</p>
                         </div>
                         {season.teams.map((team, index)=>(
                             <div className="pointTable-team" key={index}>
@@ -75,13 +75,13 @@ export function PointTable({ teamDest, matchDest }){
                     </div>
                     <div className="pointTable-teams">
                         <div className="pointTable-heading">
-                            <p className="pointTable-heading-points">Points</p>
-                            <p className="pointTable-heading-nrr">NRR</p>
+                            <p className="pointTable-heading-nrr">nrr</p>
+                            <p className="pointTable-heading-points">points</p>
                         </div>
                         {season.teams.map((team, index)=>(
                             <div className="pointTable-team" key={index}>
-                                <p className="pointTable-team-points">{team.points}</p>
                                 <p className="pointTable-team-nrr">{team.netRunRate}</p>
+                                <p className="pointTable-team-points">{team.points}</p>
                             </div>
                         ))}
                     </div>

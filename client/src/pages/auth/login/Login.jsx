@@ -64,17 +64,17 @@ export function Login(){
                     <label htmlFor="password">password</label>
                     <div className="password-container">
                         <input type={show ? "text" : "password"} name="password" id="password" value={loginData.password} onChange={handleInputChange}/>
-                        <button type="button" onClick={()=>setShow(prev=>!prev)}>
+                        <button className={`${show ? "green-button" : "red-button"}`} type="button" onClick={()=>setShow(prev=>!prev)}>
                             {show ? 
-                                <img src="/icons/eye-black.png" alt="visible" className="icon"/> 
+                                <img src="/icons/eye-black.png" alt="visible" className="icon eye"/> 
                                 : 
-                                <img src="/icons/eye-crossed-black.png" alt="visible-off" className="icon"/>
+                                <img src="/icons/eye-crossed-black.png" alt="visible-off" className="icon eye-crossed"/>
                             }
                         </button>
                     </div>                
                 </div>
-                <button className="login-button" type="submit">Login</button>
-                <p>Not registered? <a href="/register">Register</a></p>
+                <button className="login-button" type="submit">login</button>
+                <p>Not registered? <a href="/register">register</a></p>
             </form>
         </div>
     )

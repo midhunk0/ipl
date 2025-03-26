@@ -19,18 +19,18 @@ export function MatchesTable({matches, dest}){
             {matches && matches.length>0 ? (
                 <div className="matchesTable">
                     <div className="matchesTable-header">
-                        <p className="matchesTable-heading-no">No</p>
-                        <p className="matchesTable-heading-teams">Match</p>
-                        <p className="matchesTable-heading-date">Date</p>
-                        <p className="matchesTable-heading-time">Time</p>
-                        <p className="matchesTable-heading-venue">Venue</p>
-                        <p className="matchesTable-heading-result">Result</p>
-                        <p className="matchesTable-heading-potm">POTM</p>
+                        <p className="matchesTable-heading-no">no</p>
+                        <p className="matchesTable-heading-teams">match</p>
+                        <p className="matchesTable-heading-date">date</p>
+                        <p className="matchesTable-heading-time">time</p>
+                        <p className="matchesTable-heading-venue">venue</p>
+                        <p className="matchesTable-heading-result">result</p>
+                        <p className="matchesTable-heading-potm">potm</p>
                     </div>
                     {matches.map((match, index)=>(
                         <div className="matchesTable-match" key={index}>
                             <p className="matchesTable-match-no">{index+1}</p>
-                            <div className="matchesTable-match-teams" onClick={()=>navigate(dest, { state: { matchId: match._id } })}>
+                            <div className="matchesTable-match-teams" onClick={()=>navigate(`${dest}/${match._id}`)}>
                                 <div className="matchTable-match-team">
                                     <img src={`/logos/${match.team.short}.png`} alt="logo"/>
                                     <p>{match.team.short}</p> 
@@ -46,7 +46,7 @@ export function MatchesTable({matches, dest}){
                             <p className="matchesTable-match-venue">{match.venue.split(",")[1]?.trim()}</p>
                             {match.result.won.short ? 
                                 <>
-                                    <p className="matchesTable-match-result">{match.result.won.short} win by {match.result.wonBy}</p>
+                                    <p className="matchesTable-match-result">{match.result.won.short} won by {match.result.wonBy}</p>
                                     <p className="matchesTable-match-potm">{match.result.playerOfTheMatch.name} {match.result.playerOfTheMatch.for}</p>
                                 </>
                             : match.result.draw.status ? 

@@ -1,0 +1,202 @@
+.winLoseTable{
+    display: flex;
+    width: fit-content;
+    max-width: calc(100% - 2px);
+    overflow: scroll;
+    border: 1px solid var(--black);
+}
+
+.winLoseTable-teams{
+    display: flex;
+    flex-direction: column;
+}
+
+.winLoseTable-heading{
+    display: flex;
+}
+
+
+.winLoseTable-heading p{
+    padding: 16px;
+    text-transform: capitalize;
+}
+
+.winLoseTable-heading p:nth-last-child(2){
+    text-transform: uppercase;
+}
+
+.winLoseTable-heading-position, 
+.winLoseTable-team-position{
+    width: 20px;
+    min-width: 20px;
+    border-right: 1px solid var(--black);
+    border-bottom: 1px solid var(--black);
+}
+
+.winLoseTable-team{
+    display: flex;
+
+}
+
+.winLoseTable-team-position, 
+.winLoseTable-team-name{
+    padding: 16px;
+    margin: 0;
+    font-size: 16px;
+    height: 20px;
+    text-align: center;
+}
+
+.winLoseTable-team-name{
+    padding-left: 0;
+}
+
+.winLoseTable-team:last-child .winLoseTable-team-position{
+    border-bottom: none;
+}
+
+.winLoseTable-team-details{
+    display: flex;
+    gap: 8px;
+    border-bottom: 1px solid var(--black);
+    cursor: pointer;
+}
+
+.winLoseTable-team:last-child .winLoseTable-team-details{
+    border-bottom: none;
+}
+
+.winLoseTable-team-logo{
+    padding: 8px;
+    padding-right: 0;
+}
+
+.winLoseTable-heading-name, 
+.winLoseTable-team-name{
+    width: 225px;
+    min-width: 225px;
+    text-align: left;
+    border-right: 1px solid var(--black);
+    border-bottom: 1px solid var(--black);
+}
+
+.winLoseTable-heading-name.short{
+    width: 62px;
+    min-width: 62px;
+} 
+.winLoseTable-team-name.short{
+    width: 30px;
+    min-width: 30px;
+}
+
+.winLoseTable-team-name{
+    border-bottom: none;
+}
+
+.winLoseTable-heading-name{
+    width: 257px;
+    min-width: 257px;
+}
+
+.winLoseTable-heading-played{
+    padding: 16px;
+}
+
+.winLoseTable-heading-played, 
+.winLoseTable-team-played{
+    width: 45px;
+    /* border-left: 1px solid var(--black); */
+    border-bottom: 1px solid var(--black);
+}
+
+.winLoseTable-team:last-child .winLoseTable-team-played{
+    border-bottom: none;
+}
+
+.winLoseTable-heading-wins{
+    padding: 16px;
+}
+
+.winLoseTable-heading-wins, 
+.winLoseTable-team-wins{
+    width: 45px;
+    border-left: 1px solid var(--black);
+    border-bottom: 1px solid var(--black);
+}
+
+.winLoseTable-team:last-child .winLoseTable-team-wins{
+    border-bottom: none;
+}
+
+.winLoseTable-heading-loses{
+    padding: 16px;
+}
+
+.winLoseTable-heading-loses, 
+.winLoseTable-team-loses{
+    width: 45px;
+    border-left: 1px solid var(--black);
+    border-bottom: 1px solid var(--black);
+}
+
+.winLoseTable-team:last-child .winLoseTable-team-loses{
+    border-bottom: none;
+}
+
+.winLoseTable-heading-draws{
+    padding: 16px;
+}
+
+.winLoseTable-heading-draws, 
+.winLoseTable-team-draws{
+    width: 45px;
+    border-left: 1px solid var(--black);
+    border-bottom: 1px solid var(--black);
+}
+
+.winLoseTable-team:last-child .winLoseTable-team-draws{
+    border-bottom: none;
+}
+
+.winLoseTable-heading-point{
+    padding: 16px;
+}
+
+.winLoseTable-heading-point, 
+.winLoseTable-team-point{
+    width: 45px;
+    border-left: 1px solid var(--black);
+    border-bottom: 1px solid var(--black);
+}
+
+.winLoseTable-team:last-child .winLoseTable-team-point{
+    border-bottom: none;
+}
+
+.winLoseTable-heading-nrr{
+    padding: 16px;
+}
+
+.winLoseTable-heading-nrr, 
+.winLoseTable-team-nrr{
+    width: 45px;
+    border-left: 1px solid var(--black);
+    border-bottom: 1px solid var(--black);
+}
+
+.winLoseTable-team:last-child .winLoseTable-team-nrr{
+    border-bottom: none;
+}
+
+.winLoseTable-team-played, 
+.winLoseTable-team-wins,
+.winLoseTable-team-loses,
+.winLoseTable-team-draws, 
+.winLoseTable-team-point,
+.winLoseTable-team-nrr{
+    padding: 16px;
+    margin: 0;
+    font-size: 16px;
+    height: 20px;
+    text-align: center;
+}

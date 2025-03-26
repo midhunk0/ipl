@@ -5,62 +5,102 @@
     gap: 16px;
 }
 
-.home-add-season-form{
+.home-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.home-details{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.home-buttons{
     display: flex;
     gap: 16px;
 }
 
-.home-add-season-input{
+.home-table-switch-button{
     padding: 16px;
     font-size: 16px;
-    outline: none;
     border: 1px solid var(--black);
+    outline: none;
+    background-color: var(--white);
+    cursor: pointer;
+    text-transform: capitalize;
 }
 
-.home-add-season-button:hover img {
+.home-table-switch-button:hover{
+    background-color: var(--black);
+    color: var(--white);
+}
+
+.home-add-team-button:hover img {
     content: url("/icons/plus-white.png");
 }
 
-.home-seasons{
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 16px;
-    justify-content: space-between;
-    max-width: 100%;
-    overflow: scroll;
-}
-
-.home-season{
+.home-add-team-form{
     display: flex;
     flex-direction: column;
-    padding: 16px;
-    gap: 12px;
-    border: 1px solid var(--black);
-    cursor: pointer;
+    width: 25%;
+    gap: 16px;
 }
 
-.home-season-delete-button:hover img{
+.home-input-wrapper{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 12px;
+    gap: 16px;
+}
+
+.home-input-wrapper input{
+    width: 100%;
+}
+
+.home-input-wrapper:first-of-type{
+    margin-top: 0;
+}
+
+.home-add-home-button:hover img{
+    content: url("/icons/plus-white.png");
+}
+
+.home-remove-home-button:hover img{
     content: url("/icons/trash-white.png");
 }
 
-.home-season:hover .home-season-delete-button:hover{
-    background-color: var(--red);
+.home-form-buttons{
+    display: flex;
+    gap: 16px;
+}
+
+.home-close-button:hover img {
+    content: url("/icons/cross-white.png");
 }
 
 @media(max-width: 1080px){
-    .home-season{
-        flex: 1 1 calc(33.33% - 12px);
+    .home-add-team-form{
+        width: 40%;
     }
 }
 
 @media(max-width: 720px){
-    .home-season{
-        flex: 1 1 calc(50% - 8px);
+    .home-add-team-form{
+        width: 50%;
     }
 }
 
-@media(max-width: 480px){
-    .home-season{
-        flex: 1 1 100%;
+@media(max-width: 564px){
+    .home-add-team-form{
+        width: 100%;
+    }
+
+    .home-header{
+        flex-direction: column;
+        align-items: start;
+        gap: 16px;
     }
 }

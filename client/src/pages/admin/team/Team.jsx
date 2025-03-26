@@ -2,9 +2,9 @@
 import React, { useState } from "react";
 import "./Team.css";
 import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { useSeason, useYear } from "../../../context/seasonContext";
 import { MatchesTable } from "../../../components/matchesTable/matchesTable";
-import { toast } from "react-toastify";
 
 export function Team(){
     const [matchData, setMatchData]=useState({
@@ -114,30 +114,34 @@ export function Team(){
 
     return(
         <div className="team">
-            <h1>{team.name}</h1>
-            {!showForm ? 
-                <div className="team-details">
+            <div className="team-header">
+                <h1>{team.name}</h1>
+                {!showForm &&
                     <div className="team-buttons">
                         <button className="green-button team-match-add-button" type="button" onClick={()=>setShowForm(prev=>!prev)}>
                             <img src="/icons/plus-black.png" alt="add" className="icon"/>
-                            <span>Add new match</span>
+                            <span>add new match</span>
                         </button>
                         <button type="button" className="red-button team-delete-button" onClick={()=>handleDeleteTeam()}>
                             <img src="/icons/trash-red.png" alt="close" className="icon"/>
-                            <span>Delete team</span>
+                            <span>delete team</span>
                         </button>
                     </div>
-                    <MatchesTable matches={matches} dest="/admin/match"/>
+                }
+            </div>
+            {!showForm ? 
+                <div className="team-details">
+                    <MatchesTable matches={matches} dest="/admin/matches"/>
                 </div>
             : (
                 <form className="team-match-add-form" onSubmit={handleAddMatch} method="POST">
-                    <h2>Add new Match</h2>
+                    <h2>add new Match</h2>
                     <div className="input-container">
-                        <label htmlFor="team">Team</label>
+                        <label htmlFor="team">team</label>
                         <input type="text" name="teamShort" id="team" value={team.short} readOnly/>
                     </div>
                     <div className="input-container">
-                        <label htmlFor="opponent">Opponent</label>
+                        <label htmlFor="opponent">opponent</label>
                         <div className="input selection" onClick={()=>setShowOptions1(prev=>!prev)}>
                             <p>{matchData.opponentShort!=="" ? matchData.opponentShort : "Choose Opponent"}</p>
                             <button type="button">
@@ -161,7 +165,7 @@ export function Team(){
                         </div>
                     </div>
                     <div className="input-container">
-                        <label htmlFor="venue">Venue</label>
+                        <label htmlFor="venue">venue</label>
                         <div className="input selection" onClick={()=>setShowOptions2(prev=>!prev)}>
                             <p>{matchData.venue!=="" ? matchData.venue : "Choose Venue"}</p>
                             <button type="button">
@@ -183,21 +187,21 @@ export function Team(){
                         </div>
                     </div>
                     <div className="input-container">
-                        <label htmlFor="date">Date</label>
+                        <label htmlFor="date">date</label>
                         <input type="date" name="date" id="date" value={matchData.date} onChange={handleInputChange}/>
                     </div>
                     <div className="input-container">
-                        <label htmlFor="time">Time</label>
+                        <label htmlFor="time">time</label>
                         <input type="time" name="time" id="time" value={matchData.time} onChange={handleInputChange}/>
                     </div>
                     <div className="team-form-buttons">
                         <button className="black-button team-form-close-button" type="button" onClick={()=>setShowForm(prev=>!prev)}>
                             <img src="/icons/cross-black.png" alt="close" className="icon"/>
-                            <span>Close</span>
+                            <span>close</span>
                         </button>
                         <button className="green-button team-match-add-button" type="submit">
                             <img src="/icons/plus-black.png" alt="add" className="icon"/>
-                            <span>Add new match</span>
+                            <span>add new match</span>
                         </button>
                     </div>
                 </form>

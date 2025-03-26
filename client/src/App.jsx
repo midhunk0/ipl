@@ -11,8 +11,8 @@ import { Stats } from "./pages/user/stats/Stats";
 import { SeasonProvider, YearProvider } from "./context/seasonContext";
 import { Dashboard as AdminDashboard } from "./pages/admin/Dashboard";
 import { ProtectedRoute } from "./ProtectedRoute";
-import { Home as AdminHome } from "./pages/admin/home/Home";
 import { Season } from "./pages/admin/season/Season";
+import { Home as AdminHome } from "./pages/admin/home/Home";
 import { Team as AdminTeam } from "./pages/admin/team/Team";
 import { Matches as AdminMatches } from "./pages/admin/matches/Matches";
 import { Match as AdminMatch } from "./pages/admin/match/Match";
@@ -27,10 +27,10 @@ function App(){
                     <Routes>
                         <Route path="/" element={<Dashboard/>}>
                             <Route path="" element={<Home/>}/>
-                            <Route path="home" element={<Home/>}/>
+                            <Route path="point-table" element={<Home/>}/>
                             <Route path="team" element={<Team/>}/>
                             <Route path="matches" element={<Matches/>}/>
-                            <Route path="match" element={<Match/>}/>
+                            <Route path="matches/:matchId" element={<Match/>}/>
                             <Route path="stats" element={<Stats/>}/>
                         </Route>
                         <Route path="/register" element={<Register/>}/>
@@ -40,11 +40,11 @@ function App(){
                                 <AdminDashboard/>
                             </ProtectedRoute>
                         }>
-                            <Route path="" element={<AdminHome/>}/>
-                            <Route path="season" element={<Season/>}/>
+                            <Route path="" element={<Season/>}/>
+                            <Route path="point-table" element={<AdminHome/>}/>
                             <Route path="team" element={<AdminTeam/>}/>
                             <Route path="matches" element={<AdminMatches/>}/>
-                            <Route path="match" element={<AdminMatch/>}/>
+                            <Route path="matches/:matchId" element={<AdminMatch/>}/>
                         </Route>
                     </Routes>
                     <ToastContainer position="bottom-right"/>
