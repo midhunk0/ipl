@@ -7,7 +7,6 @@
 
 .matchesTable-header, .matchesTable-match{
     display: flex;
-    white-space: nowrap;
 }
 
 .matchesTable-header p, .matchesTable-match p{
@@ -112,8 +111,8 @@
 }
 
 .matchesTable-heading-result, .matchesTable-match-result{
-    width: 260px;
-    min-width: 260px;
+    width: 280px;
+    min-width: 280px;
     border-right: 1px solid var(--black);
 }
 

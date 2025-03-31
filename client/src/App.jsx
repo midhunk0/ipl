@@ -16,6 +16,7 @@ import { Home as AdminHome } from "./pages/admin/home/Home";
 import { Team as AdminTeam } from "./pages/admin/team/Team";
 import { Matches as AdminMatches } from "./pages/admin/matches/Matches";
 import { Match as AdminMatch } from "./pages/admin/match/Match";
+import { Stats as AdminStats } from "./pages/admin/stats/Stats";
 import { Dashboard } from "./pages/user/Dashboard";
 import { ToastContainer } from "react-toastify";
 
@@ -45,6 +46,7 @@ function App(){
                             <Route path="team" element={<AdminTeam/>}/>
                             <Route path="matches" element={<AdminMatches/>}/>
                             <Route path="matches/:matchId" element={<AdminMatch/>}/>
+                            <Route path="stats" element={<AdminStats/>}/>
                         </Route>
                     </Routes>
                     <ToastContainer position="bottom-right"/>

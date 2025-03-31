@@ -71,7 +71,7 @@ export function WinLoseTable({ teamDest }){
                                 <p className="winLoseTable-team-wins">{countWins(team)}</p>
                                 <p className="winLoseTable-team-loses">{countLoses(team)}</p>
                                 <p className="winLoseTable-team-draws">{countDraws(team)}</p>
-                                <p className="winLoseTable-team-nrr">{team.netRunRate}</p>
+                                <p className="winLoseTable-team-nrr">{team.netRunRate>0 ? `+${team.netRunRate}` : team.netRunRate}</p>
                                 <p className="winLoseTable-team-point">{team.points}</p>
                             </div>
                         ))}

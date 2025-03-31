@@ -16,6 +16,7 @@ export function Dashboard(){
                     <li className={`topbar-item ${active==="admin" ? "active" : ""}`} onClick={()=>navigate("/admin")}>home</li>
                     <li className={`topbar-item ${active==="point-table" || active==="team" ? "active" : ""}`} onClick={()=>navigate("/admin/point-table")}>point table</li>
                     <li className={`topbar-item ${location.pathname.startsWith("/admin/matches") ? "active" : ""}`} onClick={()=>navigate("/admin/matches")}>matches</li>
+                    <li className={`topbar-item ${active==="stats" ? "active" : ""}`} onClick={()=>navigate("/admin/stats")}>stats</li>
                 </ul>
                 <div className="topbar-menu">
                     <div className="topbar-menu-icons">
@@ -26,6 +27,7 @@ export function Dashboard(){
                             <li className={`topbar-menu-item ${active==="admin" ? "active" : ""}`} onClick={()=>{ navigate("/admin"); setShow(prev=>!prev) }}>home</li>
                             <li className={`topbar-menu-item ${active==="point-table" || active==="team" ? "active" : ""}`} onClick={()=>{ navigate("/admin/point-table"); setShow(prev=>!prev) }}>point table</li>
                             <li className={`topbar-menu-item ${location.pathname.startsWith("/admin/matches") ? "active" : ""}`} onClick={()=>{ navigate("/admin/matches"); setShow(prev=>!prev) }}>matches</li>
+                            <li className={`topbar-item ${active==="stats" ? "active" : ""}`} onClick={()=>navigate("/admin/stats")}>stats</li>
                         </ul>
                     }
                 </div>

@@ -80,7 +80,7 @@ export function PointTable({ teamDest, matchDest }){
                         </div>
                         {season.teams.map((team, index)=>(
                             <div className="pointTable-team" key={index}>
-                                <p className="pointTable-team-nrr">{team.netRunRate}</p>
+                                <p className="pointTable-team-nrr">{team.netRunRate>0 ? `+${team.netRunRate}` : team.netRunRate}</p>
                                 <p className="pointTable-team-points">{team.points}</p>
                             </div>
                         ))}

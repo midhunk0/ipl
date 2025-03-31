@@ -16,7 +16,7 @@
 
 .matchDetails-timings{
     display: flex;
-    gap: 16px;
+    justify-content: space-between;
 }
 
 .matchDetails-timings p:last-child{
@@ -32,7 +32,6 @@
 
 .matchDetails-team-scores{
     display: flex;
-    justify-content: space-between;
     gap: 16px;
 }
 

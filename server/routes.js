@@ -15,7 +15,8 @@ const {
     addResult, 
     logoutAdmin, 
     checkAuth, 
-    editMatch, 
+    editMatch,
+    addStats, 
 }=require("./controller");
 const router=express.Router();
 
@@ -35,5 +36,6 @@ router.put("/editMatch/:year/:matchId", editMatch);
 router.get("/fetchMatches/:year/:teamId", fetchMatches);
 router.delete("/deleteMatch/:year/:matchId", deleteMatch);
 router.post("/addResult/:year/:matchId", addResult);
+router.post("/addStats/:year", addStats);
 
 module.exports=router;

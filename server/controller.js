@@ -459,6 +459,11 @@ async function deleteMatch(req, res){
         if(!match){
             return res.status(400).json({ message: "Match undefined" });
         }
+
+        const convertOvers=(overs)=>{
+            const [fullOvers, balls]=String(overs).split('.').map(Number);
+            return fullOvers+Math.fround(balls ? balls/6 : 0);
+        };
         
         if(match.team?.short){
             const team=season.teams.find(team=>team.short===match.team.short);
@@ -479,8 +484,8 @@ async function deleteMatch(req, res){
                 
                 if(team.totalOversFaced>0 && team.totalOversBowled>0){
                     team.netRunRate=(
-                        team.totalRunsScored/team.totalOversFaced - 
-                        team.totalRunsConceded/team.totalOversBowled
+                        team.totalRunsScored/convertOvers(team.totalOversFaced) - 
+                        team.totalRunsConceded/convertOvers(team.totalOversBowled)
                     ).toFixed(3);
                 }
                 else{
@@ -507,8 +512,8 @@ async function deleteMatch(req, res){
                 
                 if(opponent.totalOversFaced>0 && opponent.totalOversBowled>0){
                     opponent.netRunRate=(
-                        opponent.totalRunsScored/opponent.totalOversFaced - 
-                        opponent.totalRunsConceded/opponent.totalOversBowled
+                        opponent.totalRunsScored/convertOvers(opponent.totalOversFaced) - 
+                        opponent.totalRunsConceded/convertOvers(opponent.totalOversBowled)
                     ).toFixed(3);
                 }
                 else{
@@ -597,7 +602,7 @@ async function addResult(req, res){
 
         const convertOvers=(overs)=>{
             const [fullOvers, balls]=String(overs).split('.').map(Number);
-            return fullOvers+(balls ? balls/6 : 0);
+            return fullOvers+Math.fround(balls ? balls/6 : 0);
         };
         
         if(teamMatch){
@@ -605,10 +610,10 @@ async function addResult(req, res){
         }
         team.points+=wonShort===teamShort ? 2 : 0;
         team.totalRunsScored+=Number(score.team.runs);
-        team.totalOversFaced+=convertOvers(score.team.overs);
+        team.totalOversFaced+=Number(score.team.overs);
         team.totalRunsConceded+=Number(score.opponent.runs);
-        team.totalOversBowled+=convertOvers(score.opponent.overs);
-        team.netRunRate=(team.totalRunsScored / team.totalOversFaced) - (team.totalRunsConceded / team.totalOversBowled);
+        team.totalOversBowled+=Number(score.opponent.overs);
+        team.netRunRate=(team.totalRunsScored / convertOvers(team.totalOversFaced)) - (team.totalRunsConceded / convertOvers(team.totalOversBowled));
         team.netRunRate=team.netRunRate.toFixed(3);
         
         if(opponentMatch){
@@ -616,10 +621,10 @@ async function addResult(req, res){
         }
         opponent.points+=wonShort===opponentShort ? 2 : 0;
         opponent.totalRunsScored+=Number(score.opponent.runs);
-        opponent.totalOversFaced+=convertOvers(score.opponent.overs);
+        opponent.totalOversFaced+=Number(score.opponent.overs);
         opponent.totalRunsConceded+=Number(score.team.runs);
-        opponent.totalOversBowled+=convertOvers(score.team.overs);
-        opponent.netRunRate=(opponent.totalRunsScored / opponent.totalOversFaced) - (opponent.totalRunsConceded / opponent.totalOversBowled);
+        opponent.totalOversBowled+=Number(score.team.overs);
+        opponent.netRunRate=(opponent.totalRunsScored / convertOvers(opponent.totalOversFaced)) - (opponent.totalRunsConceded / convertOvers(opponent.totalOversBowled));
         opponent.netRunRate=opponent.netRunRate.toFixed(3);
         
         match.result={
@@ -634,6 +639,88 @@ async function addResult(req, res){
 
         await admin.save();
         return res.status(200).json({ message: "Result added" });
+    }
+    catch(error){
+        return res.status(500).json({ message: error.message });
+    }
+}
+
+async function addStats(req, res){
+    try{
+        const admin=await Admin.findOne();
+        if(!admin){
+            return res.status(400).json({ message: "Admin not found" });
+        }
+        const { year }=req.params;
+        const season=admin.ipl.find(season=>season.year===Number(year));
+        if(!season){
+            return res.status(400).json({ message: "Season does not exists" });
+        }
+        const { champion, runnerUp, fairPlayAward, orangeCap, purpleCap, most6s, most4s, highestScore, mostValuablePlayer, emergingPlayer }=req.body;
+        if(champion==="" || runnerUp==="" || fairPlayAward==="" || orangeCap==="" || purpleCap==="" || most6s==="" || most4s==="" || highestScore==="" || mostValuablePlayer==="" || emergingPlayer===""){
+            return res.status(400).json({ message: "Stats details are required"});
+        }
+        if(orangeCap.name==="" || orangeCap.runs==="" || orangeCap.team===""){
+            return res.status(400).json({ message: "Orange cap details are required" });
+        }
+        if(purpleCap.name==="" || purpleCap.wickets==="" || purpleCap.team===""){
+            return res.status(400).json({ message: "Purple cap details are required" });
+        }
+        if(most6s.name==="" || most6s.number==="" || most6s.team===""){
+            return res.status(400).json({ message: "Most 6s details are required" });
+        }
+        if(most4s.name==="" || most4s.number==="" || most4s.team===""){
+            return res.status(400).json({ message: "Most 4s details are required" });
+        }
+        if(highestScore.name==="" || highestScore.runs==="" || highestScore.team===""){
+            return res.status(400).json({ message: "Highest score details are required" });
+        }
+        if(mostValuablePlayer.name==="" || mostValuablePlayer.team===""){
+            return res.status(400).json({ message: "MVP details are required" });
+        }
+        if(emergingPlayer.name==="" || emergingPlayer.team===""){
+            return res.status(400).json({ message: "Emerging player details are required" });
+        }
+        season.stats={
+            champion, 
+            runnerUp,
+            fairPlayAward,
+            orangeCap: {
+                name: orangeCap.name,
+                runs: orangeCap.runs, 
+                team: orangeCap.team
+            },
+            purpleCap: {
+                name: purpleCap.name,
+                wickets: purpleCap.wickets, 
+                team: purpleCap.team
+            },
+            most6s: {
+                name: most6s.name,
+                number: most6s.number, 
+                team: most6s.team
+            },
+            most4s: {
+                name: most4s.name,
+                number: most4s.number, 
+                team: most4s.team
+            },
+            highestScore:{
+                name: highestScore.name,
+                runs: highestScore.runs,
+                team: highestScore.team
+            },
+            mostValuablePlayer: {
+                name: mostValuablePlayer.name,
+                team: mostValuablePlayer.team
+            },
+            emergingPlayer: {
+                name: emergingPlayer.name,
+                team: emergingPlayer.team
+            }
+        };
+        await admin.save();
+        return res.status(200).json({ message: "Stats added" });
     }
     catch(error){
         return res.status(500).json({ message: error.message });
@@ -657,4 +744,5 @@ module.exports={
     fetchMatches,
     deleteMatch,
     addResult,
+    addStats
 }

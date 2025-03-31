@@ -9,7 +9,6 @@
 .pointTable-teams{
     display: flex;
     flex-direction: column;
-    width: fit-content;
 }
 
 .pointTable-heading{
@@ -25,23 +24,17 @@
 .pointTable-heading-position, 
 .pointTable-team-position{
     width: 20px;
-    min-width: 20px;
     border-right: 1px solid var(--black);
     border-bottom: 1px solid var(--black);
 }
 
 .pointTable-team{
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: fit-content;
 }
 
 .pointTable-team-position, 
 .pointTable-team-name{
     padding: 16px;
-    margin: 0;
-    font-size: 16px;
     height: 20px;
     text-align: center;
 }
@@ -73,7 +66,6 @@
 .pointTable-heading-name, 
 .pointTable-team-name{
     width: 225px;
-    min-width: 225px;
     text-align: left;
     border-right: 1px solid var(--black);
     border-bottom: 1px solid var(--black);
@@ -85,16 +77,14 @@
 
 .pointTable-heading-name{
     width: 257px;
-    min-width: 257px;
 }
 
 .pointTable-heading-name.short{
     width: 62px;
-    min-width: 62px;
 } 
+
 .pointTable-team-name.short{
     width: 30px;
-    min-width: 30px;
 }
 
 .pointTable-team-results-container{
@@ -111,7 +101,6 @@
     display: flex;
     padding: 16px;
     justify-content: center;
-    align-items: center;
     border-left: 1px solid var(--black);
     border-bottom: 1px solid var(--black);
 }
@@ -126,7 +115,6 @@
 
 .pointTable-heading-result{
     width: 20px;
-    min-width: 20px;
 }
 
 .pointTable-team-results:last-child .pointTable-team-result{
@@ -172,13 +160,7 @@
 .pointTable-team-point{
     display: flex;
     width: 20px;
-    height: 20px;
     justify-content: center;
-    align-content: center;
-}
-
-.pointTable-heading-points{
-    padding: 16px;
 }
 
 .pointTable-heading-points, 
@@ -194,13 +176,14 @@
 
 .pointTable-heading-nrr, 
 .pointTable-team-nrr{
-    width: 45px;
+    width: 55px;
     border-left: 1px solid var(--black);
     border-bottom: 1px solid var(--black);
 }
 
 .pointTable-heading .pointTable-heading-nrr{
     text-transform: uppercase;
+    text-align: center;
 }
 
 .pointTable-team:last-child .pointTable-team-nrr{
@@ -210,8 +193,10 @@
 .pointTable-team-points, 
 .pointTable-team-nrr{
     padding: 16px;
-    margin: 0;
-    font-size: 16px;
     height: 20px;
     text-align: center;
+}
+
+.pointTable-team-nrr{
+    text-align: left;
 }

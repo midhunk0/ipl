@@ -1,0 +1,25 @@
+.stats-items{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.stats-item-container{
+    display: flex;
+    gap: 16px;
+}
+
+.stats-item{
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    width: calc(100% - 34px);
+    height: calc(100vh - 210px);
+    border: 1px solid var(--black);
+}
+
+@media(max-width: 720px){
+    .stats-item-container{
+        flex-direction: column;
+    }
+}
