@@ -80,11 +80,11 @@
 }
 
 .pointTable-heading-name.short{
-    width: 62px;
+    width: 67px;
 } 
 
 .pointTable-team-name.short{
-    width: 30px;
+    width: 35px;
 }
 
 .pointTable-team-results-container{
@@ -160,6 +160,7 @@
 .pointTable-team-point{
     display: flex;
     width: 20px;
+    height: 20px;
     justify-content: center;
 }
 

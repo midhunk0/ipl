@@ -13,12 +13,35 @@
 
 .matches-details{
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     gap: 16px;
 }
 
 .matches-add-button:hover img {
     content: url("/icons/plus-white.png");
+}
+
+.matches-all-add-button:hover img{
+    content: url("/icons/check-white.png");
+}
+
+.matches-upload-close-button:hover img{
+    content: url("/icons/cross-white.png");
+}
+
+.matches-upload-button:hover img{
+    content: url("/icons/check-white.png");
+}
+
+.matches-upload-form{
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    gap: 16px;
+}
+
+.matches-upload-form input[type="file"]{
+    cursor: pointer;;
 }
 
 .matches-add-form{
@@ -38,19 +61,19 @@
 }
 
 @media(max-width: 1080px){
-    .matches-add-form{
+    .matches-add-form, .matches-upload-form{
         width: 40%;
     }
 }
 
 @media(max-width: 720px){
-    .matches-add-form{
+    .matches-add-form, .matches-upload-form{    
         width: 50%;
     }
 }
 
 @media(max-width: 564px){
-    .matches-add-form{
+    .matches-add-form, .matches-upload-form{
         width: 100%;
     }
 

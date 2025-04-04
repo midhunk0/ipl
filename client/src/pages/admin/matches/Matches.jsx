@@ -20,9 +20,11 @@ export function Matches(){
         time: "19:30",
         venue: ""
     });
+    const [fileInput, setFileInput]=useState(null);
     const [showOptions, setShowOptions]=useState(false);
     const [showOptions1, setShowOptions1]=useState(false);
     const [showOptions2, setShowOptions2]=useState(false);
+    const [showUpload, setShowUpload]=useState(false)
     const { season, fetchSeason }=useSeason();
     if(!season){
         return;
@@ -90,24 +92,73 @@ export function Matches(){
         }
     }    
 
+    async function handleAddMatches(e){
+        e.preventDefault();
+        if(!fileInput){
+            toast.error("Please select a file");
+            return;
+        }
+        try{
+            const formData=new FormData();
+            formData.append("file", fileInput);
+            const response=await fetch(`${apiUrl}/addMatches/${year}`, {
+                method: "POST",
+                body: formData,
+                credentials: "include"
+            });
+            const result=await response.json();
+            if(response.ok){
+                setShowUpload(false);
+                fetchSeason();
+                toast.success(result.message);
+            }
+            else{
+                toast.error(result.message);
+            }
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
+
     return(
         <div className="matches">
             <div className="matches-header">
                 <h1>IPL {year} fixtures</h1>
-                {!showForm &&
+                {!showForm && !showUpload &&
                     <div className="matches-details">
                         <button className="green-button matches-add-button" type="button" onClick={()=>setShowForm(prev=>!prev)}>
                             <img src="/icons/plus-black.png" alt="add" className="icon"/>
                             <span>add new match</span>
                         </button>
+                        <button className="blue-button matches-all-add-button" type="button" onClick={()=>setShowUpload(prev=>!prev)}>
+                            <img src="/icons/check-black.png" alt="add" className="icon"/>
+                            <span>add all matches</span>
+                        </button>
                     </div>
                 }
             </div>
-            {!showForm ? 
+            {showUpload && 
+                <form className="matches-upload-form" onSubmit={handleAddMatches} method="POST">
+                    <input type="file" name="fileInput" className="input" onChange={(e)=>setFileInput(e.target.files[0])}/>
+                    <div className="matches-details">
+                        <button className="black-button matches-upload-close-button" type="button" onClick={()=>setShowUpload(prev=>!prev)}>
+                            <img src="/icons/cross-black.png" alt="close" className="icon"/>
+                            <span>close form</span>
+                        </button>
+                        <button className="green-button matches-upload-button" type="submit">
+                            <img src="/icons/check-black.png" alt="upload" className="icon"/>
+                            <span>upload file</span>
+                        </button>
+                    </div>
+                </form>
+            }
+            {!showForm && !showUpload && 
                 <div className="matches-details">
                     <MatchesTable matches={season.matches} dest="/admin/matches"/>
                 </div>
-            :
+            }
+            {showForm &&
                 <form className="matches-add-form" onSubmit={handleAddMatch} method="POST">
                     <h2>add new match</h2>
                     <div className="input-container">

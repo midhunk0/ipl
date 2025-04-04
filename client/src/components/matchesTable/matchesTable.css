@@ -31,26 +31,32 @@
 }
 
 .matchesTable-heading-teams, .matchesTable-match-teams{
-    width: 156px;
-    min-width: 156px;
+    width: 188px;
+    min-width: 188px;
     border-right: 1px solid var(--black);
 }
 
 .matchesTable-match-teams{
-    width: 188px;
-    min-width: 188px;
+    width: 220px;
+    min-width: 220px;
     border-top: 1px solid var(--black);
     cursor: pointer;
     display: flex;
     gap: 4px;
     align-items: center;
+    justify-content: space-between;
 }
 
 .matchTable-match-team, .matchTable-match-opponent{
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     gap: 4px;
-    width: 100px;
+    width: 90px;
+    min-width: 90px;
+}
+
+.matchTable-match-opponent{
+    justify-content: flex-end;
 }
 
 .matchesTable-match-teams p{
@@ -111,8 +117,8 @@
 }
 
 .matchesTable-heading-result, .matchesTable-match-result{
-    width: 280px;
-    min-width: 280px;
+    width: 290px;
+    min-width: 290px;
     border-right: 1px solid var(--black);
 }
 
@@ -123,8 +129,8 @@
 }
 
 .matchesTable-heading-potm, .matchesTable-match-potm{
-    width: 250px;
-    min-width: 250px;
+    width: 260px;
+    min-width: 260px;
 }
 
 .matchesTable-match-potm{

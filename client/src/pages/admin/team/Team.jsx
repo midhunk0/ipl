@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Team.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -22,17 +22,23 @@ export function Team(){
 
     const { year }=useYear();
     const { season, setSeason, fetchSeason }=useSeason();
-    if(!season){
-        return;
-    }
     const teams=location.state.teams;
     const teamId=location.state?.teamId;
-    const team=season.teams.find(team=>team._id===teamId);
-    if(!team){
+    const team=season?.teams.find(team=>team._id===teamId);
+    useEffect(() => {
+        if (team?.home?.length === 1) {
+            setMatchData(prev => ({
+                ...prev,
+                venue: team.home[0]
+            }));
+        }
+    }, [team]);
+
+    if(!season || !team){
         return;
     }
-    const matches=season.matches.filter(match=>match.team.short===team.short || match.opponent.short===team.short);
 
+    const matches=season.matches.filter(match=>match.team.short===team.short || match.opponent.short===team.short);
 
     const apiUrl=import.meta.env.MODE==="development"
         ? import.meta.env.VITE_APP_DEV_URL 
@@ -166,25 +172,32 @@ export function Team(){
                     </div>
                     <div className="input-container">
                         <label htmlFor="venue">venue</label>
-                        <div className="input selection" onClick={()=>setShowOptions2(prev=>!prev)}>
-                            <p>{matchData.venue!=="" ? matchData.venue : "Choose Venue"}</p>
-                            <button type="button">
-                                {showOptions2 ? 
-                                    <img src="/icons/up-black.png" alt="up" className="icon"/> 
-                                : 
-                                    <img src="/icons/down-black.png" alt="down" className="icon"/>
+                        {team.home && team.home.length===1 ? (
+                            // <div className="input" value={team.home}>        
+                            //     <p>{team.home[0]}</p>    
+                            // </div>
+                            <input className="input" name="venue" value={team.home[0]} readOnly/>
+                        ) : (
+                            <div className="input selection" onClick={()=>setShowOptions2(prev=>!prev)}>
+                                <p>{matchData.venue!=="" ? matchData.venue : "Choose Venue"}</p>
+                                <button type="button">
+                                    {showOptions2 ? 
+                                        <img src="/icons/up-black.png" alt="up" className="icon"/> 
+                                    : 
+                                        <img src="/icons/down-black.png" alt="down" className="icon"/>
+                                    }
+                                </button>
+                                {showOptions2 && 
+                                    <div className="select" onClick={()=>setShowOptions2(prev=>!prev)}>
+                                        {team.home.map((home, index)=>( 
+                                            <div className="input" key={index} value={home} onClick={()=>(handleVenueSelection(home), setShowOptions2(prev=>!prev))}>        
+                                                <p>{home}</p>    
+                                            </div>
+                                        ))}
+                                    </div>
                                 }
-                            </button>
-                            {showOptions2 && 
-                                <div className="select" onClick={()=>setShowOptions2(prev=>!prev)}>
-                                    {team.home.map((home, index)=>( 
-                                        <div className="input" key={index} value={home} onClick={()=>(handleVenueSelection(home), setShowOptions2(prev=>!prev))}>        
-                                            <p>{home}</p>    
-                                        </div>
-                                    ))}
-                                </div>
-                            }
-                        </div>
+                            </div>
+                        )}
                     </div>
                     <div className="input-container">
                         <label htmlFor="date">date</label>

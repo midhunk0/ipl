@@ -16,8 +16,10 @@ const {
     logoutAdmin, 
     checkAuth, 
     editMatch,
-    addStats, 
+    addStats,
+    addMatches, 
 }=require("./controller");
+const { upload } = require("./upload");
 const router=express.Router();
 
 router.post("/registerAdmin", registerAdmin);
@@ -37,5 +39,6 @@ router.get("/fetchMatches/:year/:teamId", fetchMatches);
 router.delete("/deleteMatch/:year/:matchId", deleteMatch);
 router.post("/addResult/:year/:matchId", addResult);
 router.post("/addStats/:year", addStats);
+router.post("/addMatches/:year", upload.single("file"), addMatches);
 
 module.exports=router;

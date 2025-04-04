@@ -2,6 +2,7 @@
 const Admin=require("./model");
 const jwt=require("jsonwebtoken");
 const bcrypt=require("bcrypt");
+const xlsx=require("xlsx");
 
 const JWT_SECRET=process.env.JWT;
 
@@ -478,9 +479,11 @@ async function deleteMatch(req, res){
                 }
 
                 team.totalRunsScored-=match.result.score.team.runs;
-                team.totalOversFaced-=match.result.score.team.overs;
+                const teamTotalOverFaced=(Number(match.result.score.team.wickets)===10 ? Number(20) : Number(match.result.score.team.overs));
+                team.totalOversFaced-=teamTotalOverFaced;
                 team.totalRunsConceded-=match.result.score.opponent.runs;
-                team.totalOversBowled-=match.result.score.opponent.overs;
+                const teamTotalOversBowled=(Number(match.result.score.opponent.wickets)===10 ? Number(20) : Number(match.result.score.opponent.overs));
+                team.totalOversBowled-=teamTotalOversBowled;
                 
                 if(team.totalOversFaced>0 && team.totalOversBowled>0){
                     team.netRunRate=(
@@ -506,9 +509,11 @@ async function deleteMatch(req, res){
                 }
                 
                 opponent.totalRunsScored-=match.result.score.opponent.runs;
-                opponent.totalOversFaced-=match.result.score.opponent.overs;
+                const opponentTotalOverFaced=(Number(match.result.score.opponent.wickets)===10 ? Number(20) : Number(match.result.score.opponent.overs));
+                opponent.totalOversFaced-=opponentTotalOverFaced;
                 opponent.totalRunsConceded-=match.result.score.team.runs;
-                opponent.totalOversBowled-=match.result.score.team.overs;
+                const opponentTotalOversBowled=(Number(match.result.score.team.wickets)===10 ? Number(20) : Number(match.result.score.team.overs));
+                opponent.totalOversBowled-=opponentTotalOversBowled;
                 
                 if(opponent.totalOversFaced>0 && opponent.totalOversBowled>0){
                     opponent.netRunRate=(
@@ -610,9 +615,11 @@ async function addResult(req, res){
         }
         team.points+=wonShort===teamShort ? 2 : 0;
         team.totalRunsScored+=Number(score.team.runs);
-        team.totalOversFaced+=Number(score.team.overs);
+        const teamTotalOverFaced=(Number(score.team.wickets)===10 ? Number(20) : Number(score.team.overs));
+        team.totalOversFaced+=teamTotalOverFaced;
         team.totalRunsConceded+=Number(score.opponent.runs);
-        team.totalOversBowled+=Number(score.opponent.overs);
+        const teamTotalOversBowled=(Number(score.opponent.wickets)===10) ? Number(20) : Number(score.opponent.overs);
+        team.totalOversBowled+=teamTotalOversBowled;
         team.netRunRate=(team.totalRunsScored / convertOvers(team.totalOversFaced)) - (team.totalRunsConceded / convertOvers(team.totalOversBowled));
         team.netRunRate=team.netRunRate.toFixed(3);
         
@@ -621,9 +628,11 @@ async function addResult(req, res){
         }
         opponent.points+=wonShort===opponentShort ? 2 : 0;
         opponent.totalRunsScored+=Number(score.opponent.runs);
-        opponent.totalOversFaced+=Number(score.opponent.overs);
+        const opponentTotalOversFaced=(Number(score.opponent.wickets)===10) ? Number(20) : Number(score.opponent.overs);
+        opponent.totalOversFaced+=opponentTotalOversFaced;
         opponent.totalRunsConceded+=Number(score.team.runs);
-        opponent.totalOversBowled+=Number(score.team.overs);
+        const opponentTotalOversBowled=(Number(score.team.wickets)===10) ? Number(20) : Number(score.team.overs);
+        opponent.totalOversBowled+=opponentTotalOversBowled;
         opponent.netRunRate=(opponent.totalRunsScored / convertOvers(opponent.totalOversFaced)) - (opponent.totalRunsConceded / convertOvers(opponent.totalOversBowled));
         opponent.netRunRate=opponent.netRunRate.toFixed(3);
         
@@ -727,6 +736,79 @@ async function addStats(req, res){
     }
 }
 
+async function addMatches(req, res) {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ message: "File is required" });
+      }
+  
+      const admin = await Admin.findOne();
+      if (!admin) {
+        return res.status(400).json({ message: "Admin not found" });
+      }
+  
+      const { year } = req.params;
+      const season = admin.ipl.find(season => season.year === Number(year));
+      if (!season) {
+        return res.status(400).json({ message: "Season does not exist" });
+      }
+  
+      const workBook = xlsx.read(req.file.buffer);
+      const workSheet = workBook.Sheets[workBook.SheetNames[0]];
+      const jsonData = xlsx.utils.sheet_to_json(workSheet);
+  
+      for (const match of jsonData) {
+        const { teamShort, opponentShort, venue } = match;
+        const rawDate = match.date;
+        const rawTime = match.time;
+        
+        const date = (typeof rawDate === "number") 
+            ? new Date((rawDate - 25569) * 86400 * 1000) // Convert Excel serial to JS date
+            : new Date(rawDate);
+        
+        const time = (typeof rawTime === "number") 
+            ? new Date((rawTime * 86400 * 1000)).toISOString().split("T")[1].slice(0, 5) // Convert Excel time serial to HH:mm format
+            : rawTime || "19:30";         
+  
+        if (!teamShort || !opponentShort || !venue || !date || !time) {
+          continue; // Skip invalid row
+        }
+  
+        const team = season.teams.find(t => t.short === teamShort);
+        const opponent = season.teams.find(t => t.short === opponentShort);
+        if (!team || !opponent) continue;
+  
+        const matchExists = season.matches.some(m =>
+          new Date(m.date).toISOString().split("T")[0] === date.toISOString().split("T")[0] &&
+          m.team?.short === teamShort &&
+          m.opponent?.short === opponentShort
+        );
+        if (matchExists) continue;
+  
+        // Add match
+        season.matches.push({
+          team: { name: team.name, short: teamShort },
+          opponent: { name: opponent.name, short: opponentShort },
+          date,
+          time,
+          venue
+        });
+  
+        const newMatch = season.matches[season.matches.length - 1];
+        const matchId = newMatch._id.toString();
+  
+        team.matches.push({ matchId, date });
+        opponent.matches.push({ matchId, date });
+      }
+  
+      await admin.save();
+      return res.status(200).json({ message: "Matches added successfully" });
+    } catch (error) {
+      console.error("Add Matches Error:", error);
+      return res.status(500).json({ message: error.message });
+    }
+  }
+  
 module.exports={
     registerAdmin,
     loginAdmin,
@@ -744,5 +826,6 @@ module.exports={
     fetchMatches,
     deleteMatch,
     addResult,
-    addStats
+    addStats,
+    addMatches
 }
