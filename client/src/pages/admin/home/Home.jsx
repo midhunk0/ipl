@@ -13,7 +13,7 @@ export function Home(){
         home: [""]
     });
     const [showForm, setShowForm]=useState(false);
-    const [tableSwitch, setTableSwitch]=useState(false);
+    const [tableSwitch, setTableSwitch]=useState(true);
     const { year }=useYear();
     const { season, fetchSeason }=useSeason();
     if(!season){
@@ -100,7 +100,7 @@ export function Home(){
             {!showForm ? (
                 <div className="home-details">
                     {tableSwitch ? 
-                        <PointTable teamDest="/admin/team" matchDest="/admin/match"/>
+                        <PointTable teamDest="/admin/team" matchDest="/admin/matches"/>
                     : 
                         <WinLoseTable teamDest="/admin/team"/>
                     }

@@ -53,7 +53,7 @@ export function PointTable({ teamDest, matchDest }){
                         {season.teams.map((team, index)=>(
                             <div className="pointTable-team-results" key={index}>
                                 {[...Array(14)].map((_, index)=>(
-                                    <div key={index} className={`pointTable-team-result ${team.matches[index]?.matchId ? "" : "no-match"}`} onClick={()=>{team.matches[index]?.matchId && navigate(matchDest, { state: { matchId: team.matches[index]?.matchId }})}}>
+                                    <div key={index} className={`pointTable-team-result ${team.matches[index]?.matchId ? "" : "no-match"}`} onClick={()=>{team.matches[index]?.matchId && navigate(`${matchDest}/${team.matches[index]?.matchId}`)}}>
                                         <div className="pointTable-team-point">
                                         {team.matches[index]?.point!==undefined ? (()=>{
                                             switch(team.matches[index].point){
@@ -80,7 +80,7 @@ export function PointTable({ teamDest, matchDest }){
                         </div>
                         {season.teams.map((team, index)=>(
                             <div className="pointTable-team" key={index}>
-                                <p className="pointTable-team-nrr">{team.netRunRate>0 ? `+${team.netRunRate}` : team.netRunRate}</p>
+                                <p className="pointTable-team-nrr">{team.netRunRate>0 ? `+${team.netRunRate.toFixed(3)}` : team.netRunRate.toFixed(3)}</p>
                                 <p className="pointTable-team-points">{team.points}</p>
                             </div>
                         ))}

@@ -8,7 +8,7 @@ import { WinLoseTable } from "../../../components/winLoseTable/WinLoseTable";
 export function Home(){
     const currentYear=new Date().getFullYear();
     const { year, setYear }=useYear();
-    const [tableSwitch, setTableSwitch]=useState(false);
+    const [tableSwitch, setTableSwitch]=useState(true);
 
     return(
         <div className="home">
@@ -27,7 +27,7 @@ export function Home(){
                 <button className="home-table-switch" onClick={()=>setTableSwitch(prev=>!prev)}>switch table</button>
             </div>
             {tableSwitch ?
-                <PointTable teamDest="/team" matchDest="/match"/>
+                <PointTable teamDest="/team" matchDest="/matches"/>
             : 
                 <WinLoseTable teamDest="/team"/>
             }

@@ -694,22 +694,22 @@ async function addStats(req, res){
             champion, 
             runnerUp,
             fairPlayAward,
-            orangeCap: {
+            orangeCap:{
                 name: orangeCap.name,
                 runs: orangeCap.runs, 
                 team: orangeCap.team
             },
-            purpleCap: {
+            purpleCap:{
                 name: purpleCap.name,
                 wickets: purpleCap.wickets, 
                 team: purpleCap.team
             },
-            most6s: {
+            most6s:{
                 name: most6s.name,
                 number: most6s.number, 
                 team: most6s.team
             },
-            most4s: {
+            most4s:{
                 name: most4s.name,
                 number: most4s.number, 
                 team: most4s.team
@@ -719,11 +719,11 @@ async function addStats(req, res){
                 runs: highestScore.runs,
                 team: highestScore.team
             },
-            mostValuablePlayer: {
+            mostValuablePlayer:{
                 name: mostValuablePlayer.name,
                 team: mostValuablePlayer.team
             },
-            emergingPlayer: {
+            emergingPlayer:{
                 name: emergingPlayer.name,
                 team: emergingPlayer.team
             }
@@ -736,78 +736,78 @@ async function addStats(req, res){
     }
 }
 
-async function addMatches(req, res) {
-    try {
-      if (!req.file) {
-        return res.status(400).json({ message: "File is required" });
-      }
-  
-      const admin = await Admin.findOne();
-      if (!admin) {
-        return res.status(400).json({ message: "Admin not found" });
-      }
-  
-      const { year } = req.params;
-      const season = admin.ipl.find(season => season.year === Number(year));
-      if (!season) {
-        return res.status(400).json({ message: "Season does not exist" });
-      }
-  
-      const workBook = xlsx.read(req.file.buffer);
-      const workSheet = workBook.Sheets[workBook.SheetNames[0]];
-      const jsonData = xlsx.utils.sheet_to_json(workSheet);
-  
-      for (const match of jsonData) {
-        const { teamShort, opponentShort, venue } = match;
-        const rawDate = match.date;
-        const rawTime = match.time;
-        
-        const date = (typeof rawDate === "number") 
-            ? new Date((rawDate - 25569) * 86400 * 1000) // Convert Excel serial to JS date
-            : new Date(rawDate);
-        
-        const time = (typeof rawTime === "number") 
-            ? new Date((rawTime * 86400 * 1000)).toISOString().split("T")[1].slice(0, 5) // Convert Excel time serial to HH:mm format
-            : rawTime || "19:30";         
-  
-        if (!teamShort || !opponentShort || !venue || !date || !time) {
-          continue; // Skip invalid row
+async function addMatches(req, res){
+    try{
+        if(!req.file){
+            return res.status(400).json({ message: "File is required" });
         }
-  
-        const team = season.teams.find(t => t.short === teamShort);
-        const opponent = season.teams.find(t => t.short === opponentShort);
-        if (!team || !opponent) continue;
-  
-        const matchExists = season.matches.some(m =>
-          new Date(m.date).toISOString().split("T")[0] === date.toISOString().split("T")[0] &&
-          m.team?.short === teamShort &&
-          m.opponent?.short === opponentShort
-        );
-        if (matchExists) continue;
-  
-        // Add match
-        season.matches.push({
-          team: { name: team.name, short: teamShort },
-          opponent: { name: opponent.name, short: opponentShort },
-          date,
-          time,
-          venue
-        });
-  
-        const newMatch = season.matches[season.matches.length - 1];
-        const matchId = newMatch._id.toString();
-  
-        team.matches.push({ matchId, date });
-        opponent.matches.push({ matchId, date });
-      }
-  
-      await admin.save();
-      return res.status(200).json({ message: "Matches added successfully" });
-    } catch (error) {
-      console.error("Add Matches Error:", error);
-      return res.status(500).json({ message: error.message });
+    
+        const admin=await Admin.findOne();
+        if(!admin){
+            return res.status(400).json({ message: "Admin not found" });
+        }
+    
+        const { year }=req.params;
+        const season=admin.ipl.find(season=>season.year===Number(year));
+        if(!season){
+            return res.status(400).json({ message: "Season does not exist" });
+        }
+    
+        const workBook=xlsx.read(req.file.buffer);
+        const workSheet=workBook.Sheets[workBook.SheetNames[0]];
+        const jsonData=xlsx.utils.sheet_to_json(workSheet);
+    
+        for(const match of jsonData){
+            const { teamShort, opponentShort, venue }=match;
+            const rawDate=match.date;
+            const rawTime=match.time;
+            
+            const date=(typeof rawDate==="number") 
+                ? new Date((rawDate - 25569)*86400*1000) 
+                : new Date(rawDate);
+            
+            const time=(typeof rawTime==="number") 
+                ? new Date((rawTime*86400*1000)).toISOString().split("T")[1].slice(0, 5)
+                : rawTime || "19:30";         
+    
+            if(!teamShort || !opponentShort || !venue || !date || !time){
+                continue; 
+            }
+    
+            const team=season.teams.find(t=>t.short===teamShort);
+            const opponent=season.teams.find(t=>t.short===opponentShort);
+            if(!team || !opponent) continue;
+    
+            const matchExists=season.matches.some(m=>
+                new Date(m.date).toISOString().split("T")[0]===date.toISOString().split("T")[0] &&
+                m.team?.short===teamShort &&
+                m.opponent?.short===opponentShort
+            );
+            if(matchExists) continue;
+    
+            season.matches.push({
+                team: { name: team.name, short: teamShort },
+                opponent: { name: opponent.name, short: opponentShort },
+                date,
+                time,
+                venue
+            });
+    
+            const newMatch=season.matches[season.matches.length-1];
+            const matchId=newMatch._id.toString();
+    
+            team.matches.push({ matchId, date });
+            opponent.matches.push({ matchId, date });
+        }
+    
+        await admin.save();
+        return res.status(200).json({ message: "Matches added successfully" });
+    } 
+    catch(error){
+        console.error("Add Matches Error:", error);
+        return res.status(500).json({ message: error.message });
     }
-  }
+}
   
 module.exports={
     registerAdmin,
