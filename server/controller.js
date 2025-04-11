@@ -461,6 +461,18 @@ async function deleteMatch(req, res){
             return res.status(400).json({ message: "Match undefined" });
         }
 
+        const oversToBalls=(overs)=>{
+            const fullOvers=Math.floor(overs);
+            const balls=Math.round((overs-fullOvers)*10);
+            return fullOvers*6+balls;
+        };
+
+        const ballstoOvers=(balls)=>{
+            const fullOvers=Math.floor(balls/6);
+            const remainingBalls=balls%6;
+            return parseFloat(`${fullOvers}.${remainingBalls}`);
+        }
+
         const convertOvers=(overs)=>{
             const [fullOvers, balls]=String(overs).split('.').map(Number);
             return fullOvers+Math.fround(balls ? balls/6 : 0);
@@ -479,12 +491,13 @@ async function deleteMatch(req, res){
                 }
 
                 team.totalRunsScored-=match.result.score.team.runs;
-                const teamTotalOverFaced=(Number(match.result.score.team.wickets)===10 ? Number(20) : Number(match.result.score.team.overs));
-                team.totalOversFaced-=teamTotalOverFaced;
+                const teamBallsBowled=Number(match.result.score.team.wickets)===10 ? Number(120) : oversToBalls(Number(match.result.score.opponent.overs));
+                team.totalBallsBowled-=teamBallsBowled;
+                team.totalOversBowled=ballstoOvers(team.totalBallsBowled);
+                const teamBallsFaced=Number(match.result.score.team.wickets)===10 ? Number(120) : oversToBalls(Number(match.result.score.team.overs));
+                team.totalBallsFaced-=teamBallsFaced;
+                team.totalOversFaced=ballstoOvers(team.totalBallsFaced);
                 team.totalRunsConceded-=match.result.score.opponent.runs;
-                const teamTotalOversBowled=(Number(match.result.score.opponent.wickets)===10 ? Number(20) : Number(match.result.score.opponent.overs));
-                team.totalOversBowled-=teamTotalOversBowled;
-                
                 if(team.totalOversFaced>0 && team.totalOversBowled>0){
                     team.netRunRate=(
                         team.totalRunsScored/convertOvers(team.totalOversFaced) - 
@@ -509,12 +522,13 @@ async function deleteMatch(req, res){
                 }
                 
                 opponent.totalRunsScored-=match.result.score.opponent.runs;
-                const opponentTotalOverFaced=(Number(match.result.score.opponent.wickets)===10 ? Number(20) : Number(match.result.score.opponent.overs));
-                opponent.totalOversFaced-=opponentTotalOverFaced;
+                const opponentBallsBowled=Number(match.result.score.team.wickets)===10 ? Number(120) : oversToBalls(Number(match.result.score.team.overs));
+                opponent.totalBallsBowled-=opponentBallsBowled;
+                opponent.totalOversBowled=convertOvers(opponent.totalBallsBowled);
+                const opponentBallsFaced=Number(match.result.score.opponent.wickets)===10 ? Number(120) : oversToBalls(Number(match.result.score.opponent.overs));
+                opponent.totalBallsFaced-=opponentBallsFaced;
+                opponent.totalOversFaced=convertOvers(opponent.totalBallsFaced);
                 opponent.totalRunsConceded-=match.result.score.team.runs;
-                const opponentTotalOversBowled=(Number(match.result.score.team.wickets)===10 ? Number(20) : Number(match.result.score.team.overs));
-                opponent.totalOversBowled-=opponentTotalOversBowled;
-                
                 if(opponent.totalOversFaced>0 && opponent.totalOversBowled>0){
                     opponent.netRunRate=(
                         opponent.totalRunsScored/convertOvers(opponent.totalOversFaced) - 
@@ -605,6 +619,18 @@ async function addResult(req, res){
             return res.status(400).json({ message: "Player of the match details are required" })
         }
 
+        const oversToBalls=(overs)=>{
+            const fullOvers=Math.floor(overs);
+            const balls=Math.round((overs-fullOvers)*10);
+            return fullOvers*6+balls;
+        };
+
+        const ballstoOvers=(balls)=>{
+            const fullOvers=Math.floor(balls/6);
+            const remainingBalls=balls%6;
+            return parseFloat(`${fullOvers}.${remainingBalls}`);
+        }
+
         const convertOvers=(overs)=>{
             const [fullOvers, balls]=String(overs).split('.').map(Number);
             return fullOvers+Math.fround(balls ? balls/6 : 0);
@@ -615,11 +641,13 @@ async function addResult(req, res){
         }
         team.points+=wonShort===teamShort ? 2 : 0;
         team.totalRunsScored+=Number(score.team.runs);
-        const teamTotalOverFaced=(Number(score.team.wickets)===10 ? Number(20) : Number(score.team.overs));
-        team.totalOversFaced+=teamTotalOverFaced;
+        const teamBallsFaced=Number(score.team.wickets)===10 ? Number(120) : oversToBalls(Number(score.team.overs));
+        team.totalBallsFaced=(team.totalBallsFaced||0)+teamBallsFaced;
+        team.totalOversFaced=ballstoOvers(team.totalBallsFaced);
         team.totalRunsConceded+=Number(score.opponent.runs);
-        const teamTotalOversBowled=(Number(score.opponent.wickets)===10) ? Number(20) : Number(score.opponent.overs);
-        team.totalOversBowled+=teamTotalOversBowled;
+        const teamBallsBowled=Number(score.team.wickets)===10 ? Number(120) : oversToBalls(Number(score.opponent.overs));
+        team.totalBallsBowled=(team.totalBallsBowled||0)+teamBallsBowled;
+        team.totalOversBowled=ballstoOvers(team.totalBallsBowled);
         team.netRunRate=(team.totalRunsScored / convertOvers(team.totalOversFaced)) - (team.totalRunsConceded / convertOvers(team.totalOversBowled));
         team.netRunRate=team.netRunRate.toFixed(3);
         
@@ -628,11 +656,13 @@ async function addResult(req, res){
         }
         opponent.points+=wonShort===opponentShort ? 2 : 0;
         opponent.totalRunsScored+=Number(score.opponent.runs);
-        const opponentTotalOversFaced=(Number(score.opponent.wickets)===10) ? Number(20) : Number(score.opponent.overs);
-        opponent.totalOversFaced+=opponentTotalOversFaced;
+        const opponentBallsFaced=Number(score.opponent.wickets)===10 ? Number(120) : oversToBalls(Number(score.opponent.overs));
+        opponent.totalBallsFaced=(opponent.totalBallsFaced||0)+opponentBallsFaced;
+        opponent.totalOversFaced=ballstoOvers(opponent.totalBallsFaced);
         opponent.totalRunsConceded+=Number(score.team.runs);
-        const opponentTotalOversBowled=(Number(score.team.wickets)===10) ? Number(20) : Number(score.team.overs);
-        opponent.totalOversBowled+=opponentTotalOversBowled;
+        const opponentBallsBowled=Number(score.team.wickets)===10 ? Number(120) : oversToBalls(Number(score.team.overs));
+        opponent.totalBallsBowled=(opponent.totalBallsBowled||0)+opponentBallsBowled;
+        opponent.totalOversBowled=ballstoOvers(opponent.totalBallsBowled);
         opponent.netRunRate=(opponent.totalRunsScored / convertOvers(opponent.totalOversFaced)) - (opponent.totalRunsConceded / convertOvers(opponent.totalOversBowled));
         opponent.netRunRate=opponent.netRunRate.toFixed(3);
         

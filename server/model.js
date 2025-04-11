@@ -54,8 +54,10 @@ const teamSchema=new mongoose.Schema({
         _id: false
     }],
     totalRunsScored: { type: Number, default: 0 },
+    totalBallsFaced: { type: Number, default: 0 },
     totalOversFaced: { type: Number, default: 0 },
     totalRunsConceded: { type: Number, default: 0 },
+    totalBallsBowled: { type: Number, default: 0 },
     totalOversBowled: { type: Number, default: 0 },
     netRunRate: { type: Number, default: 0 } 
 });
