@@ -15,7 +15,6 @@
     display: flex;
 }
 
-
 .winLoseTable-heading p{
     padding: 16px;
     text-transform: capitalize;
@@ -173,4 +172,14 @@
 
 .winLoseTable-team-nrr{
     text-align: left;
+}
+
+@media(max-width: 720px){
+    .winLoseTable-team-played, .winLoseTable-heading-played, 
+    .winLoseTable-team-wins, .winLoseTable-heading-wins,
+    .winLoseTable-team-loses, .winLoseTable-heading-loses,
+    .winLoseTable-team-draws, .winLoseTable-heading-draws,
+    .winLoseTable-team-point, .winLoseTable-heading-point{
+        width: 20px;
+    }
 }

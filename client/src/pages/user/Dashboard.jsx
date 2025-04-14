@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./Dashboard.css";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 export function Dashboard(){
@@ -14,6 +15,7 @@ export function Dashboard(){
                 <ul className="topbar-items">
                     <li className={`topbar-item ${active==="" || active==="point-table" || active==="team" ? "active" : ""}`} onClick={()=>navigate("/")}>point table</li>
                     <li className={`topbar-item ${location.pathname.startsWith("/matches") ? "active" : ""}`} onClick={()=>navigate("/matches")}>matches</li>
+                    <li className={`topbar-item ${active==="results" ? "active" : ""}`} onClick={()=>navigate("/results")}>results</li>
                     <li className={`topbar-item ${active==="stats" ? "active" : ""}`} onClick={()=>navigate("/stats")}>stats</li>
                 </ul>
                 <div className="topbar-menu">
@@ -24,6 +26,7 @@ export function Dashboard(){
                         <ul className="topbar-menu-items">
                             <li className={`topbar-menu-item ${active==="" || active==="point-table" || active==="team" ? "active" : ""}`} onClick={()=>{ navigate("/"); setShow(prev=>!prev) }}>home</li>
                             <li className={`topbar-menu-item ${location.pathname.startsWith("/matches") ? "active" : ""}`} onClick={()=>{ navigate("/matches"); setShow(prev=>!prev) }}>matches</li>
+                            <li className={`topbar-item ${active==="results" ? "active" : ""}`} onClick={()=>{ navigate("/results"); setShow(prev=>!prev)}}>results</li>
                             <li className={`topbar-menu-item ${active==="stats" ? "active" : ""}`} onClick={()=>{ navigate("/stats"); setShow(prev=>!prev) }}>stats</li>
                         </ul>
                     }

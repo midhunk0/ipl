@@ -1,4 +1,4 @@
-.topbar{
+.admin-topbar{
     display: flex;
     padding: 16px;
     justify-content: space-between;
@@ -8,19 +8,19 @@
     background-color: var(--white);
 }
 
-.topbar-image{
+.admin-topbar-image{
     width: 60px;
     object-fit: contain;
     cursor: pointer;
 }
 
-.topbar-items{
+.admin-topbar-items{
     display: flex;
     align-items: center;
     gap: 16px;
 }
 
-.topbar-item{
+.admin-topbar-item{
     list-style-type: none;
     font-size: 18px;
     padding: 16px;
@@ -28,16 +28,16 @@
     cursor: pointer;
 }
 
-.topbar-item.active{
+.admin-topbar-item.active{
     background-color: var(--black);
     color: var(--white);
 }
 
-.topbar-menu{
+.admin-topbar-menu{
     display: none;
 }
 
-.topbar-icon{
+.admin-topbar-icon{
     width: 20px;
     height: 20px;
     cursor: pointer;
@@ -45,23 +45,23 @@
     padding: 16px;
 }
 
-.topbar-icon:hover{
+.admin-topbar-icon:hover{
     background-color: var(--black);
 }
 
-.topbar-menu-icons{
+.admin-topbar-menu-icons{
     display: flex;
 }
 
-.topbar-menu-icons:hover .topbar-icon.menu{
+.admin-topbar-menu-icons:hover .admin-topbar-icon.menu{
     content: url("/icons/menu-white.png");
 }
 
-.topbar-menu-icons:hover .topbar-icon.close{
+.admin-topbar-menu-icons:hover .admin-topbar-icon.close{
     content: url("/icons/cross-white.png");
 }
 
-.topbar-menu-items{
+.admin-topbar-menu-items{
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -71,7 +71,7 @@
     background-color: var(--white);
 }
 
-.topbar-menu-item{
+.admin-topbar-menu-item{
     list-style: none;
     font-size: 16px;
     padding: 16px;
@@ -79,22 +79,22 @@
     cursor: pointer;
 }
 
-.topbar-menu-item.active{
+.admin-topbar-menu-item.active{
     background-color: var(--black);
     color: var(--white);
 }
 
-.outlet{
+.admin-outlet{
     flex-grow: 1;
     overflow-y: auto;
 }
 
-@media(max-width: 548px){
-    .topbar-items{
+@media(max-width: 720px){
+    .admin-topbar-items{
         display: none;
     }
 
-    .topbar-menu{
+    .admin-topbar-menu{
         display: flex;
         align-items: center;
         padding: 0;

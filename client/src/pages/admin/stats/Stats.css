@@ -1,11 +1,17 @@
-.stats-form{
+.admin-stats{
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+}
+
+.admin-stats-form{
     display: flex;
     flex-direction: column;
     width: 30%;
     gap: 16px;
 }
 
-.stats-expand{
+.admin-stats-expand{
     display: flex;
     flex-direction: column;
     padding: 16px;
@@ -13,33 +19,33 @@
     border: 1px solid var(--black);
 }
 
-.stats-buttons{
+.admin-stats-buttons{
     display: flex;
     gap: 16px;
 }
 
-.stats-form-clear-button:hover img{
+.admin-stats-form-clear-button:hover img{
     content: url("/icons/cross-white.png");
 }
 
-.stats-add-button:hover img{
+.admin-stats-add-button:hover img{
     content: url("/icons/plus-white.png");
 }
 
 @media(max-width: 1080px){
-    .stats-form{
+    .admin-stats-form{
         width: 40%;
     }
 }
 
 @media(max-width: 720px){
-    .stats-form{
+    .admin-stats-form{
         width: 50%;
     }
 }
 
 @media(max-width: 564px){
-    .stats-form{
+    .admin-stats-form{
         width: 100%;
     }
 }

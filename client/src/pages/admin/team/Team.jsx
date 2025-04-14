@@ -118,17 +118,35 @@ export function Team(){
         }
     }
 
+    const sortedMatches=matches.slice().sort((a, b)=>{
+        const dateA=new Date(a.date);
+        const dateB=new Date(b.date);
+      
+        const isACompleted=a.result.won.short!=="";
+        const isBCompleted=b.result.won.short!=="";
+      
+        if(isACompleted && !isBCompleted) return 1;
+        if(!isACompleted && isBCompleted) return -1;
+      
+        if(isACompleted && isBCompleted) {
+            return dateB.getTime() - dateA.getTime(); 
+        } 
+        else{
+            return dateA.getTime() - dateB.getTime(); 
+        }
+    });
+
     return(
-        <div className="team">
-            <div className="team-header">
+        <div className="admin-team">
+            <div className="admin-team-header">
                 <h1>{team.name}</h1>
                 {!showForm &&
-                    <div className="team-buttons">
-                        <button className="green-button team-match-add-button" type="button" onClick={()=>setShowForm(prev=>!prev)}>
+                    <div className="admin-team-buttons">
+                        <button className="green-button admin-team-match-add-button" type="button" onClick={()=>setShowForm(prev=>!prev)}>
                             <img src="/icons/plus-black.png" alt="add" className="icon"/>
                             <span>add new match</span>
                         </button>
-                        <button type="button" className="red-button team-delete-button" onClick={()=>handleDeleteTeam()}>
+                        <button type="button" className="red-button admin-team-delete-button" onClick={()=>handleDeleteTeam()}>
                             <img src="/icons/trash-red.png" alt="close" className="icon"/>
                             <span>delete team</span>
                         </button>
@@ -136,11 +154,11 @@ export function Team(){
                 }
             </div>
             {!showForm ? 
-                <div className="team-details">
-                    <MatchesTable matches={matches} dest="/admin/matches"/>
+                <div className="admin-team-details">
+                    <MatchesTable matches={sortedMatches} dest="/admin/matches" type="teamTable"/>
                 </div>
             : (
-                <form className="team-match-add-form" onSubmit={handleAddMatch} method="POST">
+                <form className="admin-team-match-add-form" onSubmit={handleAddMatch} method="POST">
                     <h2>add new Match</h2>
                     <div className="input-container">
                         <label htmlFor="team">team</label>
@@ -173,9 +191,6 @@ export function Team(){
                     <div className="input-container">
                         <label htmlFor="venue">venue</label>
                         {team.home && team.home.length===1 ? (
-                            // <div className="input" value={team.home}>        
-                            //     <p>{team.home[0]}</p>    
-                            // </div>
                             <input className="input" name="venue" value={team.home[0]} readOnly/>
                         ) : (
                             <div className="input selection" onClick={()=>setShowOptions2(prev=>!prev)}>
@@ -207,12 +222,12 @@ export function Team(){
                         <label htmlFor="time">time</label>
                         <input type="time" name="time" id="time" value={matchData.time} onChange={handleInputChange}/>
                     </div>
-                    <div className="team-form-buttons">
-                        <button className="black-button team-form-close-button" type="button" onClick={()=>setShowForm(prev=>!prev)}>
+                    <div className="admin-team-form-buttons">
+                        <button className="black-button admin-team-form-close-button" type="button" onClick={()=>setShowForm(prev=>!prev)}>
                             <img src="/icons/cross-black.png" alt="close" className="icon"/>
                             <span>close</span>
                         </button>
-                        <button className="green-button team-match-add-button" type="submit">
+                        <button className="green-button admin-team-match-add-button" type="submit">
                             <img src="/icons/plus-black.png" alt="add" className="icon"/>
                             <span>add new match</span>
                         </button>

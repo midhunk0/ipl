@@ -13,7 +13,8 @@ export function Match(){
         opponentShort: "",
         date: "",
         venue: "",
-        time: ""
+        time: "",
+        number: 0
     });
 
     const [matchResult, setMatchResult]=useState({
@@ -223,22 +224,22 @@ export function Match(){
     }
 
     return(
-        <div className="match">
-            <div className="match-header">
+        <div className="admin-match">
+            <div className="admin-match-header">
                 <h1>{match.team.short} v/s {match.opponent.short}</h1>
                 {!showEditForm && updateResult &&
-                    <div className="match-buttons">
+                    <div className="admin-match-buttons">
                         {!match.result.draw.reason && !match.result.won.short && 
-                            <button className="green-button match-add-button" onClick={()=>setUpdateResult(false)}>
+                            <button className="green-button admin-match-add-button" onClick={()=>setUpdateResult(false)}>
                                 <img src="/icons/plus-black.png" alt="add" className="icon"/>
                                 <span>add result</span>
                             </button>
                         }
-                        <button type="button" className="blue-button match-edit-button" onClick={()=>(setShowEditForm(prev=>!prev), updateMatchForm())}>
+                        <button type="button" className="blue-button admin-match-edit-button" onClick={()=>(setShowEditForm(prev=>!prev), updateMatchForm())}>
                             <img src="/icons/edit-black.png" alt="edit" className="icon"/>
                             <span>edit match</span>
                         </button>
-                        <button className="red-button match-delete-button" type="button" onClick={()=>handleDeleteMatch()}>
+                        <button className="red-button admin-match-delete-button" type="button" onClick={()=>handleDeleteMatch()}>
                             <img src="/icons/trash-red.png" alt="delete" className="icon"/>
                             <span>delete match</span>
                         </button>
@@ -246,11 +247,11 @@ export function Match(){
                 }
             </div>
             {!showEditForm && updateResult ? 
-                <div className="match-result">
+                <div className="admin-match-result">
                     <MatchDetails match={match}/>
                 </div> 
             : showEditForm ? 
-                <form className="match-form" onSubmit={handleEditMatch} method="POST">
+                <form className="admin-match-form" onSubmit={handleEditMatch} method="POST">
                     <h2>edit match</h2>
                     <div className="input-container">
                         <label htmlFor="team">team</label>
@@ -310,19 +311,19 @@ export function Match(){
                         <label htmlFor="time">time</label>
                         <input type="time" name="time" id="time" value={matchData.time} onChange={handleInputChange}/>
                     </div>
-                    <div className="match-form-buttons">
-                        <button className="black-button match-close-button" type="button" onClick={()=>setShowEditForm(prev=>!prev)}>
+                    <div className="admin-match-form-buttons">
+                        <button className="black-button admin-match-close-button" type="button" onClick={()=>setShowEditForm(prev=>!prev)}>
                             <img src="/icons/cross-black.png" alt="close" className="icon"/>
                             <span>close</span>
                         </button>
-                        <button className="blue-button match-edit-button" type="submit">
+                        <button className="blue-button admin-match-edit-button" type="submit">
                             <img src="/icons/edit-black.png" alt="add" className="icon"/>
                             <span>edit match</span>
                         </button>
                     </div>
                 </form>
             : 
-                <form className="match-form" onSubmit={handleAddResult}>
+                <form className="admin-match-form" onSubmit={handleAddResult}>
                     <h2>add result</h2>
                     <div className="input-container">
                         <label htmlFor="won">won</label>
@@ -379,12 +380,12 @@ export function Match(){
                             </div>
                         </>
                     }
-                    <div className="match-form-buttons">
-                        <button className="black-button match-close-button" type="button" onClick={()=>setUpdateResult(prev=>!prev)}>
+                    <div className="admin-match-form-buttons">
+                        <button className="black-button admin-match-close-button" type="button" onClick={()=>setUpdateResult(prev=>!prev)}>
                             <img src="/icons/cross-black.png" alt="close" className="icon"/>
                             <span>close</span>
                         </button>
-                        <button className="green-button match-add-button" type="submit">
+                        <button className="green-button admin-match-add-button" type="submit">
                             <img src="/icons/plus-black.png" alt="add" className="icon"/>
                             <span>add result</span>
                         </button>

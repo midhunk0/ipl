@@ -11,17 +11,12 @@
 
 .matchesTable-header p, .matchesTable-match p{
     padding: 16px;
-    text-transform: capitalize;
-}
-
-.matchesTable-header p:last-child{
-    text-transform: uppercase;
 }
 
 .matchesTable-heading-no, .matchesTable-match-no{
     width: 20px;
     min-width: 20px;
-    border-right: 1px solid var(--black);
+    text-transform: capitalize;
 }
 
 .matchesTable-match-no{
@@ -33,7 +28,18 @@
 .matchesTable-heading-teams, .matchesTable-match-teams{
     width: 188px;
     min-width: 188px;
-    border-right: 1px solid var(--black);
+    border-left: 1px solid var(--black);
+    text-transform: capitalize;
+}
+
+.matchesTable-heading-teams.big{
+    width: 568px;
+    min-width: 568px;    
+}
+
+.matchesTable-match-teams.big{
+    width: 600px;
+    min-width: 600px;
 }
 
 .matchesTable-match-teams{
@@ -45,18 +51,6 @@
     gap: 4px;
     align-items: center;
     justify-content: space-between;
-}
-
-.matchTable-match-team, .matchTable-match-opponent{
-    display: flex;
-    /* justify-content: space-between; */
-    gap: 4px;
-    width: 90px;
-    min-width: 90px;
-}
-
-.matchTable-match-opponent{
-    justify-content: flex-end;
 }
 
 .matchesTable-match-teams p{
@@ -74,15 +68,31 @@
     padding-right: 0;
 }
 
-
 .matchesTable-match-teams img:last-child{
     padding-left: 0;
+}
+
+.matchTable-match-team, .matchTable-match-opponent{
+    display: flex;
+    gap: 4px;
+    width: 90px;
+    min-width: 90px;
+}
+
+.matchTable-match-team.big, .matchTable-match-opponent.big{
+    width: 280px;
+    min-width: 280px;
+}
+
+.matchTable-match-opponent{
+    justify-content: flex-end;
 }
 
 .matchesTable-heading-date, .matchesTable-match-date{
     width: 100px;
     min-width: 100px;
-    border-right: 1px solid var(--black);
+    border-left: 1px solid var(--black);
+    text-transform: capitalize;
 }
 
 .matchesTable-match-date{
@@ -94,7 +104,8 @@
 .matchesTable-heading-time, .matchesTable-match-time{
     width: 50px;
     min-width: 50px;
-    border-right: 1px solid var(--black);
+    border-left: 1px solid var(--black);
+    text-transform: capitalize;
 }
 
 .matchesTable-match-time{
@@ -106,7 +117,8 @@
 .matchesTable-heading-venue, .matchesTable-match-venue {
     width: 130px;
     min-width: 130px;
-    border-right: 1px solid var(--black);
+    border-left: 1px solid var(--black);
+    text-transform: capitalize;
 }
 
 .matchesTable-match-venue {
@@ -119,7 +131,8 @@
 .matchesTable-heading-result, .matchesTable-match-result{
     width: 290px;
     min-width: 290px;
-    border-right: 1px solid var(--black);
+    border-left: 1px solid var(--black);
+    text-transform: capitalize;
 }
 
 .matchesTable-match-result{
@@ -129,8 +142,13 @@
 }
 
 .matchesTable-heading-potm, .matchesTable-match-potm{
-    width: 260px;
-    min-width: 260px;
+    width: 300px;
+    min-width: 300px;
+    border-left: 1px solid var(--black);
+}
+
+.matchesTable-heading-potm{
+    text-transform: uppercase;
 }
 
 .matchesTable-match-potm{

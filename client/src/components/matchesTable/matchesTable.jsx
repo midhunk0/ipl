@@ -1,10 +1,19 @@
 // @ts-nocheck
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./matchesTable.css";
 import { useNavigate } from "react-router-dom";
 
-export function MatchesTable({matches, dest}){
+export function MatchesTable({matches, dest, type}){
     const navigate=useNavigate();
+    const [width, setWidth]=useState(window.innerWidth);
+
+    useEffect(()=>{
+        function handleResize(){
+            setWidth(window.innerWidth);
+        }
+        window.addEventListener("resize", handleResize);
+        return ()=>window.removeEventListener("resize", handleResize);
+    }, []);
     
     function getFormatedDate(date){
         return new Date(date).toLocaleDateString("en-IN", {
@@ -14,58 +23,63 @@ export function MatchesTable({matches, dest}){
         }).replace(/\//g, "-");   
     }
 
+    // const remainingMatches=[...matches.filter(match=>match.result.won.short==="")];
+
     return(
-        <>
-            {matches && matches.length>0 ? (
-                <div className="matchesTable">
-                    <div className="matchesTable-header">
-                        <p className="matchesTable-heading-no">no</p>
-                        <p className="matchesTable-heading-teams">match</p>
-                        <p className="matchesTable-heading-date">date</p>
-                        <p className="matchesTable-heading-time">time</p>
-                        <p className="matchesTable-heading-venue">venue</p>
+        matches && matches.length>0 ? (
+            <div className="matchesTable">
+                <div className="matchesTable-header">
+                    <p className="matchesTable-heading-no">no</p>
+                    <p className={`matchesTable-heading-teams ${width<720 || type!=="matchesTable"  ? "" : "big"}`}>match</p>
+                    <p className="matchesTable-heading-date">date</p>
+                    <p className="matchesTable-heading-time">time</p>
+                    <p className="matchesTable-heading-venue">venue</p>
+                    {type!=="matchesTable" && 
+                    <>
                         <p className="matchesTable-heading-result">result</p>
                         <p className="matchesTable-heading-potm">potm</p>
-                    </div>
-                    {matches.map((match, index)=>(
-                        <div className="matchesTable-match" key={index}>
-                            <p className="matchesTable-match-no">{index+1}</p>
-                            <div className="matchesTable-match-teams" onClick={()=>navigate(`${dest}/${match._id}`)}>
-                                <div className="matchTable-match-team">
-                                    <img src={`/logos/${match.team.short}.png`} alt="logo"/>
-                                    <p>{match.team.short}</p> 
-                                </div>
-                                <span>v/s</span> 
-                                <div className="matchTable-match-opponent">
-                                    <p>{match.opponent.short}</p>
-                                    <img src={`/logos/${match.opponent.short}.png`} alt="logo"/>
-                                </div>
-                            </div>
-                            <p className="matchesTable-match-date">{getFormatedDate(match.date)}</p>
-                            <p className="matchesTable-match-time">{match.time}</p>
-                            <p className="matchesTable-match-venue">{match.venue.split(",")[1]?.trim()}</p>
-                            {match.result.won.short ? 
-                                <>
-                                    <p className="matchesTable-match-result">{match.result.won.short} won by {match.result.wonBy}</p>
-                                    <p className="matchesTable-match-potm">{match.result.playerOfTheMatch.name} {match.result.playerOfTheMatch.for}</p>
-                                </>
-                            : match.result.draw.status ? 
-                                <>
-                                    <p className="matchesTable-match-result">{match.result.draw.reason}</p>
-                                    <p className="matchesTable-match-potm">-</p>
-                                </>
-                            :                             
-                                <>
-                                    <p className="matchesTable-match-result"></p>
-                                    <p className="matchesTable-match-potm"></p>
-                                </>
-                            }
-                        </div>                            
-                    ))}
+                    </>
+                    }
                 </div>
-            ):(
-                <p>No Matches</p>
-            )}
-        </>
+                {matches.map((match, index)=>(
+                    <div className="matchesTable-match" key={index}>
+                        <p className="matchesTable-match-no">{match.number}</p>                        
+                        <div className={`matchesTable-match-teams ${width<720 || type!=="matchesTable" ? "" : "big"}`} onClick={()=>navigate(`${dest}/${match._id}`)}>
+                            <div className={`matchTable-match-team ${width<720 || type!=="matchesTable"  ? "" : "big"}`}>
+                                <img src={`/logos/${match.team.short}.png`} alt="logo"/>
+                                <p>{width<720 || type!=="matchesTable"  ? match.team.short : match.team.name}</p> 
+                            </div>
+                            <span>v/s</span> 
+                            <div className={`matchTable-match-opponent ${width<720 || type!=="matchesTable"  ? "" : "big"}`}>
+                                <p>{width<720 || type!=="matchesTable"  ? match.opponent.short : match.opponent.name}</p>
+                                <img src={`/logos/${match.opponent.short}.png`} alt="logo"/>
+                            </div>
+                        </div>
+                        <p className="matchesTable-match-date">{getFormatedDate(match.date)}</p>
+                        <p className="matchesTable-match-time">{match.time}</p>
+                        <p className="matchesTable-match-venue">{match.venue.split(",")[1]?.trim()}</p>
+                        {type!=="matchesTable" &&( match.result.won.short ? 
+                            <>
+                                <p className="matchesTable-match-result">{match.result.won.short} won by {match.result.wonBy}</p>
+                                <p className="matchesTable-match-potm">{match.result.playerOfTheMatch.name} {match.result.playerOfTheMatch.for}</p>
+                            </>
+                        : 
+                        match.result.draw.status ? 
+                            <>
+                                <p className="matchesTable-match-result">{match.result.draw.reason}</p>
+                                <p className="matchesTable-match-potm">-</p>
+                            </>
+                        :                             
+                            <>
+                                <p className="matchesTable-match-result"></p>
+                                <p className="matchesTable-match-potm"></p>
+                            </>
+                        )}
+                    </div>    
+                ))}
+            </div>
+        ):(
+            <p>No Matches</p>
+        )
     )
 }

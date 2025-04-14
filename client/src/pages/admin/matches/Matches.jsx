@@ -18,7 +18,8 @@ export function Matches(){
         opponentShort: "",
         date: "",
         time: "19:30",
-        venue: ""
+        venue: "",
+        number: 0
     });
     const [fileInput, setFileInput]=useState(null);
     const [showOptions, setShowOptions]=useState(false);
@@ -29,6 +30,7 @@ export function Matches(){
     if(!season){
         return;
     }
+    const matches=season.matches;
     
     function handleInputChange(e){
         setMatchData({
@@ -121,17 +123,19 @@ export function Matches(){
         }
     }
 
+    const remainingMatches=[...matches.filter(match=>match.result.won.short==="")];
+
     return(
-        <div className="matches">
-            <div className="matches-header">
+        <div className="admin-matches">
+            <div className="admin-matches-header">
                 <h1>IPL {year} fixtures</h1>
                 {!showForm && !showUpload &&
-                    <div className="matches-details">
-                        <button className="green-button matches-add-button" type="button" onClick={()=>setShowForm(prev=>!prev)}>
+                    <div className="admin-matches-buttons">
+                        <button className="green-button admin-matches-add-button" type="button" onClick={()=>setShowForm(prev=>!prev)}>
                             <img src="/icons/plus-black.png" alt="add" className="icon"/>
                             <span>add new match</span>
                         </button>
-                        <button className="blue-button matches-all-add-button" type="button" onClick={()=>setShowUpload(prev=>!prev)}>
+                        <button className="blue-button admin-matches-all-add-button" type="button" onClick={()=>setShowUpload(prev=>!prev)}>
                             <img src="/icons/check-black.png" alt="add" className="icon"/>
                             <span>add all matches</span>
                         </button>
@@ -139,14 +143,14 @@ export function Matches(){
                 }
             </div>
             {showUpload && 
-                <form className="matches-upload-form" onSubmit={handleAddMatches} method="POST">
+                <form className="admin-matches-upload-form" onSubmit={handleAddMatches} method="POST">
                     <input type="file" name="fileInput" className="input" onChange={(e)=>setFileInput(e.target.files[0])}/>
-                    <div className="matches-details">
-                        <button className="black-button matches-upload-close-button" type="button" onClick={()=>setShowUpload(prev=>!prev)}>
+                    <div className="admin-matches-buttons">
+                        <button className="black-button admin-matches-upload-close-button" type="button" onClick={()=>setShowUpload(prev=>!prev)}>
                             <img src="/icons/cross-black.png" alt="close" className="icon"/>
                             <span>close form</span>
                         </button>
-                        <button className="green-button matches-upload-button" type="submit">
+                        <button className="green-button admin-matches-upload-button" type="submit">
                             <img src="/icons/check-black.png" alt="upload" className="icon"/>
                             <span>upload file</span>
                         </button>
@@ -154,12 +158,12 @@ export function Matches(){
                 </form>
             }
             {!showForm && !showUpload && 
-                <div className="matches-details">
-                    <MatchesTable matches={season.matches} dest="/admin/matches"/>
+                <div className="admin-matches-details">
+                    <MatchesTable matches={remainingMatches} dest="/admin/matches" type="matchesTable"/>
                 </div>
             }
             {showForm &&
-                <form className="matches-add-form" onSubmit={handleAddMatch} method="POST">
+                <form className="admin-matches-add-form" onSubmit={handleAddMatch} method="POST">
                     <h2>add new match</h2>
                     <div className="input-container">
                         <label htmlFor="team">team</label>
@@ -239,12 +243,16 @@ export function Matches(){
                         <label htmlFor="time">time</label>
                         <input type="time" name="time" id="time" value={matchData.time} onChange={handleInputChange}/>
                     </div>
-                    <div className="matches-form-buttons">
-                        <button className="black-button matches-form-close-button" type="button" onClick={()=>setShowForm(prev=>!prev)}>
+                    <div className="input-container">
+                        <label htmlFor="number">number</label>
+                        <input type="number" name="number" id="number" value={matchData.number} onChange={handleInputChange}/>
+                    </div>
+                    <div className="admin-matches-form-buttons">
+                        <button className="black-button admin-matches-form-close-button" type="button" onClick={()=>setShowForm(prev=>!prev)}>
                             <img src="/icons/cross-black.png" alt="close" className="icon"/>
                             <span>close</span>
                         </button>
-                        <button className="green-button matches-add-button" type="submit">
+                        <button className="green-button admin-matches-add-button" type="submit">
                             <img src="/icons/plus-black.png" alt="add" className="icon"/>
                             <span>add new match</span>
                         </button>

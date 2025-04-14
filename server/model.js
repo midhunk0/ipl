@@ -38,7 +38,8 @@ const matchSchema=new mongoose.Schema({
             status: { type: Boolean, default: false },
             reason: { type: String, default: "" }
         }
-    }
+    },
+    number: { type: Number, required: true }
 });
 
 const teamSchema=new mongoose.Schema({

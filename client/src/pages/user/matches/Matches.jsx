@@ -6,6 +6,11 @@ import { useSeason, useYear } from "../../../context/seasonContext";
 export function Matches(){
     const { year }=useYear();
     const { season }=useSeason();
+    if(!season){
+        return;
+    }
+    const matches=season.matches;
+    const remainingMatches=[...matches.filter(match=>match.result.won.short==="")];
 
     return(
         <div className="matches">
@@ -13,8 +18,8 @@ export function Matches(){
                 <p>No Season</p>
             ): (
                 <>
-                    <h1>IPL {year} matches</h1>
-                    <MatchesTable matches={season.matches} dest="/matches"/>
+                    <h1>IPL {year} fixtures</h1>
+                    <MatchesTable matches={remainingMatches} dest="/matches" type="matchesTable"/>
                 </>
             )}
         </div>

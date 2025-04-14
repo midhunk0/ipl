@@ -299,8 +299,8 @@ async function deleteTeam(req, res){
 
 async function addMatch(req, res){
     try{
-        const { teamShort, opponentShort, venue, date, time, year }=req.body;
-        if(!teamShort || !opponentShort || !venue || !date || !time){
+        const { teamShort, opponentShort, venue, date, time, year, number }=req.body;
+        if(!teamShort || !opponentShort || !venue || !date || !time || !number){
             return res.status(400).json({ message: "Match details are required" });
         }
         
@@ -338,7 +338,8 @@ async function addMatch(req, res){
             opponent: { name: opponent.name, short: opponentShort },
             date,
             time, 
-            venue
+            venue,
+            number
         })
         await admin.save();
         
@@ -788,7 +789,7 @@ async function addMatches(req, res){
         const jsonData=xlsx.utils.sheet_to_json(workSheet);
     
         for(const match of jsonData){
-            const { teamShort, opponentShort, venue }=match;
+            const { teamShort, opponentShort, venue, number }=match;
             const rawDate=match.date;
             const rawTime=match.time;
             
@@ -800,7 +801,7 @@ async function addMatches(req, res){
                 ? new Date((rawTime*86400*1000)).toISOString().split("T")[1].slice(0, 5)
                 : rawTime || "19:30";         
     
-            if(!teamShort || !opponentShort || !venue || !date || !time){
+            if(!teamShort || !opponentShort || !venue || !date || !time || !number){
                 continue; 
             }
     
@@ -820,7 +821,8 @@ async function addMatches(req, res){
                 opponent: { name: opponent.name, short: opponentShort },
                 date,
                 time,
-                venue
+                venue,
+                number
             });
     
             const newMatch=season.matches[season.matches.length-1];

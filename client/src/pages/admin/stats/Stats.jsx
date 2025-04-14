@@ -194,12 +194,12 @@ export function Stats(){
     }
 
     return(
-        <div className="stats">
+        <div className="admin-stats">
             <h1>IPL {year} season stats</h1>
             {seasonStats && seasonStats.champion!=="" ? (
                 <SeasonStats/>
             ):(
-                <form className="stats-form" method="post" onSubmit={handleAddStats}>
+                <form className="admin-stats-form" method="post" onSubmit={handleAddStats}>
                     <div className="input-container">
                         <label htmlFor="champion">champion</label>
                         <input type="text" name="champion" id="champion" value={stats.champion} onChange={handleInputChange}/>
@@ -235,7 +235,7 @@ export function Stats(){
                     
                     <div className="input-container">
                         <label>purple cap</label>
-                        <div className="stats-expand">
+                        <div className="admin-stats-expand">
                             <div className="input-container">
                                 <label htmlFor="purpleCapName">name</label>
                                 <input type="text" name="name" id="purpleCapName" value={stats.purpleCap.name} onChange={handleInputPurpleCap}/>
@@ -253,7 +253,7 @@ export function Stats(){
 
                     <div className="input-container">
                         <label>most 6s</label>
-                        <div className="stats-expand">
+                        <div className="admin-stats-expand">
                             <div className="input-container">
                                 <label htmlFor="most6sName">name</label>
                                 <input type="text" name="name" id="most6sName" value={stats.most6s.name} onChange={handleInputMost6s}/>
@@ -271,7 +271,7 @@ export function Stats(){
 
                     <div className="input-container">
                         <label>most 4s</label>
-                        <div className="stats-expand">
+                        <div className="admin-stats-expand">
                             <div className="input-container">
                                 <label htmlFor="most4sName">name</label>
                                 <input type="text" name="name" id="most4sName" value={stats.most4s.name} onChange={handleInputMost4s}/>
@@ -289,7 +289,7 @@ export function Stats(){
 
                     <div className="input-container">
                         <label>highest score</label>
-                        <div className="stats-expand">
+                        <div className="admin-stats-expand">
                             <div className="input-container">
                                 <label htmlFor="highestScoreName">name</label>
                                 <input type="text" name="name" id="highestScoreName" value={stats.highestScore.name} onChange={handleInputHighestScore}/>
@@ -307,7 +307,7 @@ export function Stats(){
 
                     <div className="input-container">
                         <label>most valuable player</label>
-                        <div className="stats-expand">
+                        <div className="admin-stats-expand">
                             <div className="input-container">
                                 <label htmlFor="MVPName">name</label>
                                 <input type="text" name="name" id="MVPName" value={stats.mostValuablePlayer.name} onChange={handleInputMVP}/>
@@ -321,7 +321,7 @@ export function Stats(){
 
                     <div className="input-container">
                         <label>emerging player</label>
-                        <div className="stats-expand">
+                        <div className="admin-stats-expand">
                             <div className="input-container">
                                 <label htmlFor="emergingPlayerName">name</label>
                                 <input type="text" name="name" id="emergingPlayerName" value={stats.emergingPlayer.name} onChange={handleInputEmergingPlayer}/>
@@ -333,12 +333,12 @@ export function Stats(){
                         </div>
                     </div>
 
-                    <div className="stats-buttons">
-                        <button className="black-button stats-form-clear-button" type="button">
+                    <div className="admin-stats-buttons">
+                        <button className="black-button admin-stats-form-clear-button" type="button">
                             <img src="/icons/cross-black.png" alt="close" className="icon"/>
                             <span>clear</span>
                         </button>
-                        <button className="green-button stats-add-button" type="submit">
+                        <button className="green-button admin-stats-add-button" type="submit">
                             <img src="/icons/plus-black.png" alt="add" className="icon"/>
                             <span>add stats</span>
                         </button>

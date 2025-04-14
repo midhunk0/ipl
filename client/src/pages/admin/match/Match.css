@@ -1,78 +1,76 @@
-.match{
+.admin-match{
     display: flex;
     flex-direction: column;
     padding: 16px;
     gap: 16px;
 }
 
-.match-header{
+.admin-match-header{
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.match-result{
+.admin-match-result{
     display: flex;
     flex-direction: column;
 }
 
-.match-buttons{
+.admin-match-buttons{
     display: flex;
     gap: 16px;
 }
 
-.match-update-result-button:hover img {
+.admin-match-update-result-button:hover img {
     content: url("/icons/update-white.png");
 }
 
-.match-edit-button:hover img{
+.admin-match-edit-button:hover img{
     content: url("/icons/edit-white.png");
 }
 
-.match-add-button:hover img{
+.admin-match-add-button:hover img{
     content: url("/icons/plus-white.png");
 }
 
-.match-delete-button:hover img {
+.admin-match-delete-button:hover img {
     content: url("/icons/trash-white.png");
 }
 
-
-
-.match-form{
+.admin-match-form{
     display: flex;
     flex-direction: column;
     width: 25%;
     gap: 16px;
 }
 
-.match-form-buttons{
+.admin-match-form-buttons{
     display: flex;
     gap: 16px;
 }
 
-.match-close-button:hover img{
+.admin-match-close-button:hover img{
     content: url("/icons/cross-white.png");
 }
 
 @media(max-width: 1080px){
-    .match-form{
+    .admin-match-form{
         width: 40%;
     }
 }
 
 @media(max-width: 720px){
-    .match-form{
+    .admin-match-form{
         width: 50%;
     }
 }
 
 @media(max-width: 564px){
-    .match-form{
+    .admin-match-form{
         width: 100%;
     }
 
-    .match-header{
+    .admin-match-header{
         flex-direction: column;
         gap: 16px;
         align-items: start;

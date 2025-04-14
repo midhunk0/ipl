@@ -19,6 +19,8 @@ import { Match as AdminMatch } from "./pages/admin/match/Match";
 import { Stats as AdminStats } from "./pages/admin/stats/Stats";
 import { Dashboard } from "./pages/user/Dashboard";
 import { ToastContainer } from "react-toastify";
+import { Results as AdminResults} from "./pages/admin/results/Results";
+import { Results } from "./pages/user/results/Results";
 
 function App(){
     return(
@@ -32,6 +34,7 @@ function App(){
                             <Route path="team" element={<Team/>}/>
                             <Route path="matches" element={<Matches/>}/>
                             <Route path="matches/:matchId" element={<Match/>}/>
+                            <Route path="results" element={<Results/>}/>
                             <Route path="stats" element={<Stats/>}/>
                         </Route>
                         <Route path="/register" element={<Register/>}/>
@@ -46,6 +49,7 @@ function App(){
                             <Route path="team" element={<AdminTeam/>}/>
                             <Route path="matches" element={<AdminMatches/>}/>
                             <Route path="matches/:matchId" element={<AdminMatch/>}/>
+                            <Route path="results" element={<AdminResults/>}/>
                             <Route path="stats" element={<AdminStats/>}/>
                         </Route>
                     </Routes>

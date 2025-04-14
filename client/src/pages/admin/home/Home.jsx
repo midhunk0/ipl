@@ -84,21 +84,21 @@ export function Home(){
     }
 
     return(
-        <div className="home">
-            <div className="home-header">
+        <div className="admin-home">
+            <div className="admin-home-header">
                 <h1>IPL {season.year}</h1>
                 {!showForm && 
-                    <div className="home-buttons">
-                        <button className="green-button home-add-team-button" onClick={()=>setShowForm(prev=>!prev)}>
+                    <div className="admin-home-buttons">
+                        <button className="green-button admin-home-add-team-button" onClick={()=>setShowForm(prev=>!prev)}>
                             <img src="/icons/plus-black.png" alt="add" className="icon"/>
                             <span>add new team</span>
                         </button>
-                        <button className="home-table-switch-button" onClick={()=>setTableSwitch(prev=>!prev)}>switch table</button>
+                        <button className="admin-home-table-switch-button" onClick={()=>setTableSwitch(prev=>!prev)}>switch table</button>
                     </div>
                 }
             </div>
             {!showForm ? (
-                <div className="home-details">
+                <div className="admin-home-details">
                     {tableSwitch ? 
                         <PointTable teamDest="/admin/team" matchDest="/admin/matches"/>
                     : 
@@ -106,7 +106,7 @@ export function Home(){
                     }
                 </div>
             ) : (
-                <form className="home-add-team-form" onSubmit={handleAddTeam} method="POST">
+                <form className="admin-home-add-team-form" onSubmit={handleAddTeam} method="POST">
                     <h2>add new team</h2>
                     <div className="input-container">
                         <label htmlFor="name">name</label>
@@ -119,27 +119,27 @@ export function Home(){
                     <div className="input-container">
                         <label htmlFor="home">home</label>
                         {teamData.home.map((home, index)=>(
-                            <div key={index} className="home-input-wrapper">
+                            <div key={index} className="admin-home-input-wrapper">
                                 <input type="text" value={home} id="home" onChange={(e)=>handleHomeChange(index, e.target.value)} />
                                 {index==0 && (
-                                    <button type="button" className="green-button home-add-home-button" onClick={handleHomeAdd}>
+                                    <button type="button" className="green-button admin-home-add-home-button" onClick={handleHomeAdd}>
                                         <img src="/icons/plus-black.png" alt="add" className="icon"/>
                                     </button>
                                 )}
                                 {index>0 && (
-                                    <button type="button" className="red-button home-remove-home-button" onClick={()=>handleHomeRemove(index)}>
+                                    <button type="button" className="red-button admin-home-remove-home-button" onClick={()=>handleHomeRemove(index)}>
                                         <img src="/icons/trash-red.png" alt="delete" className="icon"/>
                                     </button>
                                 )}
                             </div>
                         ))}
                     </div>
-                    <div className="home-form-buttons">
-                        <button className="black-button home-close-button" type="button" onClick={()=>setShowForm(prev=>!prev)}>
+                    <div className="admin-home-form-buttons">
+                        <button className="black-button admin-home-close-button" type="button" onClick={()=>setShowForm(prev=>!prev)}>
                             <img src="/icons/cross-black.png" alt="close" className="icon"/>
                             <span>close</span>
                         </button>
-                        <button className="green-button home-add-team-button" type="submit">
+                        <button className="green-button admin-home-add-team-button" type="submit">
                             <img src="/icons/plus-black.png" alt="add" className="icon"/>
                             <span>add new team</span>
                         </button>
