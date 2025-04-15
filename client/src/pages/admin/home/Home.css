@@ -64,11 +64,11 @@
     margin-top: 0;
 }
 
-.admin-home-add-admin-home-button:hover img{
+.admin-home-add-home-button:hover img{
     content: url("/icons/plus-white.png");
 }
 
-.admin-home-remove-admin-home-button:hover img{
+.admin-home-remove-home-button:hover img{
     content: url("/icons/trash-white.png");
 }
 
