@@ -20,7 +20,7 @@ export function Dashboard(){
                     <li className={`admin-topbar-item ${active==="stats" ? "active" : ""}`} onClick={()=>navigate("/admin/stats")}>stats</li>
                 </ul>
                 <div className="admin-topbar-menu">
-                    <div className="admin-topbar-menu-icons">admin-
+                    <div className="admin-topbar-menu-icons">
                         <img src={show ? `/icons/cross-black.png` : `/icons/menu-black.png`} alt={show ? "close" : "menu"} className={`admin-topbar-icon ${show ? "close" : "menu"}`} onClick={()=>setShow(prev=>!prev)}/>
                     </div>
                     {show && 
