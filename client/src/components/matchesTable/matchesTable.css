@@ -142,8 +142,8 @@
 }
 
 .matchesTable-heading-potm, .matchesTable-match-potm{
-    width: 300px;
-    min-width: 300px;
+    width: 310px;
+    min-width: 310px;
     border-left: 1px solid var(--black);
 }
 

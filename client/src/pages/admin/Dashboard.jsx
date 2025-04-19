@@ -24,7 +24,7 @@ export function Dashboard(){
                         <img src={show ? `/icons/cross-black.png` : `/icons/menu-black.png`} alt={show ? "close" : "menu"} className={`admin-topbar-icon ${show ? "close" : "menu"}`} onClick={()=>setShow(prev=>!prev)}/>
                     </div>
                     {show && 
-                        <ul className="tadmin-opbar-menu-items">
+                        <ul className="admin-topbar-menu-items">
                             <li className={`admin-topbar-menu-item ${active==="admin" ? "active" : ""}`} onClick={()=>{ navigate("/admin"); setShow(prev=>!prev) }}>home</li>
                             <li className={`admin-topbar-menu-item ${active==="point-table" || active==="team" ? "active" : ""}`} onClick={()=>{ navigate("/admin/point-table"); setShow(prev=>!prev) }}>point table</li>
                             <li className={`admin-topbar-menu-item ${location.pathname.startsWith("/admin/matches") ? "active" : ""}`} onClick={()=>{ navigate("/admin/matches"); setShow(prev=>!prev) }}>matches</li>

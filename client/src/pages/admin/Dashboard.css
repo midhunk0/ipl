@@ -26,10 +26,16 @@
     padding: 16px;
     text-transform: capitalize;
     cursor: pointer;
+    border: 1px solid var(--white);
+}
+
+.admin-topbar-item:hover{
+    border: 1px solid var(--black);
 }
 
 .admin-topbar-item.active{
     background-color: var(--black);
+    border: 1px solid var(--black);
     color: var(--white);
 }
 
@@ -77,11 +83,17 @@
     padding: 16px;
     text-transform: capitalize;
     cursor: pointer;
+    border: 1px solid var(--white);
 }
 
 .admin-topbar-menu-item.active{
     background-color: var(--black);
+    border: 1px solid var(--black);
     color: var(--white);
+}
+
+.admin-topbar-menu-item:hover{
+    border: 1px solid var(--black);
 }
 
 .admin-outlet{
