@@ -123,7 +123,7 @@ export function Matches(){
         }
     }
 
-    const remainingMatches=[...matches.filter(match=>match.result.won.short==="")];
+    const remainingMatches=[...matches.filter(match=>match.result.won.short==="" && !match.result.draw.status)];
 
     return(
         <div className="admin-matches">

@@ -621,9 +621,6 @@ async function addResult(req, res){
         }
 
         const oversToBalls=(overs)=>{
-            // const fullOvers=Math.floor(overs);
-            // const balls=Math.round((overs-fullOvers)*10);
-            // return fullOvers*6+balls;
             const oversStr=overs.toString();
             const [fullOvers, balls]=oversStr.split(".").map(Number);
             return (fullOvers*6)+(balls||0);

@@ -43,7 +43,7 @@ export function MatchDetails({ match }){
                         <img src={`/logos/${match.team.short}.png`} className="matchDetails-logo"/>
                         <p>{match.team.short}</p> 
                     </div>
-                    <p>{match.result.draw.reason}</p>
+                    <p>Match draw {match.result.draw.reason}</p>
                     <div className="matchDetails-opponent">
                         <img src={`/logos/${match.opponent.short}.png`} className="matchDetails-logo"/>
                         <p>{match.opponent.short}</p> 

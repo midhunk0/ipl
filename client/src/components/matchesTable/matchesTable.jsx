@@ -23,8 +23,6 @@ export function MatchesTable({matches, dest, type}){
         }).replace(/\//g, "-");   
     }
 
-    // const remainingMatches=[...matches.filter(match=>match.result.won.short==="")];
-
     return(
         matches && matches.length>0 ? (
             <div className="matchesTable">

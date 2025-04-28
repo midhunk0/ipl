@@ -10,7 +10,7 @@ export function Matches(){
         return;
     }
     const matches=season.matches;
-    const remainingMatches=[...matches.filter(match=>match.result.won.short==="")];
+    const remainingMatches=[...matches.filter(match=>match.result.won.short==="" && !match.result.draw.status)];
 
     return(
         <div className="matches">

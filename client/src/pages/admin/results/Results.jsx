@@ -10,7 +10,7 @@ export function Results(){
         return;
     }
     const matches=season.matches;
-    const results=[...matches.filter(match=>match.result.won.short!=="")].reverse();
+    const results=[...matches.filter(match=>match.result.won.short!=="" || match.result.draw.status)].reverse();
 
     return(
         <div className="admin-results">
