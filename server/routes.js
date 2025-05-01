@@ -17,7 +17,13 @@ const {
     checkAuth, 
     editMatch,
     addStats,
-    addMatches, 
+    addMatches,
+    setPlayoffSchedule,
+    addQ1andEliminator,
+    addQ1Result,
+    addEliminatorResult,
+    addQ2Result,
+    addFinalResult, 
 }=require("./controller");
 const { upload } = require("./upload");
 const router=express.Router();
@@ -40,5 +46,11 @@ router.delete("/deleteMatch/:year/:matchId", deleteMatch);
 router.post("/addResult/:year/:matchId", addResult);
 router.post("/addStats/:year", addStats);
 router.post("/addMatches/:year", upload.single("file"), addMatches);
+router.post("/setPlayoffSchedule/:year", setPlayoffSchedule);
+router.post("/addQ1andEliminator/:year", addQ1andEliminator);
+router.post("/addQ1Result/:year", addQ1Result);
+router.post("/addEliminatorResult/:year", addEliminatorResult);
+router.post("/addQ2Result/:year", addQ2Result);
+router.post("/addFinalResult/:year", addFinalResult);
 
 module.exports=router;

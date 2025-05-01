@@ -106,7 +106,7 @@ export function Team(){
             const result=await response.json();
             if(response.ok){
                 setSeason(result.season)
-                navigate("/admin/season");
+                navigate("/admin/point-table");
                 toast.success(result.message);
             }
             else{

@@ -51,8 +51,17 @@ export function Match(){
         return;
     }
     const teams=season.teams;
-    const matches=season.matches;
-    
+    const leagueMatches=season.matches;
+    const playoffs=season.playoffs;
+
+    const playoffMatches={
+        qualifier1: playoffs.qualifier1,
+        eliminator: playoffs.eliminator,
+        qualifier2: playoffs.qualifier2,
+        final: playoffs.final
+    };
+
+    const matches=[...leagueMatches, ...Object.values(playoffMatches)];    
     const match=matches.find(match=>match._id===matchId);
     if(!match){
         return;
@@ -64,8 +73,18 @@ export function Match(){
     
     async function handleAddResult(e){
         e.preventDefault();
+        let url;
+        switch(match.type){
+            case "league": url="addResult"; break;
+            case "qualifier1": url="addQ1Result"; break;
+            case "eliminator": url="addEliminatorResult"; break;
+            case "qualifier2": url="addQ2Result"; break;
+            case "final": url="addFinalResult"; break;
+            default: url="addResult"; break;
+        }
+
         try{
-            const response=await fetch(`${apiUrl}/addResult/${year}/${matchId}`, {
+            const response=await fetch(`${apiUrl}/${url}/${year}/${url==="league" ? matchId : ""}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(matchResult),
@@ -226,7 +245,7 @@ export function Match(){
     return(
         <div className="admin-match">
             <div className="admin-match-header">
-                <h1>{match.team.short} v/s {match.opponent.short}</h1>
+                <h1>{match.team.short || "TBD"} v/s {match.opponent.short || "TBD"}</h1>
                 {!showEditForm && updateResult &&
                     <div className="admin-match-buttons">
                         {!match.result.draw.reason && !match.result.won.short && 

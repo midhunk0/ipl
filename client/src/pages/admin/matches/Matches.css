@@ -11,7 +11,6 @@
     align-items: center;
 }
 
-
 .admin-matches-buttons{
     display: flex;
     gap: 16px;
@@ -39,6 +38,22 @@
     content: url("/icons/check-white.png");
 }
 
+.admin-matches-set-playoff-button:hover img{
+    content: url("/icons/trophy-white.png");
+}
+
+.admin-matches-set-playoff-matches-button:hover img{
+    content: url("/icons/trophy-white.png");
+}
+
+.admin-matches-playoff-close-button:hover img{
+    content: url("/icons/cross-white.png");
+}
+
+.admin-matches-set-button:hover img{
+    content: url("/icons/check-white.png");
+}
+
 .admin-matches-upload-form{
     display: flex;
     flex-direction: column;
@@ -50,14 +65,14 @@
     cursor: pointer;;
 }
 
-.admin-matches-add-form{
+.admin-matches-add-form, .admin-matches-set-playoff{
     display: flex;
     flex-direction: column;
     width: 25%;
     gap: 16px;
 }
 
-.admin-matches-form-buttons{
+.admin-matches-form-buttons, .admin-matches-playoff-buttons{
     display: flex;
     gap: 16px;
 }
@@ -72,7 +87,7 @@
 }
 
 @media(max-width: 1080px){
-    .admin-matches-add-form, .admin-matches-upload-form{
+    .admin-matches-add-form, .admin-matches-upload-form, .admin-matches-set-playoff{
         width: 40%;
     }
 }
@@ -86,13 +101,13 @@
 }
 
 @media(max-width: 720px){
-    .admin-matches-add-form, .admin-matches-upload-form{    
+    .admin-matches-add-form, .admin-matches-upload-form, .admin-matches-set-playoff{    
         width: 50%;
     }
 }
 
 @media(max-width: 564px){
-    .admin-matches-add-form, .admin-matches-upload-form{
+    .admin-matches-add-form, .admin-matches-upload-form, .admin-matches-set-playoff{
         width: 100%;
     }
 }

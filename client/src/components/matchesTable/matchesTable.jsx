@@ -44,13 +44,13 @@ export function MatchesTable({matches, dest, type}){
                         <p className="matchesTable-match-no">{match.number}</p>                        
                         <div className={`matchesTable-match-teams ${width<720 || type!=="matchesTable" ? "" : "big"}`} onClick={()=>navigate(`${dest}/${match._id}`)}>
                             <div className={`matchTable-match-team ${width<720 || type!=="matchesTable"  ? "" : "big"}`}>
-                                <img src={`/logos/${match.team.short}.png`} alt="logo"/>
-                                <p>{width<720 || type!=="matchesTable"  ? match.team.short : match.team.name}</p> 
+                                <img src={match.team.short ? `/logos/${match.team.short}.png` : `/logos/tbd.png`} alt="logo"/>
+                                {match.team.short ? <p>{width<720 || type!=="matchesTable"  ? match.team.short : match.team.name}</p> : <p>{width<720 ? "TBD" : "to be defined"}</p>}
                             </div>
                             <span>v/s</span> 
                             <div className={`matchTable-match-opponent ${width<720 || type!=="matchesTable"  ? "" : "big"}`}>
-                                <p>{width<720 || type!=="matchesTable"  ? match.opponent.short : match.opponent.name}</p>
-                                <img src={`/logos/${match.opponent.short}.png`} alt="logo"/>
+                                {match.opponent.short ? <p>{width<720 || type!=="matchesTable"  ? match.opponent.short : match.opponent.name}</p> : <p>{width<720 ? "TBD" : "to be defined"}</p>}
+                                <img src={match.opponent.short ? `/logos/${match.opponent.short}.png` : `/logos/tbd.png`} alt="logo"/>
                             </div>
                         </div>
                         <p className="matchesTable-match-date">{getFormatedDate(match.date)}</p>

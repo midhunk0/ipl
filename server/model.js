@@ -2,16 +2,16 @@ const mongoose=require("mongoose");
 
 const matchSchema=new mongoose.Schema({
     team: { 
-        name: { type: String, required: true }, 
-        short: { type: String, required: true }
+        name: { type: String, default: "" }, 
+        short: { type: String, default: "" }
     },
     opponent: { 
-        name: { type: String, required: true }, 
-        short: { type: String, required: true }
+        name: { type: String, default: "" }, 
+        short: { type: String, default: "" }
     },
-    venue: { type: String, required: true },
-    date: { type: Date, required: true },
-    time: { type: String, required: true },
+    venue: { type: String, default: "" },
+    date: { type: Date, default: "" },
+    time: { type: String, default: "" },
     result: {
         score: {
             team: { 
@@ -39,8 +39,48 @@ const matchSchema=new mongoose.Schema({
             reason: { type: String, default: "" }
         }
     },
-    number: { type: Number, required: true }
+    number: { type: Number, default: 0 },
+    type: { 
+        type: String, 
+        enum: ["league", "qualifier1", "eliminator", "qualifier2", "final"], 
+        default: "league"
+    }      
 });
+
+const playoffsSchema=new mongoose.Schema({
+    qualifier1: {
+        type: matchSchema,
+        default: {}
+    },
+    eliminator: {
+        type: matchSchema,
+        default: {}
+    },
+    qualifier2: {
+        type: matchSchema,
+        default: {}
+    },
+    final: {
+        type: matchSchema,
+        default: {}
+    },
+    fourth: {
+        name: { type: String, default: "" }, 
+        short: { type: String, default: "" }
+    },
+    third: {
+        name: { type: String, default: "" }, 
+        short: { type: String, default: "" }
+    },
+    second: {
+        name: { type: String, default: "" }, 
+        short: { type: String, default: "" }
+    },
+    first: {
+        name: { type: String, default: "" }, 
+        short: { type: String, default: "" }
+    }
+})
 
 const teamSchema=new mongoose.Schema({
     name: { type: String, required: true, unique: true },
@@ -106,7 +146,8 @@ const iplSchema=new mongoose.Schema({
     year: { type: Number, required: true, unique: true },
     teams: [teamSchema],
     stats: { type: statsSchema, default: {} },
-    matches: [matchSchema]
+    matches: [matchSchema],
+    playoffs: { type: playoffsSchema, default: {} }
 });
 
 const adminSchema=new mongoose.Schema({

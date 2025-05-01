@@ -25,6 +25,8 @@ export function PointTable({ teamDest, matchDest }){
         return <p>No Season</p>;
     }
 
+    const matchesPerTeam=season?.teams.length>0 && season.teams[0].matches.length;
+
     return(
         <>
             {season.teams && season.teams.length>0 ? (
@@ -46,13 +48,13 @@ export function PointTable({ teamDest, matchDest }){
                     </div>
                     <div className="pointTable-team-results-container">
                         <div className="pointTable-heading">
-                        {[...Array(14)].map((_, index)=>(
+                        {[...Array(matchesPerTeam)].map((_, index)=>(
                             <p  key={index} className="pointTable-heading-result">{index+1}</p>
                         ))}
                         </div>
                         {season.teams.map((team, index)=>(
                             <div className="pointTable-team-results" key={index}>
-                                {[...Array(14)].map((_, index)=>(
+                                {[...Array(matchesPerTeam)].map((_, index)=>(
                                     <div key={index} className={`pointTable-team-result ${team.matches[index]?.matchId ? "" : "no-match"}`} onClick={()=>{team.matches[index]?.matchId && navigate(`${matchDest}/${team.matches[index]?.matchId}`)}}>
                                         <div className="pointTable-team-point">
                                         {team.matches[index]?.point!==undefined ? (()=>{

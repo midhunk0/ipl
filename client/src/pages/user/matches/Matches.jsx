@@ -9,8 +9,19 @@ export function Matches(){
     if(!season){
         return;
     }
-    const matches=season.matches;
-    const remainingMatches=[...matches.filter(match=>match.result.won.short==="" && !match.result.draw.status)];
+
+    const leagueMatches=season.matches;
+    const playoffs=season.playoffs;
+
+    const playoffMatches={
+        qualifier1: playoffs.qualifier1,
+        eliminator: playoffs.eliminator,
+        qualifier2: playoffs.qualifier2,
+        final: playoffs.final
+    };
+
+    const matches=[...leagueMatches, ...Object.values(playoffMatches)];
+    const remainingMatches=[...matches.filter(match=>match?.result?.won?.short==="" && !match?.result?.draw?.status)];
 
     return(
         <div className="matches">

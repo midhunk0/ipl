@@ -9,8 +9,19 @@ export function Results(){
     if(!season){
         return;
     }
-    const matches=season.matches;
-    const results=[...matches.filter(match=>match.result.won.short!=="" || match.result.draw.status)].reverse();
+
+    const leagueMatches=season.matches;
+    const playoffs=season.playoffs;
+
+    const playoffMatches={
+        qualifier1: playoffs.qualifier1,
+        eliminator: playoffs.eliminator,
+        qualifier2: playoffs.qualifier2,
+        final: playoffs.final
+    };
+
+    const matches=[...leagueMatches, ...Object.values(playoffMatches)];
+    const results=[...matches.filter(match=>match?.result?.won?.short!=="" || match?.result?.draw?.status)].reverse();
 
     return(
         <div className="admin-results">

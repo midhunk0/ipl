@@ -105,8 +105,8 @@ async function addSeason(req, res){
 
         const season={ 
             year, 
-            teams: [], 
-            stats: {} 
+            // teams: [], 
+            // stats: {} 
         };
         admin.ipl.push(season);
         await admin.save();
@@ -354,6 +354,80 @@ async function addMatch(req, res){
         return res.status(500).json({ message: error.message });
     }
 };
+
+async function addMatches(req, res){
+    try{
+        if(!req.file){
+            return res.status(400).json({ message: "File is required" });
+        }
+    
+        const admin=await Admin.findOne();
+        if(!admin){
+            return res.status(400).json({ message: "Admin not found" });
+        }
+    
+        const { year }=req.params;
+        const season=admin.ipl.find(season=>season.year===Number(year));
+        if(!season){
+            return res.status(400).json({ message: "Season does not exist" });
+        }
+    
+        const workBook=xlsx.read(req.file.buffer);
+        const workSheet=workBook.Sheets[workBook.SheetNames[0]];
+        const jsonData=xlsx.utils.sheet_to_json(workSheet);
+    
+        for(const match of jsonData){
+            const { teamShort, opponentShort, venue, number }=match;
+            const rawDate=match.date;
+            const rawTime=match.time;
+            
+            const date=(typeof rawDate==="number") 
+                ? new Date((rawDate - 25569)*86400*1000) 
+                : new Date(rawDate);
+            
+            const time=(typeof rawTime==="number") 
+                ? new Date((rawTime*86400*1000)).toISOString().split("T")[1].slice(0, 5)
+                : rawTime || "19:30";         
+    
+            if(!teamShort || !opponentShort || !venue || !date || !time || !number){
+                continue; 
+            }
+    
+            const team=season.teams.find(t=>t.short===teamShort);
+            const opponent=season.teams.find(t=>t.short===opponentShort);
+            if(!team || !opponent) continue;
+    
+            const matchExists=season.matches.some(m=>
+                new Date(m.date).toISOString().split("T")[0]===date.toISOString().split("T")[0] &&
+                m.team?.short===teamShort &&
+                m.opponent?.short===opponentShort
+            );
+            if(matchExists) continue;
+    
+            season.matches.push({
+                team: { name: team.name, short: teamShort },
+                opponent: { name: opponent.name, short: opponentShort },
+                date,
+                time,
+                venue,
+                number
+            });
+    
+            const newMatch=season.matches[season.matches.length-1];
+            const matchId=newMatch._id.toString();
+    
+            team.matches.push({ matchId, date });
+            opponent.matches.push({ matchId, date });
+        }
+    
+        await admin.save();
+        return res.status(200).json({ message: "Matches added successfully" });
+    } 
+    catch(error){
+        console.error("Add Matches Error:", error);
+        return res.status(500).json({ message: error.message });
+    }
+}
 
 async function fetchMatches(req, res){
     try{
@@ -613,7 +687,7 @@ async function addResult(req, res){
         if(!score.team || !score.opponent){
             return res.status(400).json({ message: "Scores for both team are required" });
         }
-        if(!score.team.runs || !score.team.wickets || !score.team.overs || !score.opponent.runs || !score.opponent.wickets || !score.opponent.overs){
+        if(score.team.runs===undefined || score.team.wickets===undefined || score.team.overs===undefined || score.opponent.runs===undefined || score.opponent.wickets===undefined || score.opponent.overs===undefined){
             return res.status(400).json({ message: "Complete score details are required"});
         }
         if(!playerOfTheMatch.name || !playerOfTheMatch.for){
@@ -767,80 +841,308 @@ async function addStats(req, res){
     }
 }
 
-async function addMatches(req, res){
+async function setPlayoffSchedule(req, res){
     try{
-        if(!req.file){
-            return res.status(400).json({ message: "File is required" });
-        }
-    
         const admin=await Admin.findOne();
         if(!admin){
             return res.status(400).json({ message: "Admin not found" });
         }
-    
         const { year }=req.params;
-        const season=admin.ipl.find(season=>season.year===Number(year));
+        const season=admin.ipl.find(season=>season.year===new Date(year).getFullYear());
         if(!season){
-            return res.status(400).json({ message: "Season does not exist" });
+            return res.status(400).json({ message: "Season not found" });
         }
-    
-        const workBook=xlsx.read(req.file.buffer);
-        const workSheet=workBook.Sheets[workBook.SheetNames[0]];
-        const jsonData=xlsx.utils.sheet_to_json(workSheet);
-    
-        for(const match of jsonData){
-            const { teamShort, opponentShort, venue, number }=match;
-            const rawDate=match.date;
-            const rawTime=match.time;
-            
-            const date=(typeof rawDate==="number") 
-                ? new Date((rawDate - 25569)*86400*1000) 
-                : new Date(rawDate);
-            
-            const time=(typeof rawTime==="number") 
-                ? new Date((rawTime*86400*1000)).toISOString().split("T")[1].slice(0, 5)
-                : rawTime || "19:30";         
-    
-            if(!teamShort || !opponentShort || !venue || !date || !time || !number){
-                continue; 
-            }
-    
-            const team=season.teams.find(t=>t.short===teamShort);
-            const opponent=season.teams.find(t=>t.short===opponentShort);
-            if(!team || !opponent) continue;
-    
-            const matchExists=season.matches.some(m=>
-                new Date(m.date).toISOString().split("T")[0]===date.toISOString().split("T")[0] &&
-                m.team?.short===teamShort &&
-                m.opponent?.short===opponentShort
-            );
-            if(matchExists) continue;
-    
-            season.matches.push({
-                team: { name: team.name, short: teamShort },
-                opponent: { name: opponent.name, short: opponentShort },
-                date,
-                time,
-                venue,
-                number
-            });
-    
-            const newMatch=season.matches[season.matches.length-1];
-            const matchId=newMatch._id.toString();
-    
-            team.matches.push({ matchId, date });
-            opponent.matches.push({ matchId, date });
+        const totalLeagueMatches=season.matches.length;
+        const { qualifier1, eliminator, qualifier2, final }=req.body;
+        if(!qualifier1 || !eliminator || !qualifier2 || !final){
+            return res.status(400).json({ message: "Playoffs details are required" });
         }
-    
+        if(!qualifier1.date || !qualifier1.time || !qualifier1.venue){
+            return res.status(400).json({ message: "Date, time and venue for qualifier 1 are required" });
+        }
+        if(!eliminator.date || !eliminator.time || !eliminator.venue){
+            return res.status(400).json({ message: "Date, time and venue for eliminator are required" });
+        }
+        if(!qualifier2.date || !qualifier2.time || !qualifier2.venue){
+            return res.status(400).json({ message: "Date, time and venue for qualifier 2 are required" });
+        }
+        if(!final.date || !final.time || !final.venue){
+            return res.status(400).json({ message: "Date, time and venue for final are required" });
+        }
+
+        season.playoffs.qualifier1={ date: qualifier1.date, time: qualifier1.time, venue: qualifier1.venue, number: totalLeagueMatches+1, type: "qualifier1" };
+        season.playoffs.eliminator={ date: eliminator.date, time: eliminator.time, venue: eliminator.venue, number: totalLeagueMatches+2, type: "eliminator" };
+        season.playoffs.qualifier2={ date: qualifier2.date, time: qualifier2.time, venue: qualifier2.venue, number: totalLeagueMatches+3, type: "qualifier2" };
+        season.playoffs.final={ date: final.date, time: final.time, venue: final.venue, number: totalLeagueMatches+4, type: "final" };
+
         await admin.save();
-        return res.status(200).json({ message: "Matches added successfully" });
-    } 
+        return res.status(200).json({ message: "Playoffs scheduled" });
+    }
     catch(error){
-        console.error("Add Matches Error:", error);
         return res.status(500).json({ message: error.message });
     }
 }
-  
+
+async function addQ1andEliminator(req, res){
+    try{
+        const admin=await Admin.findOne();
+        if(!admin){
+            return res.status(400).json({ message: "Admin not found" });
+        }
+        const { year }=req.params;
+        const season=admin.ipl.find(season=>season.year===new Date(year).getFullYear());
+        if(!season){
+            return res.status(400).json({ message: "Season not found" });
+        }
+        const totalLeagueMatches=season.matches.length;
+        const totalLeagueMatchesPlayed=season.matches.filter(match=>match.result.won.short || match.result.draw.status).length;
+        if(totalLeagueMatchesPlayed<totalLeagueMatches){
+            return res.status(400).json({ message: "League not completed" });
+        }
+        const sortedTeams=[...season.teams].sort((a, b)=>{
+            if(b.points===a.points){
+                return b.netRunRate - a.netRunRate;
+            }
+            return b.points - a.points;
+        });
+        const [first, second, third, fourth]=sortedTeams;
+
+        season.playoffs.qualifier1.team={ name: first.name, short: first.short };
+        season.playoffs.qualifier1.opponent={ name: second.name, short: second.short };
+        season.playoffs.eliminator.team={ name: third.name, short: third.short };
+        season.playoffs.eliminator.opponent={ name: fourth.name, short: fourth.short };
+
+        await admin.save();
+        return res.status(200).json({ message: "Qualifier1 and eliminator are set" });
+    }   
+    catch(error){
+        return res.status(500).json({ message: error.message });
+    }
+}
+
+async function addQ1Result(req, res){
+    try{
+        const admin=await Admin.findOne();
+        if(!admin){
+            return res.status(400).json({ message: "Admin not found" });
+        }
+        const { year }=req.params;
+        const season=admin.ipl.find(season=>season.year===new Date(year).getFullYear());
+        if(!season){
+            return res.status(400).json({ message: "Season not found" });
+        }
+
+        const { wonShort, wonBy, playerOfTheMatch, score, reason }=req.body;
+
+        if(!wonShort || !wonBy || !playerOfTheMatch || !score){
+            return res.status(400).json({ message: "Result details are required" });
+        }
+        if(!score.team || !score.opponent){
+            return res.status(400).json({ message: "Scores for both team are required" });
+        }
+        if(score.team.runs===undefined || score.team.wickets===undefined || score.team.overs===undefined || score.opponent.runs===undefined || score.opponent.wickets===undefined || score.opponent.overs===undefined){
+            return res.status(400).json({ message: "Complete score details are required"});
+        }
+        if(!playerOfTheMatch.name || !playerOfTheMatch.for){
+            return res.status(400).json({ message: "Player of the match details are required" })
+        }
+        const q1=season.playoffs.qualifier1;
+        q1.result={
+            won: {
+                name: wonShort===q1.team.short ? q1.team.name : q1.opponent.name,
+                short: wonShort
+            },
+            wonBy,
+            playerOfTheMatch,
+            score
+        };
+        let winner, loser;
+        if(q1.team.short===wonShort){
+            winner=q1.team;
+            loser=q1.opponent;
+        }
+        else{
+            winner=q1.opponent;
+            loser=q1.team;
+        }
+        season.playoffs.final.team={ name: winner.name, short: winner.short };
+        season.playoffs.qualifier2.team={ name: loser.name, short: loser.short };
+
+        await admin.save();
+        return res.status(200).json({ message: "Qualifier 1 result added and final and qualifier 2 updated" });
+    }
+    catch(error){
+        return res.status(500).json({ message: error.message });
+    }
+}
+
+async function addEliminatorResult(req, res){
+    try{
+        const admin=await Admin.findOne();
+        if(!admin){
+            return res.status(400).json({ message: "Admin not found" });
+        }
+        const { year }=req.params;
+        const season=admin.ipl.find(season=>season.year===new Date(year).getFullYear());
+        if(!season){
+            return res.status(400).json({ message: "Season not found" });
+        }
+
+        const { wonShort, wonBy, playerOfTheMatch, score, reason }=req.body;
+
+        if(!wonShort || !wonBy || !playerOfTheMatch || !score){
+            return res.status(400).json({ message: "Result details are required" });
+        }
+        if(!score.team || !score.opponent){
+            return res.status(400).json({ message: "Scores for both team are required" });
+        }
+        if(score.team.runs===undefined || score.team.wickets===undefined || score.team.overs===undefined || score.opponent.runs===undefined || score.opponent.wickets===undefined || score.opponent.overs===undefined){
+            return res.status(400).json({ message: "Complete score details are required"});
+        }
+        if(!playerOfTheMatch.name || !playerOfTheMatch.for){
+            return res.status(400).json({ message: "Player of the match details are required" })
+        }
+        const eliminator=season.playoffs.eliminator;
+        eliminator.result={
+            won: {
+                name: wonShort===eliminator.team.short ? eliminator.team.name : eliminator.opponent.name,
+                short: wonShort
+            },
+            wonBy,
+            playerOfTheMatch,
+            score
+        };        
+        let winner, loser;
+        if(eliminator.team.short===wonShort){
+            winner=eliminator.team;
+            loser=eliminator.opponent;
+        }
+        else{
+            winner=eliminator.opponent;
+            loser=eliminator.team;
+        }
+        season.playoffs.qualifier2.opponent={ name: winner.name, short: winner.short };
+        season.playoffs.fourth=loser;
+
+        await admin.save();
+        return res.status(200).json({ message: "Eliminator result added and fourth place and qualifier 2 updated" });
+    }
+    catch(error){
+        return res.status(500).json({ message: error.message });
+    }
+}
+
+async function addQ2Result(req, res){
+    try{
+        const admin=await Admin.findOne();
+        if(!admin){
+            return res.status(400).json({ message: "Admin not found" });
+        }
+        const { year }=req.params;
+        const season=admin.ipl.find(season=>season.year===new Date(year).getFullYear());
+        if(!season){
+            return res.status(400).json({ message: "Season not found" });
+        }
+
+        const { wonShort, wonBy, playerOfTheMatch, score, reason }=req.body;
+
+        if(!wonShort || !wonBy || !playerOfTheMatch || !score){
+            return res.status(400).json({ message: "Result details are required" });
+        }
+        if(!score.team || !score.opponent){
+            return res.status(400).json({ message: "Scores for both team are required" });
+        }
+        if(score.team.runs===undefined || score.team.wickets===undefined || score.team.overs===undefined || score.opponent.runs===undefined || score.opponent.wickets===undefined || score.opponent.overs===undefined){
+            return res.status(400).json({ message: "Complete score details are required"});
+        }
+        if(!playerOfTheMatch.name || !playerOfTheMatch.for){
+            return res.status(400).json({ message: "Player of the match details are required" })
+        }
+        const q2=season.playoffs.qualifier2;
+        q2.result={
+            won: {
+                name: wonShort===q2.team.short ? q2.team.name : q2.opponent.name,
+                short: wonShort
+            },
+            wonBy,
+            playerOfTheMatch,
+            score
+        };        
+        let winner, loser;
+        if(q2.team.short===wonShort){
+            winner=q2.team;
+            loser=q2.opponent;
+        }
+        else{
+            winner=q2.opponent;
+            loser=q2.team;
+        }
+        season.playoffs.final.opponent={ name: winner.name, short: winner.short };
+        season.playoffs.third=loser;
+        await admin.save();
+        return res.status(200).json({ message: "Qualifier 2 result added and final and third place updated" });
+    }
+    catch(error){
+        return res.status(500).json({ message: error.message });
+    }
+}
+
+async function addFinalResult(req, res){
+    try{
+        const admin=await Admin.findOne();
+        if(!admin){
+            return res.status(400).json({ message: "Admin not found" });
+        }
+        const { year }=req.params;
+        const season=admin.ipl.find(season=>season.year===new Date(year).getFullYear());
+        if(!season){
+            return res.status(400).json({ message: "Season not found" });
+        }
+
+        const { wonShort, wonBy, playerOfTheMatch, score, reason }=req.body;
+
+        if(!wonShort || !wonBy || !playerOfTheMatch || !score){
+            return res.status(400).json({ message: "Result details are required" });
+        }
+        if(!score.team || !score.opponent){
+            return res.status(400).json({ message: "Scores for both team are required" });
+        }
+        if(score.team.runs===undefined || score.team.wickets===undefined || score.team.overs===undefined || score.opponent.runs===undefined || score.opponent.wickets===undefined || score.opponent.overs===undefined){
+            return res.status(400).json({ message: "Complete score details are required"});
+        }
+        if(!playerOfTheMatch.name || !playerOfTheMatch.for){
+            return res.status(400).json({ message: "Player of the match details are required" })
+        }
+        const final=season.playoffs.final;
+        final.result={
+            won: {
+                name: wonShort===final.team.short ? final.team.name : final.opponent.name,
+                short: wonShort
+            },
+            wonBy,
+            playerOfTheMatch,
+            score
+        };
+        let winner, loser;
+        if(final.team.short===wonShort){
+            winner=final.team;
+            loser=final.opponent;
+        }
+        else{
+            winner=final.opponent;
+            loser=final.team;
+        }
+        season.playoffs.first=winner;
+        season.playoffs.second=loser;
+
+        await admin.save();
+        return res.status(200).json({ message: "Final result added and first and second position updated" });
+    }
+    catch(error){
+        return res.status(500).json({ message: error.message });
+    }
+}
+
 module.exports={
     registerAdmin,
     loginAdmin,
@@ -854,10 +1156,16 @@ module.exports={
     fetchTeam,
     deleteTeam,
     addMatch,
+    addMatches,
     editMatch,
     fetchMatches,
     deleteMatch,
     addResult,
     addStats,
-    addMatches
+    setPlayoffSchedule,
+    addQ1andEliminator,
+    addQ1Result,
+    addEliminatorResult,
+    addQ2Result,
+    addFinalResult,
 }
