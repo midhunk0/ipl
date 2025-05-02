@@ -84,7 +84,7 @@ export function Match(){
         }
 
         try{
-            const response=await fetch(`${apiUrl}/${url}/${year}/${url==="league" ? matchId : ""}`, {
+            const response=await fetch(`${apiUrl}/${url}/${year}/${url==="addResult" ? matchId : ""}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(matchResult),

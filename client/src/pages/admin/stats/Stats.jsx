@@ -201,23 +201,23 @@ export function Stats(){
             ):(
                 <form className="admin-stats-form" method="post" onSubmit={handleAddStats}>
                     <div className="input-container">
-                        <label htmlFor="champion">champion</label>
+                        <h3>champion</h3>
                         <input type="text" name="champion" id="champion" value={stats.champion} onChange={handleInputChange}/>
                     </div>
 
                     <div className="input-container">
-                        <label htmlFor="runnerUp">runner up</label>
+                        <h3>runner up</h3>
                         <input type="text" name="runnerUp" id="runnerUp" value={stats.runnerUp} onChange={handleInputChange}/>
                     </div>
                     
                     <div className="input-container">
-                        <label htmlFor="fairPlay">fair play award</label>
+                        <h3>fair play award</h3>
                         <input type="text" name="fairPlayAward" id="fairPlay" value={stats.fairPlayAward} onChange={handleInputChange}/>
                     </div>
                     
                     <div className="input-container">
-                        <label>orange cap</label>
-                        <div className="stats-expand">
+                        <h3>orange cap</h3>
+                        <div className="admin-stats-expand">
                             <div className="input-container">
                                 <label htmlFor="orangeCapName">name</label>
                                 <input type="text" name="name" id="orangeCapName" value={stats.orangeCap.name} onChange={handleInputOrangeCap}/>
@@ -234,7 +234,7 @@ export function Stats(){
                     </div>
                     
                     <div className="input-container">
-                        <label>purple cap</label>
+                        <h3>purple cap</h3>
                         <div className="admin-stats-expand">
                             <div className="input-container">
                                 <label htmlFor="purpleCapName">name</label>
@@ -252,7 +252,7 @@ export function Stats(){
                     </div>
 
                     <div className="input-container">
-                        <label>most 6s</label>
+                        <h3>most 6s</h3>
                         <div className="admin-stats-expand">
                             <div className="input-container">
                                 <label htmlFor="most6sName">name</label>
@@ -270,7 +270,7 @@ export function Stats(){
                     </div>
 
                     <div className="input-container">
-                        <label>most 4s</label>
+                        <h3>most 4s</h3>
                         <div className="admin-stats-expand">
                             <div className="input-container">
                                 <label htmlFor="most4sName">name</label>
@@ -288,7 +288,7 @@ export function Stats(){
                     </div>
 
                     <div className="input-container">
-                        <label>highest score</label>
+                        <h3>highest score</h3>
                         <div className="admin-stats-expand">
                             <div className="input-container">
                                 <label htmlFor="highestScoreName">name</label>
@@ -306,7 +306,7 @@ export function Stats(){
                     </div>
 
                     <div className="input-container">
-                        <label>most valuable player</label>
+                        <h3>most valuable player</h3>
                         <div className="admin-stats-expand">
                             <div className="input-container">
                                 <label htmlFor="MVPName">name</label>
@@ -320,7 +320,7 @@ export function Stats(){
                     </div>
 
                     <div className="input-container">
-                        <label>emerging player</label>
+                        <h3>emerging player</h3>
                         <div className="admin-stats-expand">
                             <div className="input-container">
                                 <label htmlFor="emergingPlayerName">name</label>

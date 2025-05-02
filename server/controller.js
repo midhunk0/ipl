@@ -1134,6 +1134,8 @@ async function addFinalResult(req, res){
         }
         season.playoffs.first=winner;
         season.playoffs.second=loser;
+        season.stats.champion=winner.name;
+        season.stats.runnerUp=loser.name;
 
         await admin.save();
         return res.status(200).json({ message: "Final result added and first and second position updated" });

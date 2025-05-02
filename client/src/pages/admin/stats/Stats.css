@@ -14,9 +14,9 @@
 .admin-stats-expand{
     display: flex;
     flex-direction: column;
-    padding: 16px;
+    /* padding: 16px; */
     gap: 16px;
-    border: 1px solid var(--black);
+    /* border: 1px solid var(--black); */
 }
 
 .admin-stats-buttons{
