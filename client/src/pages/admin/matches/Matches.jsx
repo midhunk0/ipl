@@ -12,7 +12,6 @@ export function Matches(){
         ? import.meta.env.VITE_APP_DEV_URL 
         : import.meta.env.VITE_APP_PROD_URL
   
-    // const [showForm, setShowForm]=useState(false);
     const [matchData, setMatchData]=useState({
         teamShort: "",
         opponentShort: "",
@@ -49,8 +48,6 @@ export function Matches(){
     const [showOptions2, setShowOptions2]=useState(false);
     const [showOptions3, setShowOptions3]=useState(false);
     const [showOptions4, setShowOptions4]=useState(false);
-    // const [showUpload, setShowUpload]=useState(false);
-    // const [addPlayoff, setAddPlayoff]=useState(false);
     const [viewMode, setViewMode]=useState("");
     const { season, fetchSeason }=useSeason();
     if(!season){
@@ -112,7 +109,6 @@ export function Matches(){
             });
             const result=await response.json();
             if(response.ok){
-                // setShowForm(false);
                 setViewMode("");
                 fetchSeason();
                 toast.success(result.message);
@@ -149,7 +145,6 @@ export function Matches(){
             });
             const result=await response.json();
             if(response.ok){
-                // setShowUpload(false);
                 setViewMode("")
                 fetchSeason();
                 toast.success(result.message);
@@ -222,7 +217,7 @@ export function Matches(){
                             <img src="/icons/check-black.png" alt="add" className="icon"/>
                             <span>add all matches</span>
                         </button>
-                        {season.playoffs.qualifier1.date==="" ? 
+                        {season.playoffs.qualifier1.venue==="" ? 
                             <button type="button" className="green-button admin-matches-set-playoff-button" onClick={()=>setViewMode("playoff")}>
                                 <img src="/icons/trophy-black.png" alt="add" className="icon"/>
                                 <span>set playoff details</span>

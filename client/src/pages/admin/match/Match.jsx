@@ -301,7 +301,7 @@ export function Match(){
                         </div>
                     </div>
                     <div className="input-container">
-                        <label htmlFor="venue">venue</label>z
+                        <label htmlFor="venue">venue</label>
                         <div className="input selection" onClick={()=>setShowOptions2(prev=>!prev)}>
                             <p>{matchData.venue!=="" ? matchData.venue : "Choose Venue"}</p>
                             <button type="button">

@@ -105,8 +105,6 @@ async function addSeason(req, res){
 
         const season={ 
             year, 
-            // teams: [], 
-            // stats: {} 
         };
         admin.ipl.push(season);
         await admin.save();
@@ -154,8 +152,13 @@ async function fetchSeason(req, res){
         }
 
         season.teams.sort((a, b)=>{
+            const awins=a.matches.filter(match=>match.point===2).length;
+            const bwins=b.matches.filter(match=>match.point===2).length;
             if(b.points!==a.points){
                 return b.points - a.points; 
+            }
+            else if(awins!==bwins){
+                return bwins - awins;
             }
             return b.netRunRate - a.netRunRate; 
         });
