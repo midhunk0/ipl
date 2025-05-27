@@ -4,4 +4,7 @@
     padding: 16px;
     gap: 16px;
     position: relative;
+    background-color: var(--bg-color);
+    min-height: calc(100vh - 118px);
+    color: var(--text-color);
 }

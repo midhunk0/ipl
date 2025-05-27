@@ -3,6 +3,8 @@
     flex-direction: column;
     padding: 16px;
     gap: 16px;
+    background-color: var(--bg-color);
+    min-height: calc(100vh - 118px);
 }
 
 .home h1{
@@ -20,6 +22,7 @@
 .home-header-heading{
     display: flex;
     align-items: center;
+    color: var(--text-color);
 }
 
 .home-header-slider{
@@ -32,34 +35,27 @@
     border: none;
     outline: none;
     cursor: pointer;
-    background-color: var(--white);
+    background-color: var(--bg-color);
 }
 
 .home-slider-up:hover, .home-slider-down:hover{
-    background-color: var(--black);
-}
-
-.home-slider-up:hover img{
-    content: url("/icons/up-white.png");
-}
-
-.home-slider-down:hover img{
-    content: url("/icons/down-white.png");
+    background-color: var(--text-color);
 }
 
 .home-table-switch{
     padding: 16px;
     font-size: 16px;
-    background-color: var(--white);
-    border: 1px solid var(--black);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--text-color);
     outline: none;
     cursor: pointer;
     text-transform: capitalize;
 }
 
 .home-table-switch:hover{
-    background-color: var(--black);
-    color: var(--white);
+    background-color: var(--text-color);
+    color: var(--bg-color);
 }
 
 @media(max-width: 549px){

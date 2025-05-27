@@ -5,11 +5,11 @@
     position: sticky;
     top: 0;
     z-index: 2;
-    background-color: var(--white);
+    background-color: var(--bg-color);
 }
 
 .topbar-image{
-    width: 60px;
+    width: 50px;
     object-fit: contain;
     cursor: pointer;
 }
@@ -21,22 +21,27 @@
 }
 
 .topbar-item{
+    display: flex;
+    align-items: center;
+    gap: 16px;
     list-style-type: none;
-    font-size: 18px;
+    font-size: 16px;
     padding: 16px;
     text-transform: capitalize;
     cursor: pointer;
-    border: 1px solid var(--white);
+    border: 1px solid var(--text-color);
+    color: var(--text-color);
 }
 
 .topbar-item:hover{
-    border: 1px solid var(--black);
+    background-color: var(--green);
+    color: var(--white);
 }
 
 .topbar-item.active{
-    background-color: var(--black);
-    border: 1px solid var(--black);
-    color: var(--white);
+    background-color: var(--text-color);
+    border: 1px solid var(--text-color);
+    color: var(--bg-color);
 }
 
 .topbar-menu{
@@ -47,30 +52,23 @@
     width: 20px;
     height: 20px;
     cursor: pointer;
-    border: 1px solid var(--black);
+    border: 1px solid var(--text-color);
     padding: 16px;
 }
 
 .topbar-icon:hover{
-    background-color: var(--black);
-}
-
-.topbar-menu-icons:hover .topbar-icon.menu{
-    content: url("icons/menu-white.png");
-}
-
-.topbar-menu-icons:hover .topbar-icon.close{
-    content: url("icons/cross-white.png");
+    background-color: var(--text-color);
 }
 
 .topbar-menu-items{
     display: flex;
     flex-direction: column;
     position: absolute;
+    gap: 8px;
     right: 0;
     top: 70px;
     padding: 16px;
-    background-color: var(--white);
+    background-color: var(--bg-color);
 }
 
 .topbar-menu-item{
@@ -79,17 +77,18 @@
     padding: 16px;
     text-transform: capitalize;
     cursor: pointer;
-    border: 1px solid var(--white);
+    border: 1px solid var(--text-color);
+    color: var(--text-color);
 }
 
 .topbar-menu-item:hover{
-    border: 1px solid var(--black);
+    background-color: var(--green);
+    color: var(--white);
 }
 
 .topbar-menu-item.active{
-    background-color: var(--black);
-    border: 1px solid var(--black);
-    color: var(--white);
+    background-color: var(--text-color);
+    color: var(--bg-color);
 }
 
 .outlet{

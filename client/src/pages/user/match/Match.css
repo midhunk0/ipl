@@ -3,6 +3,9 @@
     flex-direction: column;
     padding: 16px;
     gap: 16px;
+    height: calc(100vh - 118px);
+    background-color: var(--bg-color);
+    color: var(--text-color);
 }
 
 .match-result{

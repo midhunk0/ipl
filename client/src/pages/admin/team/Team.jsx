@@ -5,8 +5,15 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useSeason, useYear } from "../../../context/seasonContext";
 import { MatchesTable } from "../../../components/matchesTable/matchesTable";
+import { useTheme } from "../../../context/ThemeContext";
 
 export function Team(){
+    const location=useLocation();
+    const navigate=useNavigate();
+    const apiUrl=import.meta.env.MODE==="development"
+        ? import.meta.env.VITE_APP_DEV_URL 
+        : import.meta.env.VITE_APP_PROD_URL
+
     const [matchData, setMatchData]=useState({
         opponentShort: "",
         date: "",
@@ -16,15 +23,16 @@ export function Team(){
     const [showForm, setShowForm]=useState(false);
     const [showOptions1, setShowOptions1]=useState(false);
     const [showOptions2, setShowOptions2]=useState(false);
-
-    const location=useLocation();
-    const navigate=useNavigate();
+    const [hover, setHover]=useState("");
 
     const { year }=useYear();
     const { season, setSeason, fetchSeason }=useSeason();
+    const { theme }=useTheme();
+
     const teams=location.state.teams;
     const teamId=location.state?.teamId;
     const team=season?.teams.find(team=>team._id===teamId);
+    
     useEffect(() => {
         if (team?.home?.length === 1) {
             setMatchData(prev => ({
@@ -39,10 +47,6 @@ export function Team(){
     }
 
     const matches=season.matches.filter(match=>match.team.short===team.short || match.opponent.short===team.short);
-
-    const apiUrl=import.meta.env.MODE==="development"
-        ? import.meta.env.VITE_APP_DEV_URL 
-        : import.meta.env.VITE_APP_PROD_URL
     
     function handleInputChange(e){
         setMatchData({
@@ -142,12 +146,12 @@ export function Team(){
                 <h1>{team.name}</h1>
                 {!showForm &&
                     <div className="admin-team-buttons">
-                        <button className="green-button admin-team-match-add-button" type="button" onClick={()=>setShowForm(prev=>!prev)}>
-                            <img src="/icons/plus-black.png" alt="add" className="icon"/>
+                        <button className="green-button" type="button" onClick={()=>setShowForm(prev=>!prev)} onMouseEnter={()=>setHover("add")} onMouseLeave={()=>setHover("")}>
+                            <img src={theme==="dark" ? "/icons/plus-white.png" : hover==="add" ? "/icons/plus-white.png" : "/icons/plus-black.png"} alt="add" className="icon"/>
                             <span>add new match</span>
                         </button>
-                        <button type="button" className="red-button admin-team-delete-button" onClick={()=>handleDeleteTeam()}>
-                            <img src="/icons/trash-red.png" alt="close" className="icon"/>
+                        <button type="button" className="red-button" onClick={()=>handleDeleteTeam()} onMouseEnter={()=>setHover("trash")} onMouseLeave={()=>setHover("")}>
+                            <img src={hover==="trash" ? "/icons/trash-white.png" : "/icons/trash-red.png"} alt="close" className="icon"/>
                             <span>delete team</span>
                         </button>
                     </div>
@@ -170,9 +174,9 @@ export function Team(){
                             <p>{matchData.opponentShort!=="" ? matchData.opponentShort : "Choose Opponent"}</p>
                             <button type="button">
                                 {showOptions1 ? 
-                                    <img src="/icons/up-black.png" alt="up" className="icon"/> 
+                                    <img src={theme==="dark" ? "/icons/up-white.png" : "/icons/up-black.png"} alt="up" className="icon"/> 
                                 : 
-                                    <img src="/icons/down-black.png" alt="down" className="icon"/>
+                                    <img src={theme==="dark" ? "/icons/down-white.png" : "/icons/down-black.png"} alt="down" className="icon"/>
                                 }
                             </button>
                             {showOptions1 && 
@@ -197,9 +201,9 @@ export function Team(){
                                 <p>{matchData.venue!=="" ? matchData.venue : "Choose Venue"}</p>
                                 <button type="button">
                                     {showOptions2 ? 
-                                        <img src="/icons/up-black.png" alt="up" className="icon"/> 
+                                        <img src={theme==="dark" ? "/icons/up-white.png" : "/icons/up-black.png"} alt="up" className="icon"/> 
                                     : 
-                                        <img src="/icons/down-black.png" alt="down" className="icon"/>
+                                        <img src={theme==="dark" ? "/icons/down-white.png" : "/icons/down-black.png"} alt="down" className="icon"/>
                                     }
                                 </button>
                                 {showOptions2 && 
@@ -223,12 +227,12 @@ export function Team(){
                         <input type="time" name="time" id="time" value={matchData.time} onChange={handleInputChange}/>
                     </div>
                     <div className="admin-team-form-buttons">
-                        <button className="black-button admin-team-form-close-button" type="button" onClick={()=>setShowForm(prev=>!prev)}>
-                            <img src="/icons/cross-black.png" alt="close" className="icon"/>
+                        <button className="black-button" type="button" onClick={()=>setShowForm(prev=>!prev)} onMouseEnter={()=>setHover("cross")} onMouseLeave={()=>setHover("")}>
+                            <img src={theme==="dark" ? hover==="cross" ? "/icons/cross-black.png"  : "/icons/cross-white.png" : hover==="cross" ? "/icons/cross-white.png" : "/icons/cross-black.png"} alt="close" className="icon"/>
                             <span>close</span>
                         </button>
-                        <button className="green-button admin-team-match-add-button" type="submit">
-                            <img src="/icons/plus-black.png" alt="add" className="icon"/>
+                        <button className="green-button" type="submit" onMouseEnter={()=>setHover("add1")} onMouseLeave={()=>setHover("")}>
+                            <img src={theme==="dark" ? "/icons/plus-white.png" : hover==="add1" ? "/icons/plus-white.png" : "/icons/plus-black.png"} alt="add" className="icon"/>
                             <span>add new match</span>
                         </button>
                     </div>

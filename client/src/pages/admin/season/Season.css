@@ -3,6 +3,9 @@
     flex-direction: column;
     padding: 16px;
     gap: 16px;
+    height: calc(100vh - 118px);
+    background-color: var(--bg-color);
+    color: var(--text-color);
 }
 
 .season-add-form{
@@ -14,11 +17,15 @@
     padding: 16px;
     font-size: 16px;
     outline: none;
-    border: 1px solid var(--black);
+    border: 1px solid var(--text-color);
+    color: var(--text-color);
+    background-color: var(--bg-color);
 }
 
-.season-add-button:hover img {
-    content: url("/icons/plus-white.png");
+.season-add-input::-webkit-inner-spin-button, 
+.season-add-input::-webkit-outer-spin-button{
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .seasons{
@@ -35,16 +42,16 @@
     flex-direction: column;
     padding: 16px;
     gap: 12px;
-    border: 1px solid var(--black);
+    border: 1px solid var(--text-color);
     cursor: pointer;
-}
-
-.season-delete-button:hover img{
-    content: url("/icons/trash-white.png");
 }
 
 .season:hover .season-delete-button:hover{
     background-color: var(--red);
+}
+
+.season-logout{
+    margin-top: auto;
 }
 
 @media(max-width: 1080px){

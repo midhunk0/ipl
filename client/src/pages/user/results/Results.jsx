@@ -6,8 +6,13 @@ import { MatchesTable } from "../../../components/matchesTable/matchesTable";
 export function Results(){
     const { year }=useYear();
     const { season }=useSeason();
+    
     if(!season){
-        return;
+        return (
+            <div className="results">
+                <p>No Season</p>
+            </div>
+        );
     }
 
     const leagueMatches=season.matches;

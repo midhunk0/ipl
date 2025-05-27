@@ -2,10 +2,14 @@
 import React, { useEffect, useState } from "react";
 import "./matchesTable.css";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from "../../context/themeContext";
 
 export function MatchesTable({matches, dest, type}){
     const navigate=useNavigate();
+
     const [width, setWidth]=useState(window.innerWidth);
+
+    const { theme }=useTheme();
 
     useEffect(()=>{
         function handleResize(){
@@ -44,13 +48,13 @@ export function MatchesTable({matches, dest, type}){
                         <p className="matchesTable-match-no">{match.number}</p>                        
                         <div className={`matchesTable-match-teams ${width<720 || type!=="matchesTable" ? "" : "big"}`} onClick={()=>navigate(`${dest}/${match._id}`)}>
                             <div className={`matchTable-match-team ${width<720 || type!=="matchesTable"  ? "" : "big"}`}>
-                                <img src={match.team.short ? `/logos/${match.team.short}.png` : `/logos/tbd.png`} alt="logo"/>
+                                <img src={match.team.short ? `/logos/${match.team.short}.png` : theme==="light" ? "/logos/tbd-black.png" : "/logos/tbd-white.png"} alt="logo"/>
                                 {match.team.short ? <p>{width<720 || type!=="matchesTable"  ? match.team.short : match.team.name}</p> : <p>{width<720 ? "TBD" : "to be defined"}</p>}
                             </div>
                             <span>v/s</span> 
                             <div className={`matchTable-match-opponent ${width<720 || type!=="matchesTable"  ? "" : "big"}`}>
                                 {match.opponent.short ? <p>{width<720 || type!=="matchesTable"  ? match.opponent.short : match.opponent.name}</p> : <p>{width<720 ? "TBD" : "to be defined"}</p>}
-                                <img src={match.opponent.short ? `/logos/${match.opponent.short}.png` : `/logos/tbd.png`} alt="logo"/>
+                                <img src={match.opponent.short ? `/logos/${match.opponent.short}.png` : theme==="light" ? "/logos/tbd-black.png" : "/logos/tbd-white.png"} alt="logo"/>
                             </div>
                         </div>
                         <p className="matchesTable-match-date">{getFormatedDate(match.date)}</p>

@@ -3,8 +3,15 @@ import React, { useState } from "react";
 import "./Register.css";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useTheme } from "../../../context/themeContext";
 
 export function Register(){
+    const navigate=useNavigate();
+
+    const apiUrl=import.meta.env.MODE==="development"
+        ? import.meta.env.VITE_APP_DEV_URL 
+        : import.meta.env.VITE_APP_PROD_URL
+
     const [registerData, setRegisterData]=useState({
         username: "",
         email: "",
@@ -12,11 +19,7 @@ export function Register(){
     });
     const [show, setShow]=useState(false);
 
-    const navigate=useNavigate();
-
-    const apiUrl=import.meta.env.MODE==="development"
-        ? import.meta.env.VITE_APP_DEV_URL 
-        : import.meta.env.VITE_APP_PROD_URL
+    const { theme }=useTheme();
 
     function handleInputChange(e){
         setRegisterData({
@@ -71,9 +74,9 @@ export function Register(){
                         <input className="register-input" type={show ? "text" : "password"} name="password" id="password" value={registerData.password} onChange={handleInputChange}/>
                         <button type="button" className={`${show ? "green-button": "red-button"}`} onClick={()=>setShow(prev=>!prev)}>
                             {show ? 
-                                <img src="/icons/eye-black.png" alt="visible" className="icon eye"/> 
+                                <img src={theme==="dark" ? "/icons/eye-white.png" : "/icons/eye-black.png"} alt="visible" className="icon eye"/> 
                             : 
-                                <img src="/icons/eye-crossed-black.png" alt="visible-off" className="icon eye-crossed"/>
+                                <img src={theme==="dark" ? "/icons/eye-crossed-white.png" : "/icons/eye-crossed-black.png"} alt="visible-off" className="icon eye-crossed"/>
                             }
                         </button>
                     </div>

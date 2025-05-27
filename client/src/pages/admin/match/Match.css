@@ -3,6 +3,9 @@
     flex-direction: column;
     padding: 16px;
     gap: 16px;
+    min-height: calc(100vh - 118px);
+    background-color: var(--bg-color);
+    color: var(--text-color);
 }
 
 .admin-match-header{
@@ -21,22 +24,6 @@
     gap: 16px;
 }
 
-.admin-match-update-result-button:hover img {
-    content: url("/icons/update-white.png");
-}
-
-.admin-match-edit-button:hover img{
-    content: url("/icons/edit-white.png");
-}
-
-.admin-match-add-button:hover img{
-    content: url("/icons/plus-white.png");
-}
-
-.admin-match-delete-button:hover img {
-    content: url("/icons/trash-white.png");
-}
-
 .admin-match-form{
     display: flex;
     flex-direction: column;
@@ -47,10 +34,6 @@
 .admin-match-form-buttons{
     display: flex;
     gap: 16px;
-}
-
-.admin-match-close-button:hover img{
-    content: url("/icons/cross-white.png");
 }
 
 @media(max-width: 1080px){

@@ -4,57 +4,34 @@ import "./Stats.css";
 import { useSeason, useYear } from "../../../context/seasonContext";
 import { toast } from "react-toastify";
 import { SeasonStats } from "../../../components/seasonStats/SeasonStats";
+import { useTheme } from "../../../context/themeContext";
 
 export function Stats(){
-    const { year }=useYear();
+    const apiUrl=import.meta.env.MODE==="development"
+        ? import.meta.env.VITE_APP_DEV_URL 
+        : import.meta.env.VITE_APP_PROD_URL
+
     const [stats, setStats]=useState({
         champion: "",
         runnerUp: "",
         fairPlayAward: "",
-        orangeCap: {
-            name: "",
-            runs: 0,
-            team: ""
-        },
-        purpleCap: {
-            name: "",
-            wickets: 0,
-            team: ""
-        },
-        most6s: {
-            name: "",
-            number: 0,
-            team: ""
-        },
-        most4s: {
-            name: "",
-            number: 0,
-            team: ""
-        },
-        highestScore: {
-            name: "",
-            runs: 0,
-            team: ""
-        },
-        mostValuablePlayer: {
-            name: "",
-            team: ""
-        },
-        emergingPlayer: {
-            name: "",
-            team: ""
-        }
+        orangeCap: { name: "", runs: 0, team: "" },
+        purpleCap: { name: "", wickets: 0, team: "" },
+        most6s: { name: "", number: 0, team: "" },
+        most4s: { name: "", number: 0, team: "" },
+        highestScore: { name: "", runs: 0, team: "" },
+        mostValuablePlayer: { name: "", team: "" },
+        emergingPlayer: { name: "", team: "" }
     });
+    const [hover, setHover]=useState("");
 
+    const { theme }=useTheme();
+    const { year }=useYear();
     const { season }=useSeason();
     if(!season){
         return;
     }
     const seasonStats=season.stats;
-
-    const apiUrl=import.meta.env.MODE==="development"
-        ? import.meta.env.VITE_APP_DEV_URL 
-        : import.meta.env.VITE_APP_PROD_URL
 
     function handleInputChange(e){
         setStats({
@@ -148,39 +125,13 @@ export function Stats(){
                     champion: "",
                     runnerUp: "",
                     fairPlayAward: "",
-                    orangeCap: {
-                        name: "",
-                        runs: 0,
-                        team: ""
-                    },
-                    purpleCap: {
-                        name: "",
-                        wickets: 0,
-                        team: ""
-                    },
-                    most6s: {
-                        name: "",
-                        number: 0,
-                        team: ""
-                    },
-                    most4s: {
-                        name: "",
-                        number: 0,
-                        team: ""
-                    },
-                    highestScore: {
-                        name: "",
-                        runs: 0,
-                        team: ""
-                    },
-                    mostValuablePlayer: {
-                        name: "",
-                        team: ""
-                    },
-                    emergingPlayer: {
-                        name: "",
-                        team: ""
-                    }
+                    orangeCap: { name: "", runs: 0, team: "" },
+                    purpleCap: { name: "", wickets: 0, team: "" },
+                    most6s: { name: "", number: 0, team: "" },
+                    most4s: { name: "", number: 0, team: "" },
+                    highestScore: { name: "", runs: 0, team: "" },
+                    mostValuablePlayer: { name: "", team: "" },
+                    emergingPlayer: { name: "", team: "" }
                 })
                 toast.success(result.message);
             }
@@ -334,12 +285,12 @@ export function Stats(){
                     </div>
 
                     <div className="admin-stats-buttons">
-                        <button className="black-button admin-stats-form-clear-button" type="button">
-                            <img src="/icons/cross-black.png" alt="close" className="icon"/>
+                        <button className="black-button" type="button" onMouseEnter={()=>setHover("cross")} onMouseLeave={()=>setHover("")}>
+                            <img src={theme==="dark"? hover==="cross" ? "/icons/cross-black.png" : "/icons/cross-white.png": hover==="cross" ? "/icons/cross-white.png" : "/icons/cross-black.png"} alt="close" className="icon"/>
                             <span>clear</span>
                         </button>
-                        <button className="green-button admin-stats-add-button" type="submit">
-                            <img src="/icons/plus-black.png" alt="add" className="icon"/>
+                        <button className="green-button" type="submit" onMouseEnter={()=>setHover("add")} onMouseLeave={()=>setHover("")}>
+                            <img src={theme==="dark"? "/icons/plus-white.png": hover==="add" ? "/icons/plus-white.png" : "/icons/plus-black.png" }alt="add" className="icon"/>
                             <span>add stats</span>
                         </button>
                     </div>

@@ -1,4 +1,3 @@
-import React from "react";
 import "./Results.css";
 import { useSeason, useYear } from "../../../context/seasonContext";
 import { MatchesTable } from "../../../components/matchesTable/matchesTable";

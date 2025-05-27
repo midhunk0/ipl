@@ -8,6 +8,7 @@ import { MatchDetails } from "../../../components/matchDetails/matchDetails";
 export function Match(){
     const { matchId }=useParams();
     const { season }=useSeason();
+    
     if(!season){
         return;
     }

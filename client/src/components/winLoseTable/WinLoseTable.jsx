@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./WinLoseTable.css";
 import { useNavigate } from "react-router-dom";
 import { useSeason } from "../../context/seasonContext";
 
 export function WinLoseTable({ teamDest }){
     const navigate=useNavigate();
+
     const [width, setWidth]=useState(window.innerWidth);
     
     useEffect(()=>{
@@ -13,7 +14,6 @@ export function WinLoseTable({ teamDest }){
         }
     
         window.addEventListener("resize", handleResize);
-        
         return ()=>window.removeEventListener("resize", handleResize);
     }, []);
 

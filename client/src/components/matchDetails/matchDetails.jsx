@@ -1,4 +1,3 @@
-import React from "react";
 import "./matchDetails.css";
 
 export function MatchDetails({ match }){

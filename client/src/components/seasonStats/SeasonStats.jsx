@@ -1,16 +1,23 @@
-import React from "react";
 import "./SeasonStats.css";
 import { useSeason } from "../../context/seasonContext";
+import { useYear } from "../../context/seasonContext";
 
 export function SeasonStats(){
+    const { year }=useYear();
     const { season }=useSeason();
+    
     if(!season){
-        return;
+        return (
+            <div className="stats-items">
+                <p>No Season</p>
+            </div>
+        );
     }
     const seasonStats=season.stats;
 
     return(
         <div className="stats-items">
+            <h1>IPL {year} season stats</h1>
             <div className="stats-item stats-champions">
                 <h2>champions</h2>
                 <h2>{seasonStats.champion}</h2>

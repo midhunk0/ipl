@@ -4,10 +4,9 @@ import "./Matches.css";
 import { MatchesTable } from "../../../components/matchesTable/matchesTable";
 import { useSeason, useYear } from "../../../context/seasonContext";
 import { toast } from "react-toastify";
+import { useTheme } from "../../../context/ThemeContext";
 
 export function Matches(){
-    const { year }=useYear();
-
     const apiUrl=import.meta.env.MODE==="development"
         ? import.meta.env.VITE_APP_DEV_URL 
         : import.meta.env.VITE_APP_PROD_URL
@@ -49,6 +48,10 @@ export function Matches(){
     const [showOptions3, setShowOptions3]=useState(false);
     const [showOptions4, setShowOptions4]=useState(false);
     const [viewMode, setViewMode]=useState("");
+    const [hover, setHover]=useState("");
+    
+    const { theme }=useTheme();
+    const { year }=useYear();
     const { season, fetchSeason }=useSeason();
     if(!season){
         return;
@@ -66,7 +69,7 @@ export function Matches(){
 
     const matches=[...leagueMatches, ...Object.values(playoffMatches)];
     const remainingMatches=[...matches.filter(match=>match?.result?.won?.short==="" && !match?.result?.draw?.status)];
-    
+
     function handleInputChange(e){
         setMatchData({
             ...matchData,
@@ -202,29 +205,29 @@ export function Matches(){
             console.log(error);
         }
     }
-
+    
     return(
         <div className="admin-matches">
             <div className="admin-matches-header">
                 <h1>IPL {year} fixtures</h1>
                 {viewMode==="" &&
                     <div className="admin-matches-buttons">
-                        <button className="green-button admin-matches-add-button" type="button" onClick={()=>setViewMode("addMatch")}>
-                            <img src="/icons/plus-black.png" alt="add" className="icon"/>
+                        <button className="green-button" type="button" onClick={()=>setViewMode("addMatch")} onMouseEnter={()=>setHover("add")} onMouseLeave={()=>setHover("")}>
+                            <img src={theme==="dark" ? "/icons/plus-white.png" : hover==="add" ? "/icons/plus-white.png" : "/icons/plus-black.png"} alt="add" className="icon"/>
                             <span>add new match</span>
                         </button>
-                        <button className="blue-button admin-matches-all-add-button" type="button" onClick={()=>setViewMode("addAll")}>
-                            <img src="/icons/check-black.png" alt="add" className="icon"/>
+                        <button className="blue-button" type="button" onClick={()=>setViewMode("addAll")} onMouseEnter={()=>setHover("addAll")} onMouseLeave={()=>setHover("")}>
+                            <img src={theme==="dark" ? "/icons/check-white.png" : hover==="addAll" ? "/icons/check-white.png" : "/icons/check-black.png"} alt="add" className="icon"/>
                             <span>add all matches</span>
                         </button>
                         {season.playoffs.qualifier1.venue==="" ? 
-                            <button type="button" className="green-button admin-matches-set-playoff-button" onClick={()=>setViewMode("playoff")}>
-                                <img src="/icons/trophy-black.png" alt="add" className="icon"/>
+                            <button type="button" className="green-button" onClick={()=>setViewMode("playoff")} onMouseEnter={()=>setHover("playoff")} onMouseLeave={()=>setHover("")}>
+                                <img src={theme==="dark" ? "/icons/trophy-white.png" : hover==="playoff" ? "/icons/trophy-white.png" : "/icons/trophy-black.png"} alt="add" className="icon"/>
                                 <span>set playoff details</span>
                             </button>
                         : 
-                            <button type="button" className="green-button admin-matches-set-playoff-matches-button" onClick={()=>handleSetPlayoffMatches()}>
-                                <img src="/icons/trophy-black.png" alt="add" className="icon"/>
+                            <button type="button" className="green-button" onClick={()=>handleSetPlayoffMatches()} onMouseEnter={()=>setHover("playoff")} onMouseLeave={()=>setHover("")}>
+                                <img src={theme==="dark" ? "/icons/trophy-white.png" : hover==="playoff" ? "/icons/trophy-white.png" : "/icons/trophy-black.png"} alt="add" className="icon"/>
                                 <span>set playoff matches</span>
                             </button>
                         }
@@ -235,12 +238,12 @@ export function Matches(){
                 <form className="admin-matches-upload-form" onSubmit={handleAddMatches} method="POST">
                     <input type="file" name="fileInput" className="input" onChange={(e)=>setFileInput(e.target.files[0])}/>
                     <div className="admin-matches-buttons">
-                        <button className="black-button admin-matches-upload-close-button" type="button" onClick={()=>setViewMode("")}>
-                            <img src="/icons/cross-black.png" alt="close" className="icon"/>
+                        <button className="black-button" type="button" onClick={()=>setViewMode("")} onMouseEnter={()=>setHover("cross")} onMouseLeave={()=>setHover("")}>
+                            <img src={theme==="dark" ? hover==="cross" ? "/icons/cross-black.png" : "/icons/cross-white.png": hover==="cross" ? "/icons/cross-white.png" : "/icons/cross-black.png"} alt="close" className="icon"/>
                             <span>close form</span>
                         </button>
-                        <button className="green-button admin-matches-upload-button" type="submit">
-                            <img src="/icons/check-black.png" alt="upload" className="icon"/>
+                        <button className="green-button" type="submit" onMouseEnter={()=>setHover("add1")} onMouseLeave={()=>setHover("")}>
+                            <img src={theme==="dark" ? "/icons/plus-white.png" : hover==="add1" ? "/icons/plus-white.png" : "/icons/plus-black.png"} alt="upload" className="icon"/>
                             <span>upload file</span>
                         </button>
                     </div>
@@ -271,9 +274,9 @@ export function Matches(){
                                 <p>{playoffData.qualifier1.venue!=="" ? playoffData.qualifier1.venue : "Choose Venue"}</p>
                                 <button type="button">
                                     {showOptions1 ? 
-                                        <img src="/icons/up-black.png" alt="up" className="icon"/> 
+                                        <img src={theme==="light" ? "/icons/up-black.png" : "/icons/up-white.png"} alt="up" className="icon"/> 
                                     : 
-                                        <img src="/icons/down-black.png" alt="down" className="icon"/>
+                                        <img src={theme==="light" ? "/icons/down-black.png" : "/icons/down-white.png"} alt="down" className="icon"/>
                                     }
                                 </button>
                                 {showOptions1 && 
@@ -305,9 +308,9 @@ export function Matches(){
                                 <p>{playoffData.eliminator.venue!=="" ? playoffData.eliminator.venue : "Choose Venue"}</p>
                                 <button type="button">
                                     {showOptions2 ? 
-                                        <img src="/icons/up-black.png" alt="up" className="icon"/> 
+                                        <img src={theme==="light" ? "/icons/up-black.png" : "/icons/up-white.png"} alt="up" className="icon"/> 
                                     : 
-                                        <img src="/icons/down-black.png" alt="down" className="icon"/>
+                                        <img src={theme==="light" ? "/icons/down-black.png" : "/icons/down-white.png"} alt="down" className="icon"/>
                                     }
                                 </button>
                                 {showOptions2 && 
@@ -339,9 +342,9 @@ export function Matches(){
                                 <p>{playoffData.qualifier2.venue!=="" ? playoffData.qualifier2.venue : "Choose Venue"}</p>
                                 <button type="button">
                                     {showOptions3 ? 
-                                        <img src="/icons/up-black.png" alt="up" className="icon"/> 
+                                        <img src={theme==="light" ? "/icons/up-black.png" : "/icons/up-white.png"} alt="up" className="icon"/> 
                                     : 
-                                        <img src="/icons/down-black.png" alt="down" className="icon"/>
+                                        <img src={theme==="light" ? "/icons/down-black.png" : "/icons/down-white.png"} alt="down" className="icon"/>
                                     }
                                 </button>
                                 {showOptions3 && 
@@ -373,9 +376,9 @@ export function Matches(){
                                 <p>{playoffData.final.venue!=="" ? playoffData.final.venue : "Choose Venue"}</p>
                                 <button type="button">
                                     {showOptions4 ? 
-                                        <img src="/icons/up-black.png" alt="up" className="icon"/> 
+                                        <img src={theme==="light" ? "/icons/up-black.png" : "/icons/up-white.png"} alt="up" className="icon"/> 
                                     : 
-                                        <img src="/icons/down-black.png" alt="down" className="icon"/>
+                                        <img src={theme==="light" ? "/icons/down-black.png" : "/icons/down-white.png"} alt="down" className="icon"/>
                                     }
                                 </button>
                                 {showOptions4 && 
@@ -394,12 +397,12 @@ export function Matches(){
 
                     </div>
                     <div className="admin-matches-playoff-buttons">
-                        <button className="black-button admin-matches-playoff-close-button" type="button" onClick={()=>setViewMode("")}>
-                            <img src="/icons/cross-black.png" alt="close" className="icon"/>
+                        <button className="black-button" type="button" onClick={()=>setViewMode("")} onMouseEnter={()=>setHover("cross")} onMouseLeave={()=>setHover("")}>
+                            <img src={theme==="dark" ? hover==="cross" ? "/icons/cross-black.png" : "/icons/cross-white.png": hover==="cross" ? "/icons/cross-white.png" : "/icons/cross-black.png"} alt="close" className="icon"/>
                             <span>close form</span>
                         </button>
-                        <button className="green-button admin-matches-set-button" type="submit">
-                            <img src="/icons/check-black.png" alt="upload" className="icon"/>
+                        <button className="green-button" type="submit">
+                            <img src={theme==="dark" ? "/icons/check-white.png" : hover==="addAll" ? "/icons/check-white.png" : "/icons/check-black.png"} alt="upload" className="icon"/>
                             <span>set playoff details</span>
                         </button>
                     </div>
@@ -415,9 +418,9 @@ export function Matches(){
                             <p>{matchData.teamShort!=="" ? matchData.teamShort : "Choose Team"}</p>
                             <button type="button">
                                 {showOptions ? 
-                                    <img src="/icons/up-black.png" alt="up" className="icon"/> 
-                                : 
-                                    <img src="/icons/down-black.png" alt="down" className="icon"/>
+                                        <img src={theme==="light" ? "/icons/up-black.png" : "/icons/up-white.png"} alt="up" className="icon"/> 
+                                    : 
+                                        <img src={theme==="light" ? "/icons/down-black.png" : "/icons/down-white.png"} alt="down" className="icon"/>
                                 }
                             </button>
                             {showOptions && 
@@ -437,9 +440,9 @@ export function Matches(){
                             <p>{matchData.opponentShort!=="" ? matchData.opponentShort : "Choose Opponent"}</p>
                             <button type="button">
                                 {showOptions1 ? 
-                                    <img src="/icons/up-black.png" alt="up" className="icon"/> 
-                                : 
-                                    <img src="/icons/down-black.png" alt="down" className="icon"/>
+                                        <img src={theme==="light" ? "/icons/up-black.png" : "/icons/up-white.png"} alt="up" className="icon"/> 
+                                    : 
+                                        <img src={theme==="light" ? "/icons/down-black.png" : "/icons/down-white.png"} alt="down" className="icon"/>
                                 }   
                             </button>
                             {showOptions1 && 
@@ -461,9 +464,9 @@ export function Matches(){
                             <p>{matchData.venue!=="" ? matchData.venue : "Choose Venue"}</p>
                             <button type="button">
                                 {showOptions2 ? 
-                                    <img src="/icons/up-black.png" alt="up" className="icon"/> 
-                                : 
-                                    <img src="/icons/down-black.png" alt="down" className="icon"/>
+                                        <img src={theme==="light" ? "/icons/up-black.png" : "/icons/up-white.png"} alt="up" className="icon"/> 
+                                    : 
+                                        <img src={theme==="light" ? "/icons/down-black.png" : "/icons/down-white.png"} alt="down" className="icon"/>
                                 }
                             </button>
                             {showOptions2 && 
@@ -492,12 +495,12 @@ export function Matches(){
                         <input type="number" name="number" id="number" value={matchData.number} onChange={handleInputChange}/>
                     </div>
                     <div className="admin-matches-form-buttons">
-                        <button className="black-button admin-matches-form-close-button" type="button" onClick={()=>setViewMode("")}>
-                            <img src="/icons/cross-black.png" alt="close" className="icon"/>
+                        <button className="black-button" type="button" onClick={()=>setViewMode("")} onMouseEnter={()=>setHover("cross")} onMouseLeave={()=>setHover("")}>
+                            <img src={theme==="dark" ? hover==="cross" ? "/icons/cross-black.png" : "/icons/cross-white.png": hover==="cross" ? "/icons/cross-white.png" : "/icons/cross-black.png"} alt="close" className="icon"/>
                             <span>close</span>
                         </button>
-                        <button className="green-button admin-matches-add-button" type="submit">
-                            <img src="/icons/plus-black.png" alt="add" className="icon"/>
+                        <button className="green-button" type="submit" onMouseEnter={()=>setHover("add2")} onMouseLeave={()=>setHover("")}>
+                            <img src={theme==="dark" ? "/icons/plus-white.png" : hover==="add2" ? "/icons/plus-white.png" : "/icons/plus-black.png"} alt="add" className="icon"/>
                             <span>add new match</span>
                         </button>
                     </div>

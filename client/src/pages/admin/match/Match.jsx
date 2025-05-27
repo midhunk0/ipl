@@ -5,9 +5,16 @@ import { Navigate, useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useSeason, useYear } from "../../../context/seasonContext";
 import { MatchDetails } from "../../../components/matchDetails/matchDetails";
+import { useTheme } from "../../../context/ThemeContext";
 
 export function Match(){
+    const apiUrl=import.meta.env.MODE==="development"
+        ? import.meta.env.VITE_APP_DEV_URL 
+        : import.meta.env.VITE_APP_PROD_URL
+    
     const { matchId }=useParams();
+    const navigate=useNavigate();
+
     const [matchData, setMatchData]=useState({
         teamShort: "",
         opponentShort: "",
@@ -44,9 +51,12 @@ export function Match(){
     const [updateResult, setUpdateResult]=useState(true);
     const [showEditForm, setShowEditForm]=useState(false);
     const [team, setTeam]=useState({});
-    const navigate=useNavigate();
+    const [hover, setHover]=useState("");
+
     const { year }=useYear();
+    const { theme }=useTheme();
     const { season, setSeason, fetchSeason }=useSeason();
+    
     if(!season){
         return;
     }
@@ -66,10 +76,6 @@ export function Match(){
     if(!match){
         return;
     }
-
-    const apiUrl=import.meta.env.MODE==="development"
-        ? import.meta.env.VITE_APP_DEV_URL 
-        : import.meta.env.VITE_APP_PROD_URL
     
     async function handleAddResult(e){
         e.preventDefault();
@@ -241,6 +247,8 @@ export function Match(){
             console.log(error.message);
         }
     }
+    
+
 
     return(
         <div className="admin-match">
@@ -249,17 +257,17 @@ export function Match(){
                 {!showEditForm && updateResult &&
                     <div className="admin-match-buttons">
                         {!match.result.draw.reason && !match.result.won.short && 
-                            <button className="green-button admin-match-add-button" onClick={()=>setUpdateResult(false)}>
-                                <img src="/icons/plus-black.png" alt="add" className="icon"/>
+                            <button className="green-button" onClick={()=>setUpdateResult(false)} onMouseEnter={()=>setHover("add")} onMouseLeave={()=>setHover("")}>
+                                <img src={theme==="dark" ? "/icons/plus-white.png" : hover==="add" ? "/icons/plus-white.png" : "/icons/plus-black.png"} alt="add" className="icon"/>
                                 <span>add result</span>
                             </button>
                         }
-                        <button type="button" className="blue-button admin-match-edit-button" onClick={()=>(setShowEditForm(prev=>!prev), updateMatchForm())}>
-                            <img src="/icons/edit-black.png" alt="edit" className="icon"/>
+                        <button type="button" className="blue-button" onClick={()=>(setShowEditForm(prev=>!prev), updateMatchForm())} onMouseEnter={()=>setHover("edit")} onMouseLeave={()=>setHover("")}>
+                            <img src={theme==="dark" ? "/icons/edit-white.png" : hover==="edit" ? "/icons/edit-white.png" : "/icons/edit-black.png"} alt="edit" className="icon"/>
                             <span>edit match</span>
                         </button>
-                        <button className="red-button admin-match-delete-button" type="button" onClick={()=>handleDeleteMatch()}>
-                            <img src="/icons/trash-red.png" alt="delete" className="icon"/>
+                        <button type="button" className="red-button" onClick={()=>handleDeleteMatch()} onMouseEnter={()=>setHover("delete")} onMouseLeave={()=>setHover("")}>
+                            <img src={hover==="delete" ? "/icons/trash-white.png" : "/icons/trash-red.png"} alt="delete" className="icon"/>
                             <span>delete match</span>
                         </button>
                     </div>
@@ -282,9 +290,9 @@ export function Match(){
                             <p>{matchData.opponentShort!=="" ? matchData.opponentShort : "Choose Opponent"}</p>
                             <button type="button">
                                 {showOptions1 ? 
-                                    <img src="/icons/up-black.png" alt="up" className="icon"/> 
+                                    <img src={theme==="dark" ? "/icons/up-white.png" : "/icons/up-black.png"} alt="up" className="icon"/> 
                                 : 
-                                    <img src="/icons/down-black.png" alt="down" className="icon"/>
+                                    <img src={theme==="dark" ? "/icons/down-white.png" : "/icons/down-black.png"} alt="down" className="icon"/>
                                 }
                             </button>
                             {showOptions1 && 
@@ -306,9 +314,9 @@ export function Match(){
                             <p>{matchData.venue!=="" ? matchData.venue : "Choose Venue"}</p>
                             <button type="button">
                                 {showOptions2 ? 
-                                    <img src="/icons/up-black.png" alt="up" className="icon"/> 
+                                    <img src={theme==="dark" ? "/icons/up-white.png" : "/icons/up-black.png"} alt="up" className="icon"/> 
                                 : 
-                                    <img src="/icons/down-black.png" alt="down" className="icon"/>
+                                    <img src={theme==="dark" ? "/icons/down-white.png" : "/icons/down-black.png"} alt="down" className="icon"/>
                                 }
                             </button>
                             {showOptions2 && 
@@ -331,12 +339,12 @@ export function Match(){
                         <input type="time" name="time" id="time" value={matchData.time} onChange={handleInputChange}/>
                     </div>
                     <div className="admin-match-form-buttons">
-                        <button className="black-button admin-match-close-button" type="button" onClick={()=>setShowEditForm(prev=>!prev)}>
-                            <img src="/icons/cross-black.png" alt="close" className="icon"/>
+                        <button type="button" className="black-button" onClick={()=>setShowEditForm(prev=>!prev)} onMouseEnter={()=>setHover("cross")} onMouseLeave={()=>setHover("")}>
+                            <img src={theme==="dark" ? hover==="cross" ? "/icons/cross-black.png" : "/icons/cross-white.png" : hover==="cross" ? "/icons/cross-white.png" : "/icons/cross-black.png"} alt="close" className="icon"/>
                             <span>close</span>
                         </button>
-                        <button className="blue-button admin-match-edit-button" type="submit">
-                            <img src="/icons/edit-black.png" alt="add" className="icon"/>
+                        <button type="submit" className="blue-button" onMouseEnter={()=>setHover("form-edit")} onMouseLeave={()=>setHover("")}>
+                            <img src={theme==="dark" ? "/icons/edit-white.png" : hover==="form-edit" ? "/icons/edit-white.png" : "/icons/edit-black.png"} alt="edit" className="icon"/>
                             <span>edit match</span>
                         </button>
                     </div>
@@ -350,9 +358,9 @@ export function Match(){
                             <p>{matchResult.wonShort!=="" ? matchResult.wonShort : match.result.draw.status ? "Draw" : "Choose Winner"}</p>
                             <button type="button">
                                 {showOptions ? 
-                                    <img src="/icons/up-black.png" alt="close" className="icon"/> 
+                                    <img src={theme==="dark" ? "/icons/up-white.png" : "/icons/up-black.png"} alt="up" className="icon"/> 
                                 : 
-                                    <img src="/icons/down-black.png" alt="open" className="icon"/>
+                                    <img src={theme==="dark" ? "/icons/down-white.png" : "/icons/down-black.png"} alt="down" className="icon"/>
                                 }
                             </button>
                             {showOptions && 
@@ -400,12 +408,12 @@ export function Match(){
                         </>
                     }
                     <div className="admin-match-form-buttons">
-                        <button className="black-button admin-match-close-button" type="button" onClick={()=>setUpdateResult(prev=>!prev)}>
-                            <img src="/icons/cross-black.png" alt="close" className="icon"/>
+                        <button type="button" className="black-button" onClick={()=>setUpdateResult(prev=>!prev)} onMouseEnter={()=>setHover("cross")} onMouseLeave={()=>setHover("")}>
+                            <img src={theme==="dark" ? hover==="cross" ? "/icons/cross-black.png" : "/icons/cross-white.png" : hover==="cross" ? "/icons/cross-white.png" : "/icons/cross-black.png"} alt="close" className="icon"/>
                             <span>close</span>
                         </button>
-                        <button className="green-button admin-match-add-button" type="submit">
-                            <img src="/icons/plus-black.png" alt="add" className="icon"/>
+                        <button type="submit" className="green-button" onMouseEnter={()=>setHover("form-add")} onMouseLeave={()=>setHover("")}>
+                            <img src={theme==="dark" ? "/icons/plus-white.png" : hover==="form-add" ? "/icons/plus-white.png" : "/icons/plus-black.png"} alt="add" className="icon"/>
                             <span>add result</span>
                         </button>
                     </div>

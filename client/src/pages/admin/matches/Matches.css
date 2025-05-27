@@ -3,6 +3,9 @@
     flex-direction: column;
     padding: 16px;
     gap: 16px;
+    min-height: calc(100vh - 118px);
+    color: var(--text-color);
+    background-color: var(--bg-color);
 }
 
 .admin-matches-header{
@@ -16,42 +19,14 @@
     gap: 16px;
 }
 
+.admin-matches-buttons button{
+    background-color: var(--bg-color);
+}
+
 .admin-matches-details{
     display: flex;
     flex-direction: column;
     gap: 16px;
-}
-
-.admin-matches-add-button:hover img {
-    content: url("/icons/plus-white.png");
-}
-
-.admin-matches-all-add-button:hover img{
-    content: url("/icons/check-white.png");
-}
-
-.admin-matches-upload-close-button:hover img{
-    content: url("/icons/cross-white.png");
-}
-
-.admin-matches-upload-button:hover img{
-    content: url("/icons/check-white.png");
-}
-
-.admin-matches-set-playoff-button:hover img{
-    content: url("/icons/trophy-white.png");
-}
-
-.admin-matches-set-playoff-matches-button:hover img{
-    content: url("/icons/trophy-white.png");
-}
-
-.admin-matches-playoff-close-button:hover img{
-    content: url("/icons/cross-white.png");
-}
-
-.admin-matches-set-button:hover img{
-    content: url("/icons/check-white.png");
 }
 
 .admin-matches-upload-form{
@@ -80,10 +55,6 @@
 .admin-matches-same-buttons{
     display: flex;
     gap: 16px;
-}
-
-.admin-matches-form-close-button:hover img {
-    content: url("/icons/cross-white.png");
 }
 
 @media(max-width: 1080px){

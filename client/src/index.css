@@ -16,9 +16,7 @@
     --text-color: var(--black);
 }
 
-@media(prefers-color-scheme: dark){
-    :root{
-        --bg-color: var(--black);
-        --text-color: var(--white);
-    }
+[data-theme="dark"]{
+    --bg-color: var(--black);
+    --text-color: var(--white);
 }

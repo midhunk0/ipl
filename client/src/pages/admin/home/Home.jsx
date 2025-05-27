@@ -5,8 +5,13 @@ import { useSeason, useYear } from "../../../context/seasonContext";
 import { PointTable } from "../../../components/pointTable/PointTable";
 import { toast } from "react-toastify";
 import { WinLoseTable } from "../../../components/winLoseTable/WinLoseTable";
+import { useTheme } from "../../../context/ThemeContext";
 
 export function Home(){
+    const apiUrl=import.meta.env.MODE==="development"
+        ? import.meta.env.VITE_APP_DEV_URL 
+        : import.meta.env.VITE_APP_PROD_URL
+
     const [teamData, setTeamData]=useState({
         name: "",
         short: "",
@@ -14,15 +19,14 @@ export function Home(){
     });
     const [showForm, setShowForm]=useState(false);
     const [tableSwitch, setTableSwitch]=useState(true);
+    const [hover, setHover]=useState("");
+
+    const { theme }=useTheme();
     const { year }=useYear();
     const { season, fetchSeason }=useSeason();
     if(!season){
         return;
     }
-
-    const apiUrl=import.meta.env.MODE==="development"
-        ? import.meta.env.VITE_APP_DEV_URL 
-        : import.meta.env.VITE_APP_PROD_URL
 
     function handleInputChange(e){
         setTeamData({
@@ -89,11 +93,11 @@ export function Home(){
                 <h1>IPL {season.year}</h1>
                 {!showForm && 
                     <div className="admin-home-buttons">
-                        <button className="green-button admin-home-add-team-button" onClick={()=>setShowForm(prev=>!prev)}>
-                            <img src="/icons/plus-black.png" alt="add" className="icon"/>
+                        <button className="green-button" onClick={()=>setShowForm(prev=>!prev)} onMouseEnter={()=>setHover("add")} onMouseLeave={()=>setHover("")}>
+                            <img src={theme==="dark" ? "/icons/plus-white.png" : hover==="add" ? "/icons/plus-white.png" : "/icons/plus-black.png"} alt="add" className="icon"/>
                             <span>add new team</span>
                         </button>
-                        <button className="admin-home-table-switch-button" onClick={()=>setTableSwitch(prev=>!prev)}>switch table</button>
+                        <button className="black-button" onClick={()=>setTableSwitch(prev=>!prev)}>switch table</button>
                     </div>
                 }
             </div>
@@ -122,25 +126,25 @@ export function Home(){
                             <div key={index} className="admin-home-input-wrapper">
                                 <input type="text" value={home} id="home" onChange={(e)=>handleHomeChange(index, e.target.value)} />
                                 {index==0 && (
-                                    <button type="button" className="green-button admin-home-add-home-button" onClick={handleHomeAdd}>
-                                        <img src="/icons/plus-black.png" alt="add" className="icon"/>
+                                    <button type="button" className="green-button" onClick={handleHomeAdd} onMouseEnter={()=>setHover("add1")} onMouseLeave={()=>setHover("")}>
+                                        <img src={theme==="dark" ? "/icons/plus-white.png" : hover==="add1" ? "/icons/plus-white.png" : "/icons/plus-black.png"} alt="add" className="icon"/>
                                     </button>
                                 )}
                                 {index>0 && (
-                                    <button type="button" className="red-button admin-home-remove-home-button" onClick={()=>handleHomeRemove(index)}>
-                                        <img src="/icons/trash-red.png" alt="delete" className="icon"/>
+                                    <button type="button" className="red-button" onClick={()=>handleHomeRemove(index)} onMouseEnter={()=>setHover("remove")} onMouseLeave={()=>setHover("")}>
+                                        <img src={hover==="remove" ? "/icons/trash-white.png" : "/icons/trash-red.png"} alt="delete" className="icon"/>
                                     </button>
                                 )}
                             </div>
                         ))}
                     </div>
                     <div className="admin-home-form-buttons">
-                        <button className="black-button admin-home-close-button" type="button" onClick={()=>setShowForm(prev=>!prev)}>
-                            <img src="/icons/cross-black.png" alt="close" className="icon"/>
+                        <button className="black-button" type="button" onClick={()=>setShowForm(prev=>!prev)} onMouseEnter={()=>setHover("close")} onMouseLeave={()=>setHover("")}>
+                            <img src={theme==="dark" ? hover==="close" ? "/icons/cross-black.png" : "/icons/cross-white.png" : hover==="close" ? "/icons/cross-white.png" : "/icons/cross-black.png"} alt="close" className="icon"/>
                             <span>close</span>
                         </button>
-                        <button className="green-button admin-home-add-team-button" type="submit">
-                            <img src="/icons/plus-black.png" alt="add" className="icon"/>
+                        <button className="green-button" type="submit" onMouseEnter={()=>setHover("add2")} onMouseLeave={()=>setHover("")}>
+                            <img src={theme==="dark" ? "/icons/plus-white.png" : hover==="add2" ? "/icons/plus-white.png" : "/icons/plus-black.png"} alt="add" className="icon"/>
                             <span>add new team</span>
                         </button>
                     </div>

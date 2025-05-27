@@ -5,9 +5,11 @@ import { useNavigate } from "react-router-dom";
 
 export function PointTable({ teamDest, matchDest }){
     const navigate=useNavigate();
+
     const [_, setWidth]=useState(window.innerWidth);
     const [show, setShow]=useState(window.innerWidth>720);
-    
+    const [hover, setHover]=useState({ i: -1, j: -1 });
+
     useEffect(()=>{
         function handleResize(){
             const newWidth=window.innerWidth;
@@ -16,7 +18,6 @@ export function PointTable({ teamDest, matchDest }){
         }
     
         window.addEventListener("resize", handleResize);
-        
         return ()=>window.removeEventListener("resize", handleResize);
     }, []);
 
@@ -52,23 +53,23 @@ export function PointTable({ teamDest, matchDest }){
                             <p  key={index} className="pointTable-heading-result">{index+1}</p>
                         ))}
                         </div>
-                        {season.teams.map((team, index)=>(
-                            <div className="pointTable-team-results" key={index}>
-                                {[...Array(matchesPerTeam)].map((_, index)=>(
-                                    <div key={index} className={`pointTable-team-result ${team.matches[index]?.matchId ? "" : "no-match"}`} onClick={()=>{team.matches[index]?.matchId && navigate(`${matchDest}/${team.matches[index]?.matchId}`)}}>
+                        {season.teams.map((team, i)=>(
+                            <div className="pointTable-team-results" key={i}>
+                                {[...Array(matchesPerTeam)].map((_, j)=>(
+                                    <div key={j} onMouseEnter={()=>setHover({i, j})} onMouseLeave={()=>setHover({ i: -1, j: -1 })} className={`pointTable-team-result ${team.matches[j]?.matchId ? "" : "no-match"}`} onClick={()=>{team.matches[j]?.matchId && navigate(`${matchDest}/${team.matches[j]?.matchId}`)}}>
                                         <div className="pointTable-team-point">
-                                        {team.matches[index]?.point!==undefined ? (()=>{
-                                            switch(team.matches[index].point){
-                                                case 2:
-                                                    return <img src="/icons/check-green.png" alt="win" className="icon win"/>
-                                                case 1:
-                                                    return <img src="/icons/draw-blue.png" alt="tie" className="icon tie"/>
-                                                case 0:
-                                                    return <img src="/icons/cross-red.png" alt="loss" className="icon loss"/>
-                                                default:
-                                                    return "-";
-                                            }
-                                        })() : ""}  
+                                            {team.matches[j]?.point!==undefined ? (()=>{
+                                                switch(team.matches[j].point){
+                                                    case 2:
+                                                        return <img src={hover.i===i && hover.j===j ? "/icons/check-white.png" : "/icons/check-green.png" }alt="win" className="icon win"/>
+                                                    case 1:
+                                                        return <img src={hover.i===i && hover.j===j ? "/icons/draw-white.png" : "/icons/draw-blue.png"} alt="tie" className="icon tie"/>
+                                                    case 0:
+                                                        return <img src={hover.i===i && hover.j===j ? "/icons/cross-white.png" : "/icons/cross-red.png"} alt="loss" className="icon loss"/>
+                                                    default:
+                                                        return "-";
+                                                }
+                                            })() : ""}  
                                         </div>
                                     </div>
                                 ))}

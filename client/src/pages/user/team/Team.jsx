@@ -11,15 +11,16 @@ export function Team(){
     if(!season){
         return;
     }
+    
     const teamId=location.state?.teamId;
     const team=season.teams.find(team=>team._id===teamId);
     const matches=season.matches.filter(match=>match.team.short===team.short || match.opponent.short===team.short);
     const sortedMatches=matches.slice().sort((a, b)=>{
         const dateA=new Date(a.date);
         const dateB=new Date(b.date);
-      
-        const isACompleted=a.result.won.short!=="";
-        const isBCompleted=b.result.won.short!=="";
+      console.log(a);
+        const isACompleted=a.result.won.short!=="" || a.result.draw.status;
+        const isBCompleted=b.result.won.short!=="" || b.result.draw.status;
       
         if(isACompleted && !isBCompleted) return 1;
         if(!isACompleted && isBCompleted) return -1;

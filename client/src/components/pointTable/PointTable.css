@@ -3,7 +3,8 @@
     width: fit-content;
     max-width: calc(100% - 2px);
     overflow: scroll;
-    border: 1px solid var(--black);
+    border: 1px solid var(--text-color);
+    color: var(--text-color);
 }
 
 .pointTable-teams{
@@ -23,8 +24,8 @@
 .pointTable-heading-position, 
 .pointTable-team-position{
     width: 20px;
-    border-right: 1px solid var(--black);
-    border-bottom: 1px solid var(--black);
+    border-right: 1px solid var(--text-color);
+    border-bottom: 1px solid var(--text-color);
 }
 
 .pointTable-team{
@@ -49,7 +50,7 @@
 .pointTable-team-details{
     display: flex;
     gap: 8px;
-    border-bottom: 1px solid var(--black);
+    border-bottom: 1px solid var(--text-color);
     cursor: pointer;
 }
 
@@ -66,8 +67,8 @@
 .pointTable-team-name{
     width: 225px;
     text-align: left;
-    border-right: 1px solid var(--black);
-    border-bottom: 1px solid var(--black);
+    border-right: 1px solid var(--text-color);
+    border-bottom: 1px solid var(--text-color);
 }
 
 .pointTable-team-name{
@@ -100,8 +101,8 @@
     display: flex;
     padding: 16px;
     justify-content: center;
-    border-left: 1px solid var(--black);
-    border-bottom: 1px solid var(--black);
+    border-left: 1px solid var(--text-color);
+    border-bottom: 1px solid var(--text-color);
 }
 
 .pointTable-team-result{
@@ -129,31 +130,19 @@
 }
 
 .pointTable-team-result{
-    background-color: var(--white);
+    background-color: var(--bg-color);
 }
 
 .pointTable-team-result:has(.win):hover{
     background-color: var(--green);
 }
 
-.pointTable-team-result:has(.win):hover img{
-    content: url("/icons/check-white.png");
-}
-
 .pointTable-team-result:has(.tie):hover{
     background-color: var(--blue);
 }
 
-.pointTable-team-result:has(.tie):hover img{
-    content: url("/icons/draw-white.png");
-}
-
 .pointTable-team-result:has(.loss):hover{
     background-color: var(--red);
-}
-
-.pointTable-team-result:has(.loss):hover img{
-    content: url("/icons/cross-white.png");
 }
 
 .pointTable-team-point{
@@ -166,8 +155,8 @@
 .pointTable-heading-points, 
 .pointTable-team-points{
     width: 45px;
-    border-left: 1px solid var(--black);
-    border-bottom: 1px solid var(--black);
+    border-left: 1px solid var(--text-color);
+    border-bottom: 1px solid var(--text-color);
 }
 
 .pointTable-team:last-child .pointTable-team-points{
@@ -177,8 +166,8 @@
 .pointTable-heading-nrr, 
 .pointTable-team-nrr{
     width: 55px;
-    border-left: 1px solid var(--black);
-    border-bottom: 1px solid var(--black);
+    border-left: 1px solid var(--text-color);
+    border-bottom: 1px solid var(--text-color);
 }
 
 .pointTable-heading .pointTable-heading-nrr{

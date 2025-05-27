@@ -1,5 +1,5 @@
 .matchesTable{
-    border: 1px solid var(--black);
+    border: 1px solid var(--text-color);
     width: fit-content;
     max-width: calc(100% - 2px);
     overflow: scroll;
@@ -22,13 +22,13 @@
 .matchesTable-match-no{
     display: grid;
     place-content: center;
-    border-top: 1px solid var(--black);
+    border-top: 1px solid var(--text-color);
 }
 
 .matchesTable-heading-teams, .matchesTable-match-teams{
     width: 188px;
     min-width: 188px;
-    border-left: 1px solid var(--black);
+    border-left: 1px solid var(--text-color);
     text-transform: capitalize;
 }
 
@@ -45,7 +45,7 @@
 .matchesTable-match-teams{
     width: 220px;
     min-width: 220px;
-    border-top: 1px solid var(--black);
+    border-top: 1px solid var(--text-color);
     cursor: pointer;
     display: flex;
     gap: 4px;
@@ -91,33 +91,33 @@
 .matchesTable-heading-date, .matchesTable-match-date{
     width: 100px;
     min-width: 100px;
-    border-left: 1px solid var(--black);
+    border-left: 1px solid var(--text-color);
     text-transform: capitalize;
 }
 
 .matchesTable-match-date{
     display: grid;
     place-content: center;
-    border-top: 1px solid var(--black);
+    border-top: 1px solid var(--text-color);
 }
 
 .matchesTable-heading-time, .matchesTable-match-time{
     width: 50px;
     min-width: 50px;
-    border-left: 1px solid var(--black);
+    border-left: 1px solid var(--text-color);
     text-transform: capitalize;
 }
 
 .matchesTable-match-time{
     display: grid;
     place-content: center;
-    border-top: 1px solid var(--black);
+    border-top: 1px solid var(--text-color);
 }
 
 .matchesTable-heading-venue, .matchesTable-match-venue {
     width: 130px;
     min-width: 130px;
-    border-left: 1px solid var(--black);
+    border-left: 1px solid var(--text-color);
     text-transform: capitalize;
 }
 
@@ -125,26 +125,26 @@
     display: flex;
     align-items: center;
     overflow: scroll;
-    border-top: 1px solid var(--black);
+    border-top: 1px solid var(--text-color);
 }
 
 .matchesTable-heading-result, .matchesTable-match-result{
     width: 290px;
     min-width: 290px;
-    border-left: 1px solid var(--black);
+    border-left: 1px solid var(--text-color);
     text-transform: capitalize;
 }
 
 .matchesTable-match-result{
     display: flex;
     align-items: center;
-    border-top: 1px solid var(--black);
+    border-top: 1px solid var(--text-color);
 }
 
 .matchesTable-heading-potm, .matchesTable-match-potm{
     width: 310px;
     min-width: 310px;
-    border-left: 1px solid var(--black);
+    border-left: 1px solid var(--text-color);
 }
 
 .matchesTable-heading-potm{
@@ -154,5 +154,5 @@
 .matchesTable-match-potm{
     display: flex;
     align-items: center;
-    border-top: 1px solid var(--black);
+    border-top: 1px solid var(--text-color);
 }

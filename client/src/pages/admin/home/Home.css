@@ -3,6 +3,9 @@
     flex-direction: column;
     padding: 16px;
     gap: 16px;
+    min-height: calc(100vh - 118px);
+    background-color: var(--bg-color);
+    color: var(--text-color);
 }
 
 .admin-home-header{
@@ -20,25 +23,6 @@
 .admin-home-buttons{
     display: flex;
     gap: 16px;
-}
-
-.admin-home-table-switch-button{
-    padding: 16px;
-    font-size: 16px;
-    border: 1px solid var(--black);
-    outline: none;
-    background-color: var(--white);
-    cursor: pointer;
-    text-transform: capitalize;
-}
-
-.admin-home-table-switch-button:hover{
-    background-color: var(--black);
-    color: var(--white);
-}
-
-.admin-home-add-team-button:hover img {
-    content: url("/icons/plus-white.png");
 }
 
 .admin-home-add-team-form{
@@ -64,21 +48,9 @@
     margin-top: 0;
 }
 
-.admin-home-add-home-button:hover img{
-    content: url("/icons/plus-white.png");
-}
-
-.admin-home-remove-home-button:hover img{
-    content: url("/icons/trash-white.png");
-}
-
 .admin-home-form-buttons{
     display: flex;
     gap: 16px;
-}
-
-.admin-home-close-button:hover img {
-    content: url("/icons/cross-white.png");
 }
 
 @media(max-width: 1080px){

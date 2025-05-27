@@ -21,43 +21,45 @@ import { Dashboard } from "./pages/user/Dashboard";
 import { ToastContainer } from "react-toastify";
 import { Results as AdminResults} from "./pages/admin/results/Results";
 import { Results } from "./pages/user/results/Results";
+import { ThemeProvider } from "./context/themeContext";
 
 function App(){
     return(
-        <YearProvider>
-            <SeasonProvider>
-                <Router>
-                    <Routes>
-                        <Route path="/" element={<Dashboard/>}>
-                            <Route path="" element={<Home/>}/>
-                            <Route path="point-table" element={<Home/>}/>
-                            <Route path="team" element={<Team/>}/>
-                            <Route path="matches" element={<Matches/>}/>
-                            <Route path="matches/:matchId" element={<Match/>}/>
-                            <Route path="results" element={<Results/>}/>
-                            <Route path="stats" element={<Stats/>}/>
-                        </Route>
-                        <Route path="/register" element={<Register/>}/>
-                        <Route path="/login" element={<Login/>}/>
-                        <Route path="/admin" element={
-                            <ProtectedRoute>
-                                <AdminDashboard/>
-                            </ProtectedRoute>
-                        }>
-                            <Route path="" element={<Season/>}/>
-                            <Route path="point-table" element={<AdminHome/>}/>
-                            <Route path="team" element={<AdminTeam/>}/>
-                            <Route path="matches" element={<AdminMatches/>}/>
-                            <Route path="matches/:matchId" element={<AdminMatch/>}/>
-                            <Route path="results" element={<AdminResults/>}/>
-                            <Route path="stats" element={<AdminStats/>}/>
-                        </Route>
-                    </Routes>
-                    <ToastContainer position="bottom-right"/>
-                </Router>
-            </SeasonProvider>
-        </YearProvider>
-
+        <ThemeProvider>
+            <YearProvider>
+                <SeasonProvider>
+                    <Router>
+                        <Routes>
+                            <Route path="/" element={<Dashboard/>}>
+                                <Route path="" element={<Home/>}/>
+                                <Route path="point-table" element={<Home/>}/>
+                                <Route path="team" element={<Team/>}/>
+                                <Route path="matches" element={<Matches/>}/>
+                                <Route path="matches/:matchId" element={<Match/>}/>
+                                <Route path="results" element={<Results/>}/>
+                                <Route path="stats" element={<Stats/>}/>
+                            </Route>
+                            <Route path="/register" element={<Register/>}/>
+                            <Route path="/login" element={<Login/>}/>
+                            <Route path="/admin" element={
+                                <ProtectedRoute>
+                                    <AdminDashboard/>
+                                </ProtectedRoute>
+                            }>
+                                <Route path="" element={<Season/>}/>
+                                <Route path="point-table" element={<AdminHome/>}/>
+                                <Route path="team" element={<AdminTeam/>}/>
+                                <Route path="matches" element={<AdminMatches/>}/>
+                                <Route path="matches/:matchId" element={<AdminMatch/>}/>
+                                <Route path="results" element={<AdminResults/>}/>
+                                <Route path="stats" element={<AdminStats/>}/>
+                            </Route>
+                        </Routes>
+                        <ToastContainer position="bottom-right"/>
+                    </Router>
+                </SeasonProvider>
+            </YearProvider>
+        </ThemeProvider>
     )
 }
 

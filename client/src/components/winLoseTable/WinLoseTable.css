@@ -3,7 +3,8 @@
     width: fit-content;
     max-width: calc(100% - 2px);
     overflow: scroll;
-    border: 1px solid var(--black);
+    border: 1px solid var(--text-color);
+    color: var(--text-color);
 }
 
 .winLoseTable-teams{
@@ -33,8 +34,8 @@
 .winLoseTable-heading-position, 
 .winLoseTable-team-position{
     width: 20px;
-    border-right: 1px solid var(--black);
-    border-bottom: 1px solid var(--black);
+    border-right: 1px solid var(--text-color);
+    border-bottom: 1px solid var(--text-color);
 }
 
 .winLoseTable-team{
@@ -58,7 +59,7 @@
 .winLoseTable-team-details{
     display: flex;
     gap: 8px;
-    border-bottom: 1px solid var(--black);
+    border-bottom: 1px solid var(--text-color);
     cursor: pointer;
 }
 
@@ -75,8 +76,8 @@
 .winLoseTable-team-name{
     width: 225px;
     text-align: left;
-    border-right: 1px solid var(--black);
-    border-bottom: 1px solid var(--black);
+    border-right: 1px solid var(--text-color);
+    border-bottom: 1px solid var(--text-color);
 }
 
 .winLoseTable-heading-name.short{
@@ -97,7 +98,7 @@
 .winLoseTable-heading-played, 
 .winLoseTable-team-played{
     width: 45px;
-    border-bottom: 1px solid var(--black);
+    border-bottom: 1px solid var(--text-color);
 }
 
 .winLoseTable-team:last-child .winLoseTable-team-played{
@@ -107,8 +108,8 @@
 .winLoseTable-heading-wins, 
 .winLoseTable-team-wins{
     width: 45px;
-    border-left: 1px solid var(--black);
-    border-bottom: 1px solid var(--black);
+    border-left: 1px solid var(--text-color);
+    border-bottom: 1px solid var(--text-color);
 }
 
 .winLoseTable-team:last-child .winLoseTable-team-wins{
@@ -118,8 +119,8 @@
 .winLoseTable-heading-loses, 
 .winLoseTable-team-loses{
     width: 45px;
-    border-left: 1px solid var(--black);
-    border-bottom: 1px solid var(--black);
+    border-left: 1px solid var(--text-color);
+    border-bottom: 1px solid var(--text-color);
 }
 
 .winLoseTable-team:last-child .winLoseTable-team-loses{
@@ -129,8 +130,8 @@
 .winLoseTable-heading-draws, 
 .winLoseTable-team-draws{
     width: 45px;
-    border-left: 1px solid var(--black);
-    border-bottom: 1px solid var(--black);
+    border-left: 1px solid var(--text-color);
+    border-bottom: 1px solid var(--text-color);
 }
 
 .winLoseTable-team:last-child .winLoseTable-team-draws{
@@ -140,8 +141,8 @@
 .winLoseTable-heading-point, 
 .winLoseTable-team-point{
     width: 45px;
-    border-left: 1px solid var(--black);
-    border-bottom: 1px solid var(--black);
+    border-left: 1px solid var(--text-color);
+    border-bottom: 1px solid var(--text-color);
 }
 
 .winLoseTable-team:last-child .winLoseTable-team-point{
@@ -151,8 +152,8 @@
 .winLoseTable-heading-nrr, 
 .winLoseTable-team-nrr{
     width: 55px;
-    border-left: 1px solid var(--black);
-    border-bottom: 1px solid var(--black);
+    border-left: 1px solid var(--text-color);
+    border-bottom: 1px solid var(--text-color);
 }
 
 .winLoseTable-team:last-child .winLoseTable-team-nrr{

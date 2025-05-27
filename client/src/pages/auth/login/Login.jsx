@@ -3,20 +3,22 @@ import React, { useState } from "react";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useTheme } from "../../../context/themeContext";
 
 export function Login(){
-    const [loginData, setLoginData]=useState({
-        credential: "",
-        password: ""
-    });
-    const [show, setShow]=useState(false);
-    
-
     const navigate=useNavigate();
     
     const apiUrl=import.meta.env.MODE==="development"
         ? import.meta.env.VITE_APP_DEV_URL 
         : import.meta.env.VITE_APP_PROD_URL
+
+    const [loginData, setLoginData]=useState({
+        credential: "",
+        password: ""
+    });
+    const [show, setShow]=useState(false);
+
+    const { theme }=useTheme();
 
     function handleInputChange(e){
         setLoginData({
@@ -66,9 +68,9 @@ export function Login(){
                         <input type={show ? "text" : "password"} name="password" id="password" value={loginData.password} onChange={handleInputChange}/>
                         <button className={`${show ? "green-button" : "red-button"}`} type="button" onClick={()=>setShow(prev=>!prev)}>
                             {show ? 
-                                <img src="/icons/eye-black.png" alt="visible" className="icon eye"/> 
+                                <img src={theme==="dark" ? "/icons/eye-white.png" : "/icons/eye-black.png"} alt="visible" className="icon eye"/> 
                                 : 
-                                <img src="/icons/eye-crossed-black.png" alt="visible-off" className="icon eye-crossed"/>
+                                <img src={theme==="dark" ? "/icons/eye-crossed-white.png" : "/icons/eye-crossed-black.png"} alt="visible-off" className="icon eye-crossed"/>
                             }
                         </button>
                     </div>                
