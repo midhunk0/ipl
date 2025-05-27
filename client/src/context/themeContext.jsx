@@ -1,8 +1,9 @@
 /* eslint-disable react-refresh/only-export-components */
 // @ts-nocheck
+
 import { createContext, useContext, useEffect, useState } from "react";
 
-const ThemeContext=createContext(null);
+const ThemeContext = createContext(null);
 
 export function ThemeProvider({ children }){
     const [theme, setTheme]=useState("light");

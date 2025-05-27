@@ -2,7 +2,7 @@
 import { useState } from "react";
 import "./Dashboard.css";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { useTheme } from "../../context/ThemeContext";
+import { useTheme } from "../../context/themeContext";
 
 export function Dashboard(){
     const navigate=useNavigate();
