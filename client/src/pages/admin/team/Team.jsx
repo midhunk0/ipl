@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useSeason, useYear } from "../../../context/seasonContext";
 import { MatchesTable } from "../../../components/matchesTable/matchesTable";
-import { useTheme } from "../../../context/ThemeContext";
+import { useTheme } from "../../../context/themeContext";
 
 export function Team(){
     const location=useLocation();

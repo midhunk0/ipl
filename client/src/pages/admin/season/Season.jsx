@@ -5,7 +5,7 @@ import "./Season.css";
 import { useNavigate } from "react-router-dom";
 import { useYear } from "../../../context/seasonContext";
 import { toast } from "react-toastify";
-import { useTheme } from "../../../context/ThemeContext";
+import { useTheme } from "../../../context/themeContext";
 
 export function Season(){
     const navigate=useNavigate();

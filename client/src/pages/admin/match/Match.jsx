@@ -5,7 +5,7 @@ import { Navigate, useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useSeason, useYear } from "../../../context/seasonContext";
 import { MatchDetails } from "../../../components/matchDetails/matchDetails";
-import { useTheme } from "../../../context/ThemeContext";
+import { useTheme } from "../../../context/themeContext";
 
 export function Match(){
     const apiUrl=import.meta.env.MODE==="development"

@@ -5,7 +5,7 @@ import { useSeason, useYear } from "../../../context/seasonContext";
 import { PointTable } from "../../../components/pointTable/PointTable";
 import { toast } from "react-toastify";
 import { WinLoseTable } from "../../../components/winLoseTable/WinLoseTable";
-import { useTheme } from "../../../context/ThemeContext";
+import { useTheme } from "../../../context/themeContext";
 
 export function Home(){
     const apiUrl=import.meta.env.MODE==="development"

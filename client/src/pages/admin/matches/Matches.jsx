@@ -4,7 +4,7 @@ import "./Matches.css";
 import { MatchesTable } from "../../../components/matchesTable/matchesTable";
 import { useSeason, useYear } from "../../../context/seasonContext";
 import { toast } from "react-toastify";
-import { useTheme } from "../../../context/ThemeContext";
+import { useTheme } from "../../../context/themeContext";
 
 export function Matches(){
     const apiUrl=import.meta.env.MODE==="development"
