@@ -5,7 +5,6 @@ export function Stats(){
 
     return(
         <div className="stats">
-            
             <SeasonStats/>
         </div>
     )

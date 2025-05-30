@@ -127,17 +127,14 @@ const statsSchema=new mongoose.Schema({
         number: { type: Number, default: 0 },
         team: { type: String, default: "" }
     },
-    highestScore: {
-        name: { type: String, default: "" },
-        runs: { type: Number, default: 0 },
-        team: { type: String, default: "" }
-    },
     mostValuablePlayer: {
         name: { type: String, default: "" },
+        for: { type: String, default: "" },
         team: { type: String, default: "" }
     },
     emergingPlayer: {
         name: { type: String, default: "" },
+        for: { type: String, default: "" },
         team: { type: String, default: "" }
     },
 }, { _id: false });

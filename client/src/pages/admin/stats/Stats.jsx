@@ -6,24 +6,26 @@ import { toast } from "react-toastify";
 import { SeasonStats } from "../../../components/seasonStats/SeasonStats";
 import { useTheme } from "../../../context/themeContext";
 
+const initialStats={
+    champion: "",
+    runnerUp: "",
+    fairPlayAward: "",
+    orangeCap: { name: "", runs: 0, team: "" },
+    purpleCap: { name: "", wickets: 0, team: "" },
+    most6s: { name: "", number: 0, team: "" },
+    most4s: { name: "", number: 0, team: "" },
+    mostValuablePlayer: { name: "", for: "", team: "" },
+    emergingPlayer: { name: "", for: "", team: "" }
+}
+
 export function Stats(){
     const apiUrl=import.meta.env.MODE==="development"
         ? import.meta.env.VITE_APP_DEV_URL 
         : import.meta.env.VITE_APP_PROD_URL
 
-    const [stats, setStats]=useState({
-        champion: "",
-        runnerUp: "",
-        fairPlayAward: "",
-        orangeCap: { name: "", runs: 0, team: "" },
-        purpleCap: { name: "", wickets: 0, team: "" },
-        most6s: { name: "", number: 0, team: "" },
-        most4s: { name: "", number: 0, team: "" },
-        highestScore: { name: "", runs: 0, team: "" },
-        mostValuablePlayer: { name: "", team: "" },
-        emergingPlayer: { name: "", team: "" }
-    });
+    const [stats, setStats]=useState(initialStats);
     const [hover, setHover]=useState("");
+    const [activeDropdown, setActiveDropdown]=useState("");
 
     const { theme }=useTheme();
     const { year }=useYear();
@@ -33,78 +35,11 @@ export function Stats(){
     }
     const seasonStats=season.stats;
 
-    function handleInputChange(e){
+    function handleInput(e, item){
         setStats({
             ...stats,
-            [e.target.name]: e.target.value
-        });
-    };
-
-    function handleInputOrangeCap(e){
-        setStats({
-            ...stats,
-            orangeCap: {
-                ...stats.orangeCap,
-                [e.target.name]: e.target.value
-            }
-        });
-    };
-
-    function handleInputPurpleCap(e){
-        setStats({
-            ...stats,
-            purpleCap: {
-                ...stats.purpleCap,
-                [e.target.name]: e.target.value
-            }
-        });
-    };
-
-    function handleInputMost6s(e){
-        setStats({
-            ...stats,
-            most6s: {
-                ...stats.most6s,
-                [e.target.name]: e.target.value
-            }
-        });
-    };
-
-    function handleInputMost4s(e){
-        setStats({
-            ...stats,
-            most4s: {
-                ...stats.most4s,
-                [e.target.name]: e.target.value
-            }
-        });
-    };
-
-    function handleInputHighestScore(e){
-        setStats({
-            ...stats,
-            highestScore: {
-                ...stats.highestScore,
-                [e.target.name]: e.target.value
-            }
-        });
-    };
-
-    function handleInputMVP(e){
-        setStats({
-            ...stats,
-            mostValuablePlayer: {
-                ...stats.mostValuablePlayer,
-                [e.target.name]: e.target.value
-            }
-        });
-    };
-
-    function handleInputEmergingPlayer(e){
-        setStats({
-            ...stats,
-            emergingPlayer: {
-                ...stats.emergingPlayer,
+            [item]: {
+                ...stats[item],
                 [e.target.name]: e.target.value
             }
         });
@@ -121,18 +56,7 @@ export function Stats(){
             });
             const result=await response.json();
             if(response.ok){
-                setStats({
-                    champion: "",
-                    runnerUp: "",
-                    fairPlayAward: "",
-                    orangeCap: { name: "", runs: 0, team: "" },
-                    purpleCap: { name: "", wickets: 0, team: "" },
-                    most6s: { name: "", number: 0, team: "" },
-                    most4s: { name: "", number: 0, team: "" },
-                    highestScore: { name: "", runs: 0, team: "" },
-                    mostValuablePlayer: { name: "", team: "" },
-                    emergingPlayer: { name: "", team: "" }
-                })
+                setStats(initialStats);
                 toast.success(result.message);
             }
             else{
@@ -144,43 +68,119 @@ export function Stats(){
         }
     }
 
+    function ToggleIcon({ item }){
+        return(
+            <button type="button">
+                <img
+                    src={
+                        theme==="light"
+                            ? activeDropdown===item
+                                ? "/icons/up-black.png"
+                                : "/icons/down-black.png"
+                            : activeDropdown===item
+                                ? "/icons/up-white.png"
+                                : "/icons/down-white.png"
+                    }
+                    alt="toggle"
+                    className="icon"
+                />
+            </button>
+        )
+    }
+
+    function formatLabel(text){
+        return text
+            .replace(/([A-Z])/g, " $1")
+            .replace(/^./, str=>str.toUpperCase());
+    }
+
+    function ItemContainer({ item }){
+        return(
+            <div className="input-container">
+                <h3>{formatLabel(item)}</h3>
+                <div className="input selection" onClick={()=>setActiveDropdown(activeDropdown===item ? "" : item)}>
+                    <p>{stats[item]!=="" ? stats[item] : "Choose team"}</p>
+                    <ToggleIcon item={item}/>
+                    {activeDropdown===item && (
+                        <div className="select">
+                            {season.teams.map((team, index)=>(
+                                <div
+                                    className="input"
+                                    key={index}
+                                    onClick={(e)=>{
+                                        e.stopPropagation();
+                                        setStats({ ...stats, [item]: team.name });
+                                        setActiveDropdown("");
+                                    }}
+                                >
+                                    <p>{team.name}</p>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            </div>
+        )
+    }
+
+    function SubItemContainer({ item }){
+        return(
+            <div className="input-container">
+                <label htmlFor={item}>team</label>
+                <div className="input selection" onClick={()=>setActiveDropdown(activeDropdown===item ? "" : item)}>
+                    <p>{stats[item].team!=="" ? stats[item].team : "Choose team"}</p>
+                    <ToggleIcon item={item}/>
+                    {activeDropdown===item && (
+                        <div className="select">
+                            {season.teams.map((team, index)=>(
+                                <div
+                                    className="input"
+                                    key={index}
+                                    onClick={(e)=>{
+                                        e.stopPropagation();
+                                        setStats({ 
+                                            ...stats, 
+                                            [item]: {
+                                                ...stats[item],
+                                                team: team.name
+                                            }
+                                        });
+                                        setActiveDropdown("");
+                                    }}
+                                >
+                                    <p>{team.name}</p>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            </div>
+        )
+    }
+
     return(
         <div className="admin-stats">
-            <h1>IPL {year} season stats</h1>
-            {seasonStats && seasonStats.champion!=="" ? (
+            {seasonStats && seasonStats.orangeCap.name!=="" ? (
                 <SeasonStats/>
             ):(
                 <form className="admin-stats-form" method="post" onSubmit={handleAddStats}>
-                    <div className="input-container">
-                        <h3>champion</h3>
-                        <input type="text" name="champion" id="champion" value={stats.champion} onChange={handleInputChange}/>
-                    </div>
-
-                    <div className="input-container">
-                        <h3>runner up</h3>
-                        <input type="text" name="runnerUp" id="runnerUp" value={stats.runnerUp} onChange={handleInputChange}/>
-                    </div>
-                    
-                    <div className="input-container">
-                        <h3>fair play award</h3>
-                        <input type="text" name="fairPlayAward" id="fairPlay" value={stats.fairPlayAward} onChange={handleInputChange}/>
-                    </div>
+                    <h1>IPL {year} season stats</h1>
+                    <ItemContainer item="champion"/>
+                    <ItemContainer item="runnerUp"/>
+                    <ItemContainer item="fairPlayAward"/>
                     
                     <div className="input-container">
                         <h3>orange cap</h3>
                         <div className="admin-stats-expand">
                             <div className="input-container">
                                 <label htmlFor="orangeCapName">name</label>
-                                <input type="text" name="name" id="orangeCapName" value={stats.orangeCap.name} onChange={handleInputOrangeCap}/>
+                                <input type="text" name="name" id="orangeCapName" value={stats.orangeCap.name} onChange={(e)=>handleInput(e, "orangeCap")}/>
                             </div>
                             <div className="input-container">
                                 <label htmlFor="orangeCapRuns">runs</label>
-                                <input type="text" name="runs" id="orangeCapRuns" value={stats.orangeCap.runs} onChange={handleInputOrangeCap}/>
+                                <input type="text" name="runs" id="orangeCapRuns" value={stats.orangeCap.runs} onChange={(e)=>handleInput(e, "orangeCap")}/>
                             </div>
-                            <div className="input-container">
-                                <label htmlFor="orangeCapTeam">team</label>
-                                <input type="text" name="team" id="orangeCapTeam" value={stats.orangeCap.team} onChange={handleInputOrangeCap}/>
-                            </div>
+                            <SubItemContainer item="orangeCap"/>
                         </div>
                     </div>
                     
@@ -189,16 +189,13 @@ export function Stats(){
                         <div className="admin-stats-expand">
                             <div className="input-container">
                                 <label htmlFor="purpleCapName">name</label>
-                                <input type="text" name="name" id="purpleCapName" value={stats.purpleCap.name} onChange={handleInputPurpleCap}/>
+                                <input type="text" name="name" id="purpleCapName" value={stats.purpleCap.name} onChange={(e)=>handleInput(e, "purpleCap")}/>
                             </div>
                             <div className="input-container">
                                 <label htmlFor="purpleCapRuns">wickets</label>
-                                <input type="text" name="wickets" id="purpleCapRuns" value={stats.purpleCap.wickets} onChange={handleInputPurpleCap}/>
+                                <input type="text" name="wickets" id="purpleCapRuns" value={stats.purpleCap.wickets} onChange={(e)=>handleInput(e, "purpleCap")}/>
                             </div>
-                            <div className="input-container">
-                                <label htmlFor="purpleCapTeam">team</label>
-                                <input type="text" name="team" id="purpleCapTeam" value={stats.purpleCap.team} onChange={handleInputPurpleCap}/>
-                            </div>
+                            <SubItemContainer item="purpleCap"/>
                         </div>
                     </div>
 
@@ -207,16 +204,13 @@ export function Stats(){
                         <div className="admin-stats-expand">
                             <div className="input-container">
                                 <label htmlFor="most6sName">name</label>
-                                <input type="text" name="name" id="most6sName" value={stats.most6s.name} onChange={handleInputMost6s}/>
+                                <input type="text" name="name" id="most6sName" value={stats.most6s.name} onChange={(e)=>handleInput(e, "most6s")}/>
                             </div>
                             <div className="input-container">
                                 <label htmlFor="most6s">number</label>
-                                <input type="text" name="number" id="most6s" value={stats.most6s.number} onChange={handleInputMost6s}/>
+                                <input type="text" name="number" id="most6s" value={stats.most6s.number} onChange={(e)=>handleInput(e, "most6s")}/>
                             </div>
-                            <div className="input-container">
-                                <label htmlFor="most6sTeam">team</label>
-                                <input type="text" name="team" id="most6sTeam" value={stats.most6s.team} onChange={handleInputMost6s}/>
-                            </div>  
+                            <SubItemContainer item="most6s"/>
                         </div>
                     </div>
 
@@ -225,34 +219,13 @@ export function Stats(){
                         <div className="admin-stats-expand">
                             <div className="input-container">
                                 <label htmlFor="most4sName">name</label>
-                                <input type="text" name="name" id="most4sName" value={stats.most4s.name} onChange={handleInputMost4s}/>
+                                <input type="text" name="name" id="most4sName" value={stats.most4s.name} onChange={(e)=>handleInput(e, "most4s")}/>
                             </div>
                             <div className="input-container">
                                 <label htmlFor="most4s">number</label>
-                                <input type="text" name="number" id="most4s" value={stats.most4s.number} onChange={handleInputMost4s}/>
+                                <input type="text" name="number" id="most4s" value={stats.most4s.number} onChange={(e)=>handleInput(e, "most4s")}/>
                             </div>
-                            <div className="input-container">
-                                <label htmlFor="most4sTeam">team</label>
-                                <input type="text" name="team" id="most4sTeam" value={stats.most4s.team} onChange={handleInputMost4s}/>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="input-container">
-                        <h3>highest score</h3>
-                        <div className="admin-stats-expand">
-                            <div className="input-container">
-                                <label htmlFor="highestScoreName">name</label>
-                                <input type="text" name="name" id="highestScoreName" value={stats.highestScore.name} onChange={handleInputHighestScore}/>
-                            </div>
-                            <div className="input-container">
-                                <label htmlFor="highestScore">runs</label>
-                                <input type="text" name="runs" id="highestScore" value={stats.highestScore.runs} onChange={handleInputHighestScore}/>
-                            </div>
-                            <div className="input-container">
-                                <label htmlFor="highestScoreTeam">team</label>
-                                <input type="text" name="team" id="highestScoreTeam" value={stats.highestScore.team} onChange={handleInputHighestScore}/>
-                            </div>
+                            <SubItemContainer item="most4s"/>
                         </div>
                     </div>
 
@@ -261,12 +234,13 @@ export function Stats(){
                         <div className="admin-stats-expand">
                             <div className="input-container">
                                 <label htmlFor="MVPName">name</label>
-                                <input type="text" name="name" id="MVPName" value={stats.mostValuablePlayer.name} onChange={handleInputMVP}/>
+                                <input type="text" name="name" id="MVPName" value={stats.mostValuablePlayer.name} onChange={(e)=>handleInput(e, "mostValuablePlayer")}/>
                             </div>
                             <div className="input-container">
-                                <label htmlFor="MVOTeam">team</label>
-                                <input type="text" name="team" id="MVPTeam" value={stats.mostValuablePlayer.team} onChange={handleInputMVP}/>
+                                <label htmlFor="MVPFor">for</label>
+                                <input type="text" name="for" id="MVPFor" value={stats.mostValuablePlayer.for} onChange={(e)=>handleInput(e, "mostValuablePlayer")}/>
                             </div>
+                            <SubItemContainer item="mostValuablePlayer"/>
                         </div>
                     </div>
 
@@ -275,17 +249,18 @@ export function Stats(){
                         <div className="admin-stats-expand">
                             <div className="input-container">
                                 <label htmlFor="emergingPlayerName">name</label>
-                                <input type="text" name="name" id="emergingPlayerName" value={stats.emergingPlayer.name} onChange={handleInputEmergingPlayer}/>
+                                <input type="text" name="name" id="emergingPlayerName" value={stats.emergingPlayer.name} onChange={(e)=>handleInput(e, "emergingPlayer")}/>
                             </div>
                             <div className="input-container">
-                                <label htmlFor="emergingPlayerTeam">team</label>
-                                <input type="text" name="team" id="emergingPlayerTeam" value={stats.emergingPlayer.team} onChange={handleInputEmergingPlayer}/>
+                                <label htmlFor="emergingPlayerFor">for</label>
+                                <input type="text" name="for" id="emergingPlayerFor" value={stats.emergingPlayer.for} onChange={(e)=>handleInput(e, "emergingPlayer")}/>
                             </div>
+                            <SubItemContainer item="emergingPlayer"/>
                         </div>
                     </div>
 
                     <div className="admin-stats-buttons">
-                        <button className="black-button" type="button" onMouseEnter={()=>setHover("cross")} onMouseLeave={()=>setHover("")}>
+                        <button className="black-button" type="button" onClick={()=>setStats(initialStats)} onMouseEnter={()=>setHover("cross")} onMouseLeave={()=>setHover("")}>
                             <img src={theme==="dark"? hover==="cross" ? "/icons/cross-black.png" : "/icons/cross-white.png": hover==="cross" ? "/icons/cross-white.png" : "/icons/cross-black.png"} alt="close" className="icon"/>
                             <span>clear</span>
                         </button>

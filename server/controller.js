@@ -773,8 +773,8 @@ async function addStats(req, res){
         if(!season){
             return res.status(400).json({ message: "Season does not exists" });
         }
-        const { champion, runnerUp, fairPlayAward, orangeCap, purpleCap, most6s, most4s, highestScore, mostValuablePlayer, emergingPlayer }=req.body;
-        if(champion==="" || runnerUp==="" || fairPlayAward==="" || orangeCap==="" || purpleCap==="" || most6s==="" || most4s==="" || highestScore==="" || mostValuablePlayer==="" || emergingPlayer===""){
+        const { champion, runnerUp, fairPlayAward, orangeCap, purpleCap, most6s, most4s, mostValuablePlayer, emergingPlayer }=req.body;
+        if(champion==="" || runnerUp==="" || fairPlayAward==="" || orangeCap==="" || purpleCap==="" || most6s==="" || most4s==="" || mostValuablePlayer==="" || emergingPlayer===""){
             return res.status(400).json({ message: "Stats details are required"});
         }
         if(orangeCap.name==="" || orangeCap.runs==="" || orangeCap.team===""){
@@ -789,13 +789,10 @@ async function addStats(req, res){
         if(most4s.name==="" || most4s.number==="" || most4s.team===""){
             return res.status(400).json({ message: "Most 4s details are required" });
         }
-        if(highestScore.name==="" || highestScore.runs==="" || highestScore.team===""){
-            return res.status(400).json({ message: "Highest score details are required" });
-        }
-        if(mostValuablePlayer.name==="" || mostValuablePlayer.team===""){
+        if(mostValuablePlayer.name==="" || mostValuablePlayer.for==="" || mostValuablePlayer.team===""){
             return res.status(400).json({ message: "MVP details are required" });
         }
-        if(emergingPlayer.name==="" || emergingPlayer.team===""){
+        if(emergingPlayer.name==="" || emergingPlayer.for==="" || emergingPlayer.team===""){
             return res.status(400).json({ message: "Emerging player details are required" });
         }
         season.stats={
@@ -822,17 +819,14 @@ async function addStats(req, res){
                 number: most4s.number, 
                 team: most4s.team
             },
-            highestScore:{
-                name: highestScore.name,
-                runs: highestScore.runs,
-                team: highestScore.team
-            },
             mostValuablePlayer:{
                 name: mostValuablePlayer.name,
+                for: mostValuablePlayer.for,
                 team: mostValuablePlayer.team
             },
             emergingPlayer:{
                 name: emergingPlayer.name,
+                for: emergingPlayer.for,
                 team: emergingPlayer.team
             }
         };

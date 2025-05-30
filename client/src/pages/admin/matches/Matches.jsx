@@ -120,6 +120,7 @@ export function Matches(){
                 toast.error(result.message);
             }
             setMatchData({
+                teamShort: "",
                 opponentShort: "",
                 venue: "",
                 date: "",
