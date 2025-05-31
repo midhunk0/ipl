@@ -58,6 +58,138 @@
     color: var(--bg-color);
 }
 
+.home-playoffs{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    color: var(--text-color);
+    position: relative;
+    height: 500px;
+}
+
+.home-playoff-team{
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--text-color);
+    gap: 8px;
+    padding: 8px;
+}
+
+.home-q1, .home-el, .home-q2, .home-final{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 25%;
+}
+
+.home-q1-details, .home-el-details, .home-q2-details, .home-final-details{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--text-color);
+    padding: 8px;
+    cursor: pointer;
+}
+
+.home-q1-details p:first-child,
+.home-el-details p:first-child, 
+.home-q2-details p:first-child, 
+.home-final-details p:first-child{
+    text-transform: capitalize;
+    color: var(--green);
+    font-size: larger;
+}
+
+.home-final{
+    position: absolute;
+    right: 0;
+}
+
+.home-el{
+    position: absolute;
+    bottom: 0;
+}
+
+.home-q2{
+    position: absolute;
+    right: 38%;
+    top: 38%;
+}
+
+.playoff-line{
+    position: absolute;
+    background-color: var(--text-color);
+}
+
+.line-q1-final {
+    width: 753px;
+    height: 1px;
+    left: 25%;
+    top: 90px;
+}
+
+.line1-q1-to-q2{
+    width: 100px;
+    height: 1px;
+    left: 25%;
+    top: 120px;
+}
+
+.line2-q1-to-q2{
+    width: 1px;
+    height: 160px;
+    left: calc(25% + 100px);
+    top: 120px;
+}
+
+.line3-q1-to-q2{
+    width: 81px;
+    height: 1px;
+    left: calc(25% + 100px);
+    top: 280px;
+}
+
+.line1-q2-to-final{
+    width: 100px;
+    height: 1px;
+    left: 62%;
+    top: 280px;
+}
+
+.line2-q2-to-final{
+    width: 1px;
+    height: 160px;
+    left: calc(62% + 100px);
+    top: 120px;
+}
+
+.line3-q2-to-final{
+    width: 96px;
+    height: 1px;
+    left: calc(62% + 100px);
+    top: 120px;
+}
+
+.line1-el-to-q2{
+    width: 100px;
+    height: 1px;
+    left: 25%;
+    top: 400px;
+}
+
+.line2-el-to-q2{
+    width: 1px;
+    height: 90px;
+    left: calc(25% + 100px);
+    top: 310px;
+}
+
+.line3-el-to-q2{
+    width: 81px;
+    height: 1px;
+    left: calc(25% + 100px);
+    top: 310px;
+}
+
 @media(max-width: 549px){
     .home-header{
         flex-direction: column;
