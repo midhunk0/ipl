@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./PointTable.css";
 import { useSeason } from "../../context/seasonContext";
 import { useNavigate } from "react-router-dom";

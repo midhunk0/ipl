@@ -70,25 +70,47 @@
 .home-playoff-team{
     display: flex;
     align-items: center;
+    justify-content: center;
     border: 1px solid var(--text-color);
     gap: 8px;
     padding: 8px;
+    overflow: scroll;
 }
 
 .home-q1, .home-el, .home-q2, .home-final{
     display: flex;
     flex-direction: column;
     gap: 8px;
-    width: 25%;
+    width: 20%;
 }
 
-.home-q1-details, .home-el-details, .home-q2-details, .home-final-details{
+.home-q1-details, 
+.home-el-details, 
+.home-q2-details, 
+.home-final-details{
     display: flex;
+    align-items: center;
     flex-direction: column;
     border: 1px solid var(--text-color);
     padding: 8px;
     cursor: pointer;
 }
+
+.home-q1-details p, 
+.home-el-details p, 
+.home-q2-details p, 
+.home-final-details p{
+    color: inherit;
+}
+
+.home-q1-details:hover, 
+.home-el-details:hover, 
+.home-q2-details:hover, 
+.home-final-details:hover{
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
 
 .home-q1-details p:first-child,
 .home-el-details p:first-child, 
@@ -120,74 +142,111 @@
     background-color: var(--text-color);
 }
 
-.line-q1-final {
-    width: 753px;
-    height: 1px;
-    left: 25%;
-    top: 90px;
+.line-q1-final{
+    width: 60%;
+    height: 0.5px;
+    left: 20%;
+    top: 17%;
 }
 
 .line1-q1-to-q2{
-    width: 100px;
+    width: 11%;
     height: 1px;
-    left: 25%;
-    top: 120px;
+    left: 20%;
+    top: 24%;
 }
 
 .line2-q1-to-q2{
     width: 1px;
-    height: 160px;
-    left: calc(25% + 100px);
-    top: 120px;
+    height: 32%;
+    left: 31%;
+    top: 24%;
 }
 
 .line3-q1-to-q2{
-    width: 81px;
+    width: 11%;
     height: 1px;
-    left: calc(25% + 100px);
-    top: 280px;
+    left: 31%;
+    top: 56%;
 }
 
 .line1-q2-to-final{
-    width: 100px;
+    width: 9%;
     height: 1px;
     left: 62%;
-    top: 280px;
+    top: 58%;
 }
 
 .line2-q2-to-final{
-    width: 1px;
-    height: 160px;
-    left: calc(62% + 100px);
-    top: 120px;
+    width: .5px;
+    height: 34.2%;
+    left: 71%;
+    top: 24%;
 }
 
 .line3-q2-to-final{
-    width: 96px;
+    width: 9%;
     height: 1px;
-    left: calc(62% + 100px);
-    top: 120px;
+    left: 71%;
+    top: 24%;
 }
 
 .line1-el-to-q2{
-    width: 100px;
+    width: 11%;
     height: 1px;
-    left: 25%;
-    top: 400px;
+    left: 20%;
+    top: 80%;
 }
 
 .line2-el-to-q2{
     width: 1px;
-    height: 90px;
-    left: calc(25% + 100px);
-    top: 310px;
+    height: 18.1%;
+    left: 31%;
+    top: 62%;
 }
 
 .line3-el-to-q2{
-    width: 81px;
+    width: 11%;
     height: 1px;
-    left: calc(25% + 100px);
-    top: 310px;
+    left: 31%;
+    top: 62%;
+}
+
+@media(max-width: 1080px){
+    .home-q1-details, 
+    .home-el-details, 
+    .home-q2-details, 
+    .home-final-details{
+        align-items: center;
+        justify-content: center;
+        height: 60px;
+    }
+
+    .home-q1-details p:not(:first-child){
+        display: none;
+    }
+
+    .home-el-details p:not(:first-child){
+        display: none;
+    }
+
+    .home-q2-details p:not(:first-child){
+        display: none;
+    }
+
+    .home-final-details p:not(:first-child){
+        display: none;
+    }
+}
+
+@media(max-width: 720px){
+    .home-playoff-team{
+        padding: 10.5px;
+    }
+
+    .home-playoff-team h3{
+        display: none;
+    }
 }
 
 @media(max-width: 549px){
