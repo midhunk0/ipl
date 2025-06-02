@@ -1,0 +1,203 @@
+
+.playoffs{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    color: var(--text-color);
+    position: relative;
+    height: 500px;
+    width: 100%;
+}
+
+.playoff-team{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--text-color);
+    gap: 8px;
+    padding: 8px;
+    overflow: scroll;
+}
+
+.playoffs-qualifier1, 
+.playoffs-eliminator, 
+.playoffs-qualifier2, 
+.playoffs-final{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 20%;
+}
+
+.playoffs-qualifier1-details, 
+.playoffs-eliminator-details, 
+.playoffs-qualifier2-details, 
+.playoffs-final-details{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid var(--text-color);
+    padding: 8px;
+    cursor: pointer;
+}
+
+.playoffs-qualifier1-details p, 
+.playoffs-eliminator-details p, 
+.playoffs-qualifier2-details p, 
+.playoffs-final-details p{
+    color: inherit;
+}
+
+.playoffs-qualifier1-details:hover, 
+.playoffs-eliminator-details:hover, 
+.playoffs-qualifier2-details:hover, 
+.playoffs-final-details:hover{
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
+
+.playoffs-qualifier1-details p:first-child,
+.playoffs-eliminator-details p:first-child, 
+.playoffs-qualifier2-details p:first-child, 
+.playoffs-final-details p:first-child{
+    text-transform: capitalize;
+    color: var(--green);
+    font-size: larger;
+}
+
+.playoffs-final{
+    position: absolute;
+    right: 0;
+}
+
+.playoffs-eliminator{
+    position: absolute;
+    bottom: 0;
+}
+
+.playoffs-qualifier2{
+    position: absolute;
+    right: 38%;
+    top: 38%;
+}
+
+.playoff-line{
+    position: absolute;
+    background-color: var(--text-color);
+}
+
+.line-q1-final{
+    width: 60%;
+    height: 0.5px;
+    left: 20%;
+    top: 17%;
+}
+
+.line1-q1-to-q2{
+    width: 11%;
+    height: 1px;
+    left: 20%;
+    top: 24%;
+}
+
+.line2-q1-to-q2{
+    width: 1px;
+    height: 32%;
+    left: 31%;
+    top: 24%;
+}
+
+.line3-q1-to-q2{
+    width: 11%;
+    height: 1px;
+    left: 31%;
+    top: 56%;
+}
+
+.line1-q2-to-final{
+    width: 9%;
+    height: 1px;
+    left: 62%;
+    top: 58%;
+}
+
+.line2-q2-to-final{
+    width: .5px;
+    height: 34.2%;
+    left: 71%;
+    top: 24%;
+}
+
+.line3-q2-to-final{
+    width: 9%;
+    height: 1px;
+    left: 71%;
+    top: 24%;
+}
+
+.line1-el-to-q2{
+    width: 11%;
+    height: 1px;
+    left: 20%;
+    top: 80%;
+}
+
+.line2-el-to-q2{
+    width: 1px;
+    height: 18.1%;
+    left: 31%;
+    top: 62%;
+}
+
+.line3-el-to-q2{
+    width: 11%;
+    height: 1px;
+    left: 31%;
+    top: 62%;
+}
+
+.won{
+    background: linear-gradient(45deg, var(--green), var(--bg-color));
+}
+
+.lost{
+    background: linear-gradient(45deg, var(--red), var(--bg-color));
+}
+
+@media(max-width: 1080px){
+    .playoffs-qualifier1-details, 
+    .playoffs-eliminator-details, 
+    .playoffs-qualifier2-details, 
+    .playoffs-final-details{
+        align-items: center;
+        justify-content: center;
+        height: 60px;
+    }
+
+    .playoffs-qualifier1-details p:not(:first-child){
+        display: none;
+    }
+
+    .playoffs-eliminator-details p:not(:first-child){
+        display: none;
+    }
+
+    .playoffs-qualifier2-details p:not(:first-child){
+        display: none;
+    }
+
+    .playoffs-final-details p:not(:first-child){
+        display: none;
+    }
+}
+
+@media(max-width: 720px){
+    .playoff-team{
+        padding: 10.5px;
+    }
+
+    .playoff-team h3{
+        display: none;
+    }
+}

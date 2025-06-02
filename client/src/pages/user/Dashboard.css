@@ -96,7 +96,7 @@
     overflow-y: auto;
 }
 
-@media(max-width: 720px){
+@media(max-width: 800px){
     .topbar-items{
         display: none;
     }

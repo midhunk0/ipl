@@ -105,6 +105,11 @@
     border-bottom: 1px solid var(--text-color);
 }
 
+.pointTable-heading-result:last-child, 
+.pointTable-team-result:last-child{
+    border-right: 1px solid var(--text-color);
+}
+
 .pointTable-team-result{
     cursor: pointer;
 }
@@ -166,7 +171,7 @@
 .pointTable-heading-nrr, 
 .pointTable-team-nrr{
     width: 55px;
-    border-left: 1px solid var(--text-color);
+    /* border-left: 1px solid var(--text-color); */
     border-bottom: 1px solid var(--text-color);
 }
 
