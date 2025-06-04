@@ -42,13 +42,13 @@ export function SeasonStats(){
                 <div className="stats-item">
                     <h4>orange cap</h4>
                     <h2>{seasonStats.orangeCap.name}</h2>
-                    <h4>{seasonStats.orangeCap.runs===0 ?  "" : `${seasonStats.orangeCap.runs } runs`}</h4>
+                    <h4>{`${seasonStats.orangeCap.runs} runs`}</h4>
                     <h4>{seasonStats.orangeCap.team}</h4>
                 </div>
                 <div className="stats-item">
                     <h4>purple cap</h4>
                     <h2>{seasonStats.purpleCap.name}</h2>
-                    <h4>{seasonStats.purpleCap.wickets===0 ?  "" : `${seasonStats.purpleCap.wickets } wickets`}</h4>
+                    <h4>{`${seasonStats.purpleCap.wickets} wickets`}</h4>
                     <h4>{seasonStats.purpleCap.team}</h4>
                 </div>
             </div>
@@ -56,13 +56,13 @@ export function SeasonStats(){
                 <div className="stats-item">
                     <h4>most 6s</h4>
                     <h2>{seasonStats.most6s.name}</h2>
-                    <h4>{seasonStats.most6s.number===0 ? "" : seasonStats.most6s.number}</h4>
+                    <h4>{seasonStats.most6s.number}</h4>
                     <h4>{seasonStats.most6s.team}</h4>
                 </div>
                 <div className="stats-item">
                     <h4>most 4s</h4>
                     <h2>{seasonStats.most4s.name}</h2>
-                    <h4>{seasonStats.most4s.number===0 ? "" : seasonStats.most4s.number}</h4>
+                    <h4>{seasonStats.most4s.number}</h4>
                     <h4>{seasonStats.most4s.team}</h4>
                 </div>
             </div>
