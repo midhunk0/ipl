@@ -109,22 +109,22 @@ const statsSchema=new mongoose.Schema({
     fairPlayAward: { type: String, default: "" },
     orangeCap: {
         name: { type: String, default: "" },
-        runs: { type: Number, default: 0 },
+        runs: { type: String, default: "" },
         team: { type: String, default: "" }
     },
     purpleCap: {
         name: { type: String,  default: "" },
-        wickets: { type: Number, default: 0 },
+        wickets: { type: String, default: "" },
         team: { type: String,  default: "" }
     },
     most6s: {
         name: { type: String, default: "" },
-        number: { type: Number, default: 0 },
+        number: { type: String, default: "" },
         team: { type: String, default: "" }
     },
     most4s: {
         name: { type: String, default: "" },
-        number: { type: Number, default: 0 },
+        number: { type: String, default: "" },
         team: { type: String, default: "" }
     },
     mostValuablePlayer: {

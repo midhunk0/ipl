@@ -78,9 +78,9 @@ export interface TeamType{
 export interface AwardType{
     name: string;
     team: string;
-    runs?: number;
-    wickets?: number;
-    number?: number;
+    runs?: string;
+    wickets?: string;
+    number?: string;
     for?: string;
 }
 

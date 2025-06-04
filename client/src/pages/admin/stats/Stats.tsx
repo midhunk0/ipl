@@ -11,10 +11,10 @@ const initialStats={
     champion: "",
     runnerUp: "",
     fairPlayAward: "",
-    orangeCap: { name: "", runs: 0, team: "" },
-    purpleCap: { name: "", wickets: 0, team: "" },
-    most6s: { name: "", number: 0, team: "" },
-    most4s: { name: "", number: 0, team: "" },
+    orangeCap: { name: "", runs: "", team: "" },
+    purpleCap: { name: "", wickets: "", team: "" },
+    most6s: { name: "", number: "", team: "" },
+    most4s: { name: "", number: "", team: "" },
     mostValuablePlayer: { name: "", for: "", team: "" },
     emergingPlayer: { name: "", for: "", team: "" }
 }
